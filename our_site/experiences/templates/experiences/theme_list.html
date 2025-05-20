@@ -1,0 +1,32 @@
+{% extends "experiences/theme_base.html" %}
+
+{% block title %}
+    Themes
+{% endblock %}
+
+{% block content %}
+    {% if user.is_staff or user.is_superuser %}
+    <h2>Themes</h2>
+    <h3><a href={% url "experiences:theme_create" %}>Create new Theme</a></h3>   
+    <hr>
+    <input type="text" placeholder="Search..." id="search" 
+        _="on keyup 
+            if the event's key is 'Escape'
+                set my value to '' 
+                trigger keyup
+            else
+                show <li/> in #theme_list when its textContent.toLowerCase() contains my value.toLowerCase()">  
+    <ul id="theme_list">
+    {% for theme in theme_list %}
+        <li style="--d:flex; --ai:center; --jc:space-between">
+            <a href={% url "experiences:theme_detail" theme.pk %}>{{ theme }}</a> 
+    </li>
+    {% empty %}
+        <li>No Themes yet.</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to see themes.</p>
+    {% endif %}
+{% endblock %}
+

@@ -1,0 +1,30 @@
+{% extends "experiences/participation_base.html" %}
+
+{% block title %}
+    Update {{ participation }}
+{% endblock %}
+
+{% block content %}
+<h2><a href={% url "experiences:participation_list" %}>Participation</a></h2>
+<h3>Update {{ participation }}</h3>   
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={%
+        url "experiences:participation_detail" 
+        participation.pk 
+    %}
+    > Cancel </a>
+<form style="--d:inline" 
+    action={% 
+        url "experiences:participation_delete" 
+        participation.pk 
+    %} 
+    method="post" 
+    onsubmit="return confirm('Are you sure you want to delete {{ participation }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

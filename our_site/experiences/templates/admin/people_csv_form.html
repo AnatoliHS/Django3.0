@@ -1,0 +1,55 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block content %}
+<div id="content-main">
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            {% for field in form %}
+                <div class="form-row">
+                    {{ field.errors }}
+                    <label for="{{ field.id_for_label }}" class="{% if field.field.required %}required{% endif %}">
+                        {{ field.label }}:
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="help">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </fieldset>
+        
+        <h2>Instructions</h2>
+        <p>Upload a CSV file with the following columns:</p>
+        <ul>
+            <li><strong>email</strong> - Email address of the person (required)</li>
+            <li><strong>role</strong> - The role title for this person (required, must match an existing role)</li>
+            <li><strong>first_name</strong> - First name (optional)</li>
+            <li><strong>last_name</strong> - Last name (optional)</li>
+            <li><strong>graduating_year</strong> - Graduating year for students (optional)</li>
+        </ul>
+
+        <h2>New User Creation</h2>
+        <p>If you check the "Create new users" option:</p>
+        <ul>
+            <li>The system will create new user accounts for any email not found in the database</li>
+            <li>Random pronounceable passwords will be generated for each new account</li>
+            <li>After import, you'll see a list of all new accounts created with their credentials</li>
+            <li>You can download a CSV file with all the account details to distribute to users</li>
+        </ul>
+
+        <h3>Example CSV Format</h3>
+        <pre>email,role,first_name,last_name,graduating_year
+john.doe@example.com,Student,John,Doe,2026
+jane.smith@example.com,Facilitator,Jane,Smith,</pre>
+        
+        <p><a href="{% url 'admin:download_people_csv_template' %}" class="button" style="margin-top: 10px;">Download Example CSV Template</a></p>
+
+        <div class="submit-row">
+            <input type="submit" class="default" value="{% trans 'Upload CSV' %}">
+        </div>
+    </form>
+</div>
+{% endblock %}

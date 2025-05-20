@@ -1,0 +1,67 @@
+{% extends "experiences/person_base.html" %}
+
+{% block title %}
+    People
+{% endblock %}
+
+{% block content %}
+    <h2>People</h2>
+    {% if user.is_authenticated %}
+    {% if user.is_staff or user.is_superuser %}
+        <h3><a href={% url "experiences:person_create" %}>Create new Person</a></h3>   
+    {% else %}
+        <div class="info-message" style="--bgc:#f8f9fa; --bl:4px solid #17a2b8; --p:10px; --mb:15px; --radius:4px">
+            <p>You are viewing your profile and your children's profiles.</p>
+        </div>
+    {% endif %}
+    <hr>
+    <input type="text" placeholder="Search..." id="search" 
+        _="on keyup 
+            if the event's key is 'Escape'
+                set my value to '' 
+                trigger keyup
+            end
+            set searchTerm to my.value.toLowerCase()
+            for li in <li/> in #person_list
+                if li.textContent.toLowerCase().includes(searchTerm)
+                    show li
+                else
+                    hide li
+                end
+            end">  
+    <ul id="person_list" style="--w:100%; --p:0; --m:0; --ls:none; list-style:none;">
+    {% for person in person_list %}
+        <li style="--ls:none;">
+            <article style="--d:flex; --ai:center; --jc:space-between; --w:100%; --p:0.5rem; --radius:3px; {% if person.id == user.person.id %}--bgc:#f0f8ff;{% endif %}">
+                <div style="--w:70%;">
+                <a href={% url "experiences:person_detail" person.pk %}>{{ person.user.get_full_name|default:person.user.username }}
+                {% if person.graduating_year %}
+                    (Class of {{ person.graduating_year }})
+                {% endif %}
+                
+                {% if person.id == user.person.id %}
+                    <span style="--c:#28a745; --fs:italic">(You)</span>
+                {% elif person.id in students_ids %}
+                    <span style="--c:#007bff; --fs:italic">(Your Child)</span>
+                {% endif %}
+                </a>
+            </div>
+            {% if user.is_staff or user.is_superuser %}
+                <div style="--w:30%; --d:flex; --jc:flex-end; --ai:center; --g:1rem;">
+                    <a href={% url "experiences:person_update" person.pk %}>Update</a>
+                    <form style="--d:inline" action={% url "experiences:person_delete" person.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ person }}?')">{% csrf_token %}
+                        <input type="submit" value="Delete" />
+                    </form>
+                </div>
+            {% endif %}
+            </article>
+        </li>
+    {% empty %}
+        <li>No People yet.</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to see people.</p>
+    {% endif %}
+{% endblock %}
+

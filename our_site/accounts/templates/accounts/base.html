@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load account_filters %}
+
+{% block title %} accounts {% block inner_title %}management{% endblock %}{% endblock %}
+
+{% block head_content %}
+<style>
+    .profile-img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 20px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        margin-left: 0.5rem;
+    }
+
+    .badge-primary {
+        color: #fff;
+        background-color: #007bff;
+    }
+
+    .badge-secondary {
+        color: #fff;
+        background-color: #6c757d;
+    }
+
+    .student-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .student-info {
+        margin-left: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block auth-links %}
+{{ block.super }}
+<div class="nav" style="--d:flex; --jc:center; --mb:1em">
+    <a href="{% url 'accounts:profile' %}" style="--mr:1em">Edit Profile</a>
+    <a href="{% url 'password_change' %}" style="--mr:1em">Change Password</a>
+    <!-- logout-->
+    <a href="{% url 'logout' %}" style="--mr:1em">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<h1 style="--ta:center; --ta-sm:left; --p:0.2em">
+    {% block header %}Account Management{% endblock %}</h1>
+
+{% block inner_content %}{% endblock %}
+{% endblock %}

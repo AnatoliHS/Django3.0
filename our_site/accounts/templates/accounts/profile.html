@@ -1,0 +1,154 @@
+{% extends "accounts/base.html" %}
+{% load account_filters %}
+
+{% block inner_title %}Your Profile{% endblock %}
+
+{% block header %}Your Profile{% endblock %}
+
+{% block inner_content %}
+{% if messages %}
+<div style="--bgc:#d4edda; --c:#155724; --p:15px; --mb:20px; --br:4px">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+    <div style="--d:flex; --fd:column-reverse; --fd-sm:row">
+        <div style="--mr:30px">
+            {% if person.profile_picture %}
+            <img src="{{ person.profile_picture.url }}" alt="{{ person }}" style="--w:200px; --h:200px; --br:10px; --objf:cover">
+            {% else %}
+            <div style="--w:10em; --h:10em; --br:10px; --bgc:#ccc; --d:flex; --ai:center; --jc:center">
+                <span style="--size:72px; --c:#fff">
+                    {{ person.user.first_name|first }}{{ person.user.last_name|first }}</span>
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" style="--mt:20px">
+                <style>
+                    button,input::file-selector-button{background-color: #005894;}
+                </style>
+                {% csrf_token %}
+                <div style="--mb:10px">
+                    {{ form.profile_picture }}
+                    {% if form.profile_picture.errors %}
+                    <div style="--c:red; --size:14px">
+                        {{ form.profile_picture.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit"
+                    style="--p:5px 10px;">Update Profile Picture</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>{{ person.user.get_full_name }}</h2>
+            <div style="--m:2em 0">
+                <strong>Email:</strong> {{ person.user.email }}<br>
+                <strong>Role:</strong> {{ person.role }}<br>
+                {% if person.graduating_year %}
+                <strong>Graduating Year:</strong> {{ person.graduating_year }}<br>
+                {% endif %}
+                <strong>Account Status:</strong>
+                {% if person.user.is_active %}
+                <span class="badge badge-primary">Active</span>
+                {% else %}
+                <span class="badge badge-secondary">Inactive</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visibility Controls -->
+<div class="card" style="--mt:20px">
+    <h3>Profile Visibility Settings</h3>
+    <form method="post" action="{% url 'accounts:update_visibility' %}">
+        {% csrf_token %}
+        <div style="--mb:10px">
+            <label style="--d:flex; --ai:center; --mb:5px">
+                <input type="checkbox" name="is_public" {% if person.is_public %}checked{% endif %} style="--mr:10px">
+                Make my profile public
+            </label>
+            <small style="--d:block; --c:#666">When enabled, anyone can view your public profile</small>
+        </div>
+        <div style="--mb:10px">
+            <label style="--d:flex; --ai:center; --mb:5px">
+                <input type="checkbox" name="show_activities_publicly" {% if person.show_activities_publicly %}checked{% endif %} style="--mr:10px">
+                Show my activities on public profile
+            </label>
+            <small style="--d:block; --c:#666">When enabled, your activities will be visible on your public profile</small>
+        </div>
+        <div style="--mb:10px">
+            <label style="--d:flex; --ai:center; --mb:5px">
+                <input type="checkbox" name="show_guardians_publicly" {% if person.show_guardians_publicly %}checked{% endif %} style="--mr:10px">
+                Show my guardians on public profile
+            </label>
+            <small style="--d:block; --c:#666">When enabled, your guardians will be visible on your public profile</small>
+            <button type="submit" style="--p:8px 15px;">Save Visibility Settings</button>
+        </div>
+       
+    </form>
+
+    <!-- Sharing Options -->
+    {% if person.is_public %}
+    <div class="sharing-options" style="--mt:20px; --pt:20px; --bt:1px solid #eee">
+        <h3>Share Your Profile</h3>
+        <div style="--d:flex; --fw:wrap; --g:1rem; --ai:center; --jc:space-around; --p:1rem">
+            <p>Your public profile is available at: <a href="{{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/" 
+               style="--c:#005894; --td:underline">{{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/</a>.<br>
+            Share it with your friends, family, or colleagues to let them know about your experiences and achievements!</p>
+        <section>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/share?url={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/" 
+               target="_blank" 
+               style="--p:8px 15px; --bgc:#e1306c; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">
+                Share on Instagram
+            </a>
+                        <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/&title=Check out my profile"
+               target="_blank"> 
+                Share on LinkedIn
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/" 
+               target="_blank" 
+               style="--p:8px 15px; --bgc:#3b5998; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">
+                Share on Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/&text=Check out my profile" 
+               target="_blank" 
+               style="--p:8px 15px; --bgc:#1da1f2; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">
+                Share on Twitter
+            </a>
+            <a href="mailto:?subject=Check out my profile&body={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/" 
+               style="--p:8px 15px; --bgc:#666; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">
+                Share via Email
+            </a>
+            <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/')" 
+                    style="--p:8px 15px; --bgc:#28a745; --c:#fff; --b:none; --radius:4px; --cur:pointer">
+                Copy Profile Link
+            </button>
+        </section>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Profile link copied to clipboard!');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+</script>
+
+<!-- Student/Guardian relationships will be displayed here in the future -->
+
+<!-- Activity participations will be displayed here in the future -->
+{% endblock %}

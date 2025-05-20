@@ -1,0 +1,16 @@
+{% extends "experiences/pathways_base.html" %}
+
+{% block title %}
+    Create Pathways
+{% endblock %}
+
+{% block content %}
+<h2><a href={% url "experiences:pathways_list" %}>Pathways</a></h2>
+<h3>Create Pathways</h3>   
+<hr>
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+<a href={% url "experiences:pathways_list" %}>Cancel</a>
+{% endblock %}

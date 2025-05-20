@@ -1,0 +1,17 @@
+{% extends "experiences/pathways_base.html" %}
+
+{% block title %}
+    Delete {{ pathways }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ pathways }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ pathways }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:pathways_detail" pathways.pk %}>Cancel</a>
+
+{% endblock %}

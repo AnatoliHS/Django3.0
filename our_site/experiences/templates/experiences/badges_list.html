@@ -1,0 +1,28 @@
+{% extends "experiences/badges_base.html" %}
+
+{% block title %}
+    Badges
+{% endblock %}
+
+{% block content %}
+    <h2>Badges</h2>
+    <h3><a href={% url "experiences:badges_create" %}>Create new Badges</a></h3>   
+    <hr>
+    <input type="text" placeholder="Search..." id="search" 
+        _="on keyup 
+            if the event's key is 'Escape'
+                set my value to '' 
+                trigger keyup
+            else
+                show <li/> in #badges_list when its textContent.toLowerCase() contains my value.toLowerCase()">  
+    <ul id="badges_list">
+    {% for badges in badges_list %}
+        <li>
+            <a href={% url "experiences:badges_detail" badges.pk %}>{{ badges }}</a> 
+    </li>
+    {% empty %}
+        <li>No Badges yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

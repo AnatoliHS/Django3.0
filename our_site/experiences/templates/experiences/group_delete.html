@@ -1,0 +1,17 @@
+{% extends "experiences/group_base.html" %}
+
+{% block title %}
+    Delete {{ group }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ group }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ group }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:group_detail" group.pk %}>Cancel</a>
+
+{% endblock %}

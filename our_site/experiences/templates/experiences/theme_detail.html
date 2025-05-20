@@ -1,0 +1,38 @@
+{% extends "experiences/theme_base.html" %}
+
+{% block title %}
+    {{ theme }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:theme_list" %}>Theme</a></h2>
+    <h3>{{ theme }} | <a href={% url "experiences:theme_update" theme.pk %}>Update</a></h3>   
+<hr>        
+        <ul style="--lis:none">
+            
+                <li>
+                    group: {{ theme.group }}
+                </li>
+            
+                <li>
+                    color_palette: {{ theme.color_palette }}
+                </li>
+            
+                <li>
+                    font_choices: {{ theme.font_choices }}
+                </li>
+            
+                <li>
+                    logo: {{ theme.logo }}
+                </li>
+            
+                <li>
+                    background_image: {{ theme.background_image }}
+                </li>
+            
+        </ul>
+    <form style="--d:inline" action={% url "experiences:theme_delete" theme.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ theme }}?')">{% csrf_token %}
+        
+    </form>
+
+{% endblock %}

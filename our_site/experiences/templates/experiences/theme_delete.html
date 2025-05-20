@@ -1,0 +1,17 @@
+{% extends "experiences/theme_base.html" %}
+
+{% block title %}
+    Delete {{ theme }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ theme }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ theme }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:theme_detail" theme.pk %}>Cancel</a>
+
+{% endblock %}

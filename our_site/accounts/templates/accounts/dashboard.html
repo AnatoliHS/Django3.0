@@ -1,0 +1,124 @@
+{% extends "accounts/base.html" %}
+{% load account_filters %}
+{% load static %}
+
+{% block inner_title %}Dashboard{% endblock %}
+
+{% block header %}Account Dashboard{% endblock %}
+
+{% block inner_content %}
+<div class="container" style="--maxw:1200px; --m:0 auto; --p:20px">
+    {% if profile_exists %}
+    <div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+        <div style="--d:flex; --ai:center; --mb:20px">
+            {% if person.profile_picture %}
+                <img src="{{ person.profile_picture.url }}" alt="{{ person }}" style="--w:100px; --h:100px; --radius:50%; --objf:cover; --mr:20px">
+            {% else %}
+                <div style="--w:100px; --h:100px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:20px">
+                    <span style="--size:36px; --c:#fff">{{ person.user.first_name|first }}{{ person.user.last_name|first }}</span>
+                </div>
+            {% endif %}
+            <div>
+                <h1 style="--m:0">{{ person.user.get_full_name|default:person.user.username }}</h1>
+                {% if person.role %}
+                    <p style="--m:5px 0 0 0">{{ person.role.title }}</p>
+                {% endif %}
+                {% if person.graduating_year %}
+                    <p style="--m:5px 0 0 0">Graduating Year: {{ person.graduating_year }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if students %}
+        <div class="card">
+            <h3>Your Students</h3>
+            {% for student in students %}
+                <div class="student-card">
+                    {% if student.profile_picture %}
+                        <img src="{{ student.profile_picture.url }}" alt="{{ student }}" style="--w:50px; --h:50px; --radius:50%; --objf:cover">
+                    {% else %}
+                        <div style="--w:50px; --h:46px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center">
+                            <span style="--size:18px; --c:#fff">{{ student.user.first_name|first }}{{ student.user.last_name|first }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="student-info" style="--w:100%">
+                        <strong>{{ student.user.get_full_name|default:student.user.username }}</strong>
+                        <div>Relationship: {{ student_relationships|get_item:student.id|default:"Guardian" }}</div>
+                        <div style="--d:flex; --ac:center; --jc:space-evenly">
+                            <a style="--d:block" href="{% url 'experiences:person_detail' student.id %}">View Profile</a>
+                            <a style="--d:block"  href="{% url 'experiences:participation_list' %}?person={{ student.id }}">View Participations</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if guardians %}
+        <div class="card">
+            <h3>Your Guardians</h3>
+            {% for guardian in guardians %}
+                <div class="student-card">
+                    {% if guardian.profile_picture %}
+                        <img src="{{ guardian.profile_picture.url }}" alt="{{ guardian }}" style="--w:50px; --h:50px; --radius:50%; --objf:cover">
+                    {% else %}
+                        <div style="--w:50px; --h:50px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center">
+                            <span style="--size:18px; --c:#fff">{{ guardian.user.first_name|first }}{{ guardian.user.last_name|first }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="student-info">
+                        <strong>{{ guardian.user.get_full_name|default:guardian.user.username }}</strong>
+                        <div>Relationship: {{ guardian_relationships|get_item:guardian.id|default:"student" }}</div>
+                        <div>
+                            <a href="{% url 'experiences:person_detail' guardian.id %}">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="card">
+        <h3>Your Activities</h3>
+        {% if participations_preview %}
+            <ul>
+                {% for participation in participations_preview %}
+                    <li style="--mb:15px; --d:flex; --ai:center; --jc:space-between">
+                        <div>
+                            <a href="{% url 'experiences:participation_detail' participation.id %}">
+                                {{ participation.group.name }} ({{ participation.years|join:", " }})
+                            </a>
+                            <!-- visibility toggle -->
+                            <form method="post" action="{% url 'accounts:toggle_participation_visibility' participation.id %}" style="--d:inline">
+                                {% csrf_token %}
+                                <label>
+                                    <input type="checkbox" name="is_public" {% if participation.is_public %}checked{% endif %} onchange="this.form.submit()">
+                                    Public
+                                </label>
+                            </form>
+                        </div>
+                    </li>
+                 {% endfor %}
+            </ul>
+            {% if has_more_participations %}
+                <a href="{% url 'experiences:participation_list' %}?person={{ person.id }}">View all activities</a>
+            {% endif %}
+        {% else %}
+            <p>You have no activity participations yet!</p>
+            {% if person.role|lower == 'parent' %}
+                <div class="parent-suggestion" style="--mt:15px; --p:10px; --bgc:#f8f9fa; --bl:4px solid #007bff; --radius:4px">
+                    <p><strong>Get Involved!</strong> As a parent, you can participate in our vibrant parent community. Learn more at <a href="https://www.thestudy.qc.ca/about/parent-community" target="_blank">thestudy.qc.ca/about/parent-community</a>.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="card">
+        <h2>Welcome to your account!</h2>
+        <p>It looks like you don't have a profile set up yet. Create one to access all features.</p>
+        <a href="{% url 'accounts:create_profile' %}" style="--p:8px 15px; --bgc:#007bff; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">Create Profile</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

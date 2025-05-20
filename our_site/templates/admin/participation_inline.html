@@ -1,0 +1,38 @@
+{% extends "admin/edit_inline/tabular.html" %}
+
+{# This template extends the default Django admin tabular inline template #}
+{# and can be customized to enhance the display of participation inlines #}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style>
+    /* Custom styles for participation inlines */
+    .participation-inline .field-years {
+      min-width: 200px;
+    }
+    .participation-inline .field-hours {
+      width: 80px;
+    }
+    .participation-inline .field-special_recognition {
+      width: 120px;
+    }
+  </style>
+{% endblock %}
+
+{% block inline_field_sets %}
+<div class="participation-inline">
+  {{ block.super }}
+</div>
+{% endblock %}
+
+{% block inline_admin_formset_footer %}
+  {{ block.super }}
+  <div class="help">
+    {% if inline_admin_formset.formset.total_form_count > 5 %}
+      <p class="help pagination-notice">
+        Showing {{ inline_admin_formset.formset.total_form_count }} participations. 
+        Use pagination for better performance.
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}

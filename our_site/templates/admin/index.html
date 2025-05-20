@@ -1,0 +1,33 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block sidebar %}
+{{ block.super }}
+
+<div class="module">
+    <h2>{% trans 'Backup & Restore' %}</h2>
+    <table>
+        <caption>{% trans 'Backup Options' %}</caption>
+        <tr>
+            <th scope="row"><a href="{% url 'backup_all' %}">{% trans 'Backup Now (Database + Media)' %}</a></th>
+            <td>{% trans 'Create a single backup with both database and media files.' %}</td>
+        </tr>
+        <tr>
+            <th scope="row"><a href="{% url 'list_backups' %}">{% trans 'View/Download Backups' %}</a></th>
+            <td>{% trans 'List and download existing backup files.' %}</td>
+        </tr>
+        <!-- Add restore links here once implemented -->
+        <!--
+        <caption>{% trans 'Restore Options' %}</caption>
+        <tr>
+            <th scope="row"><a href="{% url 'restore_database' %}">{% trans 'Restore Database' %}</a></th>
+            <td>{% trans 'Restore database from a JSON backup file.' %}</td>
+        </tr>
+        <tr>
+            <th scope="row"><a href="{% url 'restore_media' %}">{% trans 'Restore Media Files' %}</a></th>
+            <td>{% trans 'Restore media files from a compressed archive.' %}</td>
+        </tr>
+        -->
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static humanize %}
+
+{% block extrastyle %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% block content_title %}<h1>{% trans 'Backup Management' %}</h1>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+
+    <div class="backup-actions">
+        <h2>{% trans 'Create New Backup' %}</h2>
+        <ul>
+            <li><a href="{% url 'backup_all' %}" class="primary">{% trans 'Backup All (Database + Media)' %}</a> - {% trans 'Create a single backup with both database and media files.' %}</li>
+            <li><a href="{% url 'backup_database' %}">{% trans 'Backup Database Only' %}</a> - {% trans 'Create a JSON dump of the database.' %}</li>
+            <li><a href="{% url 'backup_media' %}">{% trans 'Backup Media Files Only' %}</a> - {% trans 'Create a compressed archive (.tar.gz) of the media directory.' %}</li>
+        </ul>
+    </div>
+
+    <h2>{% trans 'Available Backups' %}</h2>
+    {% if backup_files %}
+    <div class="module" id="changelist">
+        <table class="backup-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>{% trans 'Filename' %}</th>
+                    <th>{% trans 'Size' %}</th>
+                    <th>{% trans 'Date Modified' %}</th>
+                    <th>{% trans 'Actions' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in backup_files %}
+                <tr>
+                    <td>{{ file.name }}</td>
+                    <td>{{ file.size|filesizeformat }}</td>
+                    <td>{{ file.modified|date:"Y-m-d H:i:s" }}</td>
+                    <td><a href="{% url 'download_backup' filename=file.name %}">{% trans 'Download' %}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>{% trans "No backup files found in the backup directory." %}</p>
+    {% endif %}
+    <br class="clear"/>
+    <p><a href="{% url 'admin:index' %}">{% trans 'Back to Admin Home' %}</a></p>
+</div>
+{% endblock %}

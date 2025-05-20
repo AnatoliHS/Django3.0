@@ -1,0 +1,14 @@
+- [ ] We need to build out the Startr_Style App to be able to be used in the Startr/WEB-Django project
+  - [ ] Enable Startr.Style base debug page template 
+    - [ ] template should include Startr branding
+    - [ ] links to working URL patterns
+  - [ ] Enable Startr.Style base page(s) template
+    - [ ] pages 404, 500, 403, 400
+      - [ ] template should include Startr branding
+      - [ ] links to working URL patterns
+  - [ ] Enable Startr.Style admin page template
+    - [ ] template should include Startr branding
+    - [ ] links to working URL patterns
+    - [ ] enable htmx or our liter alternative with just gets and posts for the admin page
+    - [ ] optionally use swup.js for page transitions instead of htmx
+  

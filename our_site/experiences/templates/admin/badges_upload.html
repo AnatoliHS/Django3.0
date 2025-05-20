@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block content %}
+<div id="content-main">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            {% for field in form %}
+                <div class="form-row">
+                    <div class="field-box">
+                        {{ field.errors }}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="help">{{ field.help_text|safe }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        
+        <div class="submit-row">
+            <input type="submit" class="default" value="{% trans 'Upload' %}" />
+        </div>
+        
+        <div class="help">
+            <h3>Requirements:</h3>
+            <ul>
+                <li>All images must be PNG format (this allows for transparency)</li>
+                <li>All images should be 512x512 pixels in size</li>
+                <li>If badge images are in folders their folder names will be used as prefixes (e.g., "leadership/leadership_badge.png" -> "Leadership Leadership Badge")</li>
+                <li>Badge names will be inferred from file names (e.g., "leadership_badge.png" -> "Leadership Badge")</li>
+                <li>Duplicate badge names will be skipped</li>
+                <li>All images must be less than 1MB in size</li>
+            </ul>
+        </div>
+    </form>
+</div>
+{% endblock %}

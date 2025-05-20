@@ -1,0 +1,17 @@
+{% extends "experiences/participation_base.html" %}
+
+{% block title %}
+    Delete {{ participation }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ participation }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ participation }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:participation_detail" participation.pk %}>Cancel</a>
+
+{% endblock %}

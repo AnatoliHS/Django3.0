@@ -1,0 +1,30 @@
+{% extends "experiences/group_base.html" %}
+
+{% block title %}
+    Update {{ group }}
+{% endblock %}
+
+{% block content %}
+<h2><a href={% url "experiences:group_list" %}>Group</a></h2>
+<h3>Update {{ group }}</h3>   
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={%
+        url "experiences:group_detail" 
+        group.pk 
+    %}
+    > Cancel </a>
+<form style="--d:inline" 
+    action={% 
+        url "experiences:group_delete" 
+        group.pk 
+    %} 
+    method="post" 
+    onsubmit="return confirm('Are you sure you want to delete {{ group }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

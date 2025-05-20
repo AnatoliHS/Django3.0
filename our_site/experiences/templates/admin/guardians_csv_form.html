@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block content %}
+<div id="content-main">
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            {% for field in form %}
+                <div class="form-row">
+                    {{ field.errors }}
+                    <label for="{{ field.id_for_label }}" class="{% if field.field.required %}required{% endif %}">
+                        {{ field.label }}:
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="help">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </fieldset>
+        
+        <h2>Instructions</h2>
+        <p>Upload a CSV file with the following columns:</p>
+        <ul>
+            <li><strong>guardian_email</strong> - Email address of the guardian (required)</li>
+            <li><strong>student_email</strong> - Email address of the student (required)</li>
+            <li><strong>relationship</strong> - Relationship type (e.g., "Parent", "Guardian", "Other") (required)</li>
+        </ul>
+
+        <h3>Example CSV Format</h3>
+        <pre>guardian_email,student_email,relationship
+parent@example.com,student@example.com,Parent
+guardian@example.com,student@example.com,Guardian</pre>
+        
+        <p><a href="{% url 'admin:download_guardian_csv_template' %}" class="button" style="margin-top: 10px;">Download Example CSV Template</a></p>
+
+        <div class="submit-row">
+            <input type="submit" class="default" value="{% trans 'Upload CSV' %}">
+        </div>
+    </form>
+</div>
+{% endblock %}

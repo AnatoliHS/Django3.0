@@ -1,0 +1,3 @@
+[submodule "our_site/STARTR-django-code"]
+	path = our_submodules/STARTR-django-code
+	url = https://github.com/Startr/STARTR-django-code

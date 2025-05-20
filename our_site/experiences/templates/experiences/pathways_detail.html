@@ -1,0 +1,30 @@
+{% extends "experiences/pathways_base.html" %}
+
+{% block title %}
+    {{ pathways }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:pathways_list" %}>Pathways</a></h2>
+    <h3>{{ pathways }} | <a href={% url "experiences:pathways_update" pathways.pk %}>Update</a></h3>   
+<hr>        
+        <ul style="--lis:none">
+            
+                <li>
+                    : {{ pathways.title }}
+                </li>
+            
+                <li>
+                    : {{ pathways.description }}
+                </li>
+            
+                <li>
+                    : {{ pathways.is_active }}
+                </li>
+            
+        </ul>
+    <form style="--d:inline" action={% url "experiences:pathways_delete" pathways.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ pathways }}?')">{% csrf_token %}
+        
+    </form>
+
+{% endblock %}

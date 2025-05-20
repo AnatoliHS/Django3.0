@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ config.SITE_TITLE }}{% endblock %}
+
+{% block head_content %}
+{{ block.super }}
+<link rel="shortcut icon" type="image/png" href="{{ config.SITE_FAVICON }}" />
+<link rel="stylesheet" href="https://startr.style/style.css" />
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr',
+            },
+            'google_translate_element'
+        );
+        // Add the Startr link after the widget is initialized
+        var container = document.getElementById('google_translate_element');
+        if (container) {
+            // The Google Translate widget often creates an inner div with these classes.
+            var translateGadgetDiv = container.querySelector('.skiptranslate.goog-te-gadget');
+            if (translateGadgetDiv) {
+                var startrLink = document.createElement('a');
+                startrLink.href = '#';
+                startrLink.style.zoom = '0.9';
+                //Make it bold
+                startrLink.style.fontWeight = 'bold';
+                startrLink.textContent = 'Startr';
+
+                var spacer = document.createTextNode(' '); 
+                
+                translateGadgetDiv.appendChild(spacer); // Append spacer first
+                translateGadgetDiv.appendChild(startrLink); // Then append the link
+            }
+            // else {
+            //     // Optional: console.warn("Could not find '.skiptranslate.goog-te-gadget' to append link.");
+            // }
+        }
+        // else {
+        //     // Optional: console.warn("Could not find 'google_translate_element' container.");
+        // }
+    }
+</script>
+<script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>
+    :root {
+        --smooth-transition: 0.3s ease-in-out;
+    }
+
+    /* Hide the Google Translate toolbar */
+    .skiptranslate>iframe.skiptranslate {
+        display: none !important;
+    }
+
+    .skiptranslate span {
+        display: none !important;
+    }
+
+    body {
+        top: 0px !important; /* Counteracts Google's default banner shift */
+        /* Add transition for smooth adjustment if padding/margin changes dynamically */
+        transition: padding-top var(--smooth-transition), margin-top var(--smooth-transition);
+    }
+
+    #google_translate_element {
+        /* Smooth transition for size changes when content loads */
+        /* Note: relies on inline styles for positioning, padding, bg, etc. */
+        transition: width var(--smooth-transition), height var(--smooth-transition), opacity var(--smooth-transition);
+        opacity: 1; /* Ensure it's visible */
+        display: flex; /* Helps align items added by JS */
+        align-items: center; /* Vertically align items in the translate div */
+    }
+
+    /* Style the select element within Google Translate for better integration */
+    #google_translate_element select.goog-te-combo {
+        padding: 0.25em 0.5em;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        /* margin-left: 0.5em; /* Spacing after the Startr link, if link is first */
+    }
+
+    /* Style for the added Startr link for better integration */
+    #google_translate_element > a {
+        text-decoration: none;
+        /* color: inherit; /* Or a specific color if needed */
+        /* margin-right: 0.5em; /* Spacing before the select, if link is first */
+    }
+</style>
+{% endblock %}
+
+{% block title-bar %}
+<title-bar style="--d:flex; --jc:space-around; gap:1em">
+    <a href="/" style="--m:auto"><img src="{% static 'images/The_Study.webp' %}" alt="The Study"
+            style="--minw:10em"></a>
+    <section style="--ta:right;">
+        <h2 style="--c:#005894; --fs:1.5em; --weight:bold">{{ config.SITE_TITLE }}</h2>
+        <p style="--c:#005894; --fs:0.8em">{{ config.SITE_SUBTITLE }}</p>
+    </section>
+    <div id="google_translate_element" style="--pos: fixed; --top: 0; --right: 0; --p: 1em; --bg: #f0efe3; --br: 0 0 0 1rem;"></div>
+</title-bar>
+{% endblock %}
+
+{% block auth-links %}
+{% if user.is_authenticated %}
+<!-- Authentication links can be customized here -->
+<div class="menu">
+    <ul style="--lis:none; --d:flex; --jc:space-around; gap:1em; --p:0.5em 1em; --bg:#005894; --br:0.3em; --c:#ccc">
+        <li><a href="{% url 'accounts:dashboard' %}" style="--c:white">Dashboard</a></li>
+        <li>|</li>
+        <li><a href="/experiences" style="--c:white">Experiences</a></li>
+        {% if user.is_staff %}
+        <li>|</li>
+        <li><a href="{% url 'admin:index' %}" style="--c:white">Admin</a></li>
+        {% endif %}
+    </ul>
+    {% comment %}{{ block.super }}{% endcomment %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<!-- Main content overrides can go here -->
+{% endblock %}
+
+{% block footer %}
+<hr />
+{% if random_quote %}
+<div class="quote-container" style="text-align:center; margin:2em;">
+    {% include "includes/boomer.html" with style="--w: 5rem; --ml:5rem; --mb:-5rem" %}
+    <blockquote style="font-size:1.5em; font-style:italic; --shadow: 6;--br:0.3em; --pos:relative; --z:10">
+
+        “{{ random_quote.text }}”
+        {% if random_quote.author %}
+        <p style="--mt:1em; --fw:bold; --ta:right; --w:100%; --pr:2em;">
+            {{ random_quote.author }}
+        </p>
+
+        {% endif %}
+    </blockquote>
+
+</div>
+{% else %}
+<div class="debug-info" style="--d:flex; --fd:column; --jc:center; --ai:center; --br:0.6em; --shadow-inset:10">
+    {% if user.is_authenticated %}{% include "includes/boomer.html" %}{% endif %}
+    <p style="--m:auto">This page is auto-generated by Startr. Edit in your project's templates folder.</p>
+</div>
+{% endif %}
+{% endblock %}

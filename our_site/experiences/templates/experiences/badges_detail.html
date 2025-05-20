@@ -1,0 +1,31 @@
+{% extends "experiences/badges_base.html" %}
+
+{% block title %}
+    {{ badges }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:badges_list" %}>Badges</a></h2>
+    <h3>{{ badges }} | <a href={% url "experiences:badges_update" badges.pk %}>Update</a></h3>   
+<hr>        
+        <ul style="--lis:none">
+            
+            
+                <li>
+                {{ badges.description }}
+                </li>
+            
+                <li>
+                {% if badges.image %}<img src="{{ badges.image.url }}" alt="{{ badges.title }}" style="max-width: 300px;">{% else %}No image{% endif %}
+                </li>
+            
+                <li>
+                    Currently active: {{ badges.is_active }}
+                </li>
+            
+        </ul>
+    <form style="--d:inline" action={% url "experiences:badges_delete" badges.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ badges }}?')">{% csrf_token %}
+        
+    </form>
+
+{% endblock %}

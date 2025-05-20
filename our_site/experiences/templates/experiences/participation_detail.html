@@ -1,0 +1,77 @@
+{% extends "experiences/participation_base.html" %}
+
+{% block title %}
+    {{ participation }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:participation_list" %}>Participation</a></h2>
+    <h3>
+        {{ participation }} 
+        {% if can_edit %}
+        | <a href={% url "experiences:participation_update" participation.pk %}>Update</a>
+        {% endif %}
+    </h3>   
+<hr>        
+        <ul style="--lis:none">
+            
+                <li>
+                    person: {{ participation.person }}
+                </li>
+            
+                <li>
+                    group: {{ participation.group }}
+                </li>
+            
+                <li>
+                    hours: {{ participation.hours }}
+                </li>
+            
+                <li>
+                    special_recognition: {{ participation.special_recognition }}
+                </li>
+            
+                <li>
+                    years: {{ participation.years }}
+                </li>
+            
+                <li>
+                    elementary: {{ participation.elementary }}
+                </li>
+            
+                <li>
+                    senior: {{ participation.senior }}
+                </li>
+            
+        </ul>
+
+        {% if participation.badges.exists %}
+        <div class="badges-section" style="--mt:20px; --mb:20px">
+            <h4>Badges</h4>
+            <div style="--d:flex; --fxw:wrap; --g:10px">
+                {% for badge in participation.badges.all %}
+                    <div class="badge-item" style="--d:flex; --fxd:column; --ai:center; --w:100px; --txtc:center">
+                        {% if badge.image %}
+                            <img src="{{ badge.image.url }}" alt="{{ badge.title }}" style="--w:60px; --h:60px; --objf:contain; --mb:5px">
+                        {% else %}
+                            <div style="--w:60px; --h:60px; --d:flex; --ai:center; --jc:center; --bgc:#f0f0f0; --radius:50%; --mb:5px">
+                                <span style="--size:12px">{{ badge.title|first }}</span>
+                            </div>
+                        {% endif %}
+                        <span style="--size:14px; --fw:bold">{{ badge.title }}</span>
+                        {% if badge.description %}
+                            <span style="--size:12px; --c:#666; --mt:2px">{{ badge.description|truncatechars:50 }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    {% if can_edit %}
+    <form style="--d:inline" action={% url "experiences:participation_delete" participation.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ participation }}?')">{% csrf_token %}
+        <input type="submit" value="Delete" />
+    </form>
+    {% endif %}
+
+{% endblock %}

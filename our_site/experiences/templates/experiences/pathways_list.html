@@ -1,0 +1,28 @@
+{% extends "experiences/pathways_base.html" %}
+
+{% block title %}
+    Pathways
+{% endblock %}
+
+{% block content %}
+    <h2>Pathways</h2>
+    <h3><a href={% url "experiences:pathways_create" %}>Create new Pathways</a></h3>   
+    <hr>
+    <input type="text" placeholder="Search..." id="search" 
+        _="on keyup 
+            if the event's key is 'Escape'
+                set my value to '' 
+                trigger keyup
+            else
+                show <li/> in #pathways_list when its textContent.toLowerCase() contains my value.toLowerCase()">  
+    <ul id="pathways_list">
+    {% for pathways in pathways_list %}
+        <li style="--d:flex; --ai:center; --jc:space-between">
+            <a href={% url "experiences:pathways_detail" pathways.pk %}>{{ pathways }}</a> 
+    </li>
+    {% empty %}
+        <li>No Pathways yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

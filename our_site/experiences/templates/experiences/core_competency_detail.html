@@ -1,0 +1,18 @@
+{% extends "experiences/core_competency_base.html" %}
+
+{% block title %}
+    {{ core_competency }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:core_competency_list" %}>Core Competency</a></h2>
+    <h3>{{ core_competency|capfirst }} {% if user.is_staff or user.is_superuser %}| <a href={% url "experiences:core_competency_update" core_competency.pk %}>Update</a>{% endif %}</h3>   
+<hr>            
+    <p style="--m:0.6em">
+        Description: {{ core_competency.description | default:"Core competencies are the fundamental strengths and strategic advantages that individuals within their field. These competencies are not easily replicated and provide a unique value proposition. " }}
+    </p>
+    <form style="--d:inline" action={% url "experiences:core_competency_delete" core_competency.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ core_competency }}?')">{% csrf_token %}
+        
+    </form>
+
+{% endblock %}

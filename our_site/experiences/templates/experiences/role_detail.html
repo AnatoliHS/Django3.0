@@ -1,0 +1,30 @@
+{% extends "experiences/role_base.html" %}
+
+{% block title %}
+    {{ role }}
+{% endblock %}
+
+{% block content %}
+    <h2><a href={% url "experiences:role_list" %}>Role</a></h2>
+    <h3>{{ role }} {%if user.is_staff or user.is_superuser %}| <a href={% url "experiences:role_update" role.pk %}>Update</a>{% endif %}</h3>   
+<hr>        
+        <ul style="--lis:none">
+            
+                <li>
+                    Title: {{ role.title }}
+                </li>
+            
+                <li>
+                    Description: {{ role.description|default:"Description needed" }}
+                </li>
+            
+                <li>
+                    is_active: {{ role.is_active }}
+                </li>
+            
+        </ul>
+    <form style="--d:inline" action={% url "experiences:role_delete" role.pk %} method="post" onsubmit="return confirm('Are you sure you want to delete {{ role }}?')">{% csrf_token %}
+        
+    </form>
+
+{% endblock %}

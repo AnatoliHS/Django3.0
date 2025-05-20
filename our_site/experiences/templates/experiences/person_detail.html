@@ -1,0 +1,199 @@
+{% extends "experiences/person_base.html" %}
+{% load static %}
+{% block title %}
+{{ person.user.get_full_name|default:person.user.username }}
+{% endblock %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<h2><a href={% url "experiences:person_list" %}>People</a></h2>
+{% else %}
+<hr>
+{% endif %}
+
+{% if person.is_public or user.is_authenticated %}
+<div class="person-header" style="--mb:20px; --p:15px; --b:1px solid #dddddd00; --radius:5px">
+    <div style="--mb:10px; --d:flex; --fw:wrap; --g:0.8em; --ai:center; --pl:1.6em">
+        {% if person.profile_picture %}
+        <img src="{{ person.profile_picture.url }}" alt="{{ person }}"
+            style="--d:flex; --ai:center; --p:4px 8px; --w:120px; --h:120px; --radius:50%; --objf:cover; --mr:20px">
+        {% else %}
+        <div style="--w:120px; --h:120px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:20px">
+            <span style="--size:48px; --c:#fff">
+                {{ person.user.first_name|first }}
+                {{ person.user.last_name|first }}
+            </span>
+        </div>
+        {% endif %}
+        <div>
+            <h3>{{ person.user.get_full_name|default:person.user.username }}</h3>
+            <p>Role: {{ person.role|default:"No role assigned" }}</p>
+            {% if person.graduating_year %}
+            <p>Graduating Year: {{ person.graduating_year }}</p>
+            {% endif %}
+
+            {# Show Update button only if user can edit #}
+            {% if can_edit %}
+            <a href={% url "experiences:person_update" person.pk %} class="btn btn-primary btn-sm">Update</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<hr>
+
+{# Guardians Section - Conditionally rendered based on context flag #}
+{% if show_guardians %}
+<div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+    <h4 style="--weight: 700">Guardians:</h4>
+    {% if guardian_relationships %}
+    <ul style="--lis:none; --pl: 1.6em">
+        {% for relationship in guardian_relationships %}
+        {# No need for is_active check here, already filtered in view #}
+        <li style="--mb:10px; --d:flex; --ai:center">
+            {% if relationship.guardian.profile_picture %}
+            <img src="{{ relationship.guardian.profile_picture.url }}" alt="{{ relationship.guardian }}"
+                style="--w:50px; --h:50px; --radius:50%; --objf:cover; --mr:10px">
+            {% else %}
+            <div style="--w:50px; --h:50px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:10px">
+                <span style="--size:18px; --c:#fff">{{ relationship.guardian.user.first_name|first }}
+                    {{ relationship.guardian.user.last_name|first }}</span>
+            </div>
+            {% endif %}
+            <div>
+                {# Link to guardian's profile #}
+                <a href={% url "experiences:person_detail" relationship.guardian.pk %}>
+                    {{ relationship.guardian.user.get_full_name|default:relationship.guardian.user.username }}
+                </a>
+                <p>Relationship: {{ relationship.relationship }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No guardians to display based on your permissions or profile settings.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{# Students Section - Conditionally rendered based on context flag #}
+{% if show_students %}
+<div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+    <h4 style="--weight: 700">Students:</h4>
+    {% if student_relationships %}
+    <ul style="--lis:none; --pl: 1.6em;">
+        {% for relationship in student_relationships %}
+        {# No need for is_active check here, already filtered in view #}
+        <li style="--mb:10px; --d:flex; --ai:center">
+            {% if relationship.student.profile_picture %}
+            <img src="{{ relationship.student.profile_picture.url }}" alt="{{ relationship.student }}"
+                style="--w:50px; --h:50px; --radius:50%; --objf:cover; --mr:10px">
+            {% else %}
+            <div style="--w:50px; --h:50px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:10px">
+                <span style="--size:18px; --c:#fff">{{ relationship.student.user.first_name|first }}{{
+                    relationship.student.user.last_name|first }}</span>
+            </div>
+            {% endif %}
+            <div>
+                {# Link to student's profile #}
+                <a href={% url "experiences:person_detail" relationship.student.pk %}>
+                    {{ relationship.student.user.get_full_name|default:relationship.student.user.username }}
+                </a>
+                <p>Relationship: {{ relationship.relationship }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No students to display.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{# Activities Section - Conditionally rendered based on context flag #}
+{% if show_activities %}
+<div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+    <h4 style="--weight: 700">Activities:</h4>
+    {% if participations %}
+    <ul style="--pl:15px">
+        {% for participation in participations %}
+        <li style="--mb:10px; --d:flex; --fw:wrap; --g:0.8em; --ai:center">
+
+            {% if participation.group.badges %}
+            <div class="badge-item" style="--d:flex; --ai:center; --p:4px 8px; --mr:5px">
+                {% if participation.group.badges.image %}
+                <img src="{{ participation.group.badges.image.url }}" alt="{{ participation.group.badges.title }}"
+                    title="{{ participation.group.badges.title }} (Badge)"
+                    style="--w:8rem; --h:8rem; --objf:contain; --mr:5px">
+                {% else %}
+                <img src="{% static 'images/trilium.png' %}" alt="{{ participation.group.badges.title }}"
+                    title="{{ participation.group.badges.title }} (Badge image is not available)"
+                    style="--w:8rem; --h:8rem; --objf:contain; --mr:5px">
+                {% endif %}
+
+            </div>
+            {% endif %}
+
+            {% if participation.badges %}
+            <div class="badge-item" style="--d:flex; --ai:center; --p:4px 8px;">
+                {% if participation.badges.image %}
+                <img src="{{ participation.badges.image.url }}" alt="{{ participation.badges.title }}"
+                    title="{{ participation.badges.title }}" style="--w:8rem; --h:8rem; --objf:contain; --mr:5px">
+                {% else %}
+                <img src="{% static 'images/trilium.png' %}" alt="{{ participation.badges.title }}"
+                    title="{{ participation.badges.title }} (Badge image is not available)"
+                    style="--w:8rem; --h:8rem; --objf:contain; --mr:5px">
+                {% endif %}
+
+            </div>
+            {% endif %}
+            <div>
+                <a href="{% url 'experiences:participation_detail' participation.id %}">
+                    {{ participation.group.name }} ({{ participation.years|join:", " }})
+                </a><br>
+                {% if participation.special_recognition %}
+
+                <strong style="--mt:5px; --fs:italic">Special Recognition:</strong>
+                {{ participation.special_recognition }}
+                {% endif %}
+
+
+                <div style="--mt:5px">
+                    {% if participation.elementary %}
+                    <span
+                        style="--bgc:#17a2b8; --c:white; --p:3px 8px; --radius:3px; --size:12px; --mr:5px">Elementary</span>
+                    {% endif %}
+                    {% if participation.senior %}
+                    <span style="--bgc:#007bff; --c:white; --p:3px 8px; --radius:3px; --size:12px">senior School</span>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>This person has no activity participations yet.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{# Delete Button - Show only if user is staff #}
+{% if user.is_staff %}
+<div style="--mt:20px">
+    <form style="--d:inline" action={% url "experiences:person_delete" person.pk %} method="post"
+        onsubmit="return confirm('Are you sure you want to delete {{ person }}?')">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+</div>
+{% endif %}
+
+{# Removed the outer 'if user.is_authenticated' check as access is handled by the view #}
+{# The view will raise PermissionDenied or Http404 if access is not allowed #}
+
+{% endblock %}

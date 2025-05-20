@@ -1,0 +1,23 @@
+{% extends "experiences/theme_base.html" %}
+
+{% block title %}
+    Update {{ theme }}
+{% endblock %}
+
+{% block content %}
+<h2><a href={% url "experiences:theme_list" %}>Theme</a></h2>
+<h3>Update {{ theme }}</h3>   
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={% url "experiences:theme_detail" theme.pk %}>Cancel</a>
+<form style="--d:inline" 
+    action={% url "experiences:theme_delete" theme.pk %}
+    method="post" 
+    onsubmit="return confirm('Are you sure you want to delete {{ theme }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

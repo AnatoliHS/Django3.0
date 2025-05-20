@@ -1,0 +1,16 @@
+{% extends 'admin/change_list.html' %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <a href="{% url 'admin:experiences_person_import-people-csv' %}" class="addlink">
+            {% trans 'Import People' %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admin:experiences_person_import-guardians-csv' %}" class="addlink">
+            {% trans 'Import Guardian-Student Relations' %}
+        </a>
+    </li>
+{% endblock %}

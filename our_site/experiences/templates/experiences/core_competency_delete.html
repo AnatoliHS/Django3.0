@@ -1,0 +1,17 @@
+{% extends "experiences/core_competency_base.html" %}
+
+{% block title %}
+    Delete {{ core_competency }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ core_competency }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ core_competency }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:core_competency_detail" core_competency.pk %}>Cancel</a>
+
+{% endblock %}

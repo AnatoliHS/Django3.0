@@ -1,0 +1,119 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}">
+    <style>
+        .backup-actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 15px;
+            background-color: var(--button-bg);
+            color: var(--button-fg);
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .backup-actions a:hover {
+            background-color: var(--button-hover-bg);
+        }
+        .upload-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid var(--hairline-color);
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid var(--hairline-color);
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-hover-color);
+        }
+    </style>
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-our_site model-backup{% endblock %}
+
+{% block content_title %}<h1>Backup and Restore Management</h1>{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">Home</a> &rsaquo;
+        Backup/Restore
+    </div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h2>Actions</h2>
+    <div class="backup-actions">
+        <a href="{% url 'backup_database' %}">Backup Database (JSON)</a>
+        <a href="{% url 'backup_media' %}">Backup Media Files</a>
+        <a href="{% url 'backup_all' %}">Backup All (Database + Media)</a>
+        <a href="{% url 'backup_database_flat_csv' %}">Backup Database (Flat CSV - Experimental)</a>
+    </div>
+
+    <div class="upload-section">
+        <h3>Restore Database from JSON</h3>
+        <form method="post" action="{% url 'restore_database' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ json_form.as_p }}
+            <button type="submit">Restore Database</button>
+        </form>
+        <p><small>Note: Database restore functionality (JSON) is not fully implemented. Use with caution.</small></p>
+
+        <h3>Restore Media from Archive</h3>
+        <form method="post" action="{% url 'restore_media' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ media_form.as_p }}
+            <button type="submit">Restore Media</button>
+        </form>
+        <p><small>Note: Media restore functionality is not fully implemented. Use with caution.</small></p>
+
+        <h3>Restore Database from Flat CSV (Experimental)</h3>
+        <form method="post" action="{% url 'restore_database_from_flat_csv' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ csv_form.as_p }}
+            <button type="submit">Restore from CSV</button>
+        </form>
+        <p><small>Warning: Restoring from a flat CSV is highly experimental and not recommended for production. It does not handle complex relationships or data integrity fully.</small></p>
+    </div>
+
+    <h2>Available Backups</h2>
+    {% if backup_files %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Date Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in backup_files %}
+                    {% if file.name != "README.md" %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.size|filesizeformat }}</td>
+                        <td>{{ file.modified|date:"Y-m-d H:i:s" }}</td>
+                        <td><a href="{% url 'download_backup' filename=file.name %}">Download</a></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No backup files found.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Import Guardian-Student Relationships{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo;
+    <a href="{% url 'admin:experiences_person_changelist' %}">People</a> &rsaquo;
+    Import Relationships
+</div>
+{% endblock %}
+
+{% block content %}
+    <h1>Import Guardian-Student Relationships</h1>
+    
+    <div class="module">
+        <form action="." method="POST" enctype="multipart/form-data">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <div class="submit-row">
+                <input type="submit" value="Upload CSV" class="default" />
+            </div>
+        </form>
+    </div>
+    
+    <div class="module">
+        <h2>Instructions</h2>
+        <div style="--m:10px 0">
+            <p>Upload a CSV file with the following columns:</p>
+            <ul>
+                <li><strong>guardian_email</strong> - Email address of the guardian (required)</li>
+                <li><strong>student_email</strong> - Email address of the student (required)</li>
+                <li><strong>relationship</strong> - Type of relationship (e.g., Parent, Legal Guardian) (required)</li>
+                <li><strong>notes</strong> - Any additional notes about the relationship (optional)</li>
+                <li><strong>guardian_first_name</strong> - First name of the guardian (optional, used if creating a new user)</li>
+                <li><strong>guardian_last_name</strong> - Last name of the guardian (optional, used if creating a new user)</li>
+                <li><strong>student_first_name</strong> - First name of the student (optional, used if creating a new user)</li>
+                <li><strong>student_last_name</strong> - Last name of the student (optional, used if creating a new user)</li>
+                <li><strong>graduating_year</strong> - Graduating year for student (optional, used if creating a new user)</li>
+            </ul>
+        </div>
+        
+        <h3>New User Creation</h3>
+        <div style="--m:10px 0">
+            <p>If you check the "Create new users" option:</p>
+            <ul>
+                <li>The system will create new user accounts for any guardian or student email not found in the database</li>
+                <li>Random pronounceable passwords will be generated for each new account</li>
+                <li>After import, you'll see a list of all new accounts created with their credentials</li>
+                <li>You can download a CSV file with all the account details to distribute to users</li>
+            </ul>
+        </div>
+        
+        <h3>Example CSV Format</h3>
+        <pre style="--bgc:#f8f8f8; --p:10px; --b:1px solid #ddd; --of:auto">guardian_email,student_email,relationship,notes,guardian_first_name,guardian_last_name,student_first_name,student_last_name,graduating_year
+parent@example.com,student@example.com,Parent,Primary contact,Jane,Smith,John,Smith,2025
+guardian@example.com,student2@example.com,Legal Guardian,Emergency contact only,Robert,Jones,Sarah,Williams,2026</pre>
+    </div>
+{% endblock %} 

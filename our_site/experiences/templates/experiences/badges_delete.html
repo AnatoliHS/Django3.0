@@ -1,0 +1,17 @@
+{% extends "experiences/badges_base.html" %}
+
+{% block title %}
+    Delete {{ badges }}
+{% endblock %}
+
+{% block content %}
+<h2>Delete {{ badges }}</h2>
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete {{ badges }}?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+<a href={% url "experiences:badges_detail" badges.pk %}>Cancel</a>
+
+{% endblock %}

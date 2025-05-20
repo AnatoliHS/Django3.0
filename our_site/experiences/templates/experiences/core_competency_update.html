@@ -1,0 +1,23 @@
+{% extends "experiences/core_competency_base.html" %}
+
+{% block title %}
+    Update {{ core_competency }}
+{% endblock %}
+
+{% block content %}
+<h2><a href={% url "experiences:core_competency_list" %}>Core Competency</a></h2>
+<h3>Update {{ core_competency }}</h3>   
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update" />
+</form>
+<a href={% url "experiences:core_competency_detail" core_competency.pk %}>Cancel</a>
+<form style="--d:inline" 
+    action={% url "experiences:core_competency_delete" core_competency.pk %}
+    method="post" 
+    onsubmit="return confirm('Are you sure you want to delete {{ core_competency }}?')">{% csrf_token %}
+    <input type="submit" value="Delete" />
+</form>
+{% endblock %}

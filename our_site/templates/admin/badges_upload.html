@@ -1,0 +1,31 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block content %}
+    <div id="content-main">
+        <form method="post" enctype="multipart/form-data" id="badge-upload-form">
+            {% csrf_token %}
+            <div>
+                <fieldset class="module aligned">
+                    <div class="form-row">
+                        <div>
+                            <label for="id_zip_file" class="required">{{ form.zip_file.label }}</label>
+                            {{ form.zip_file }}
+                            <div class="help">
+                                {{ form.zip_file.help_text|safe }}
+                            </div>
+                            <p class="help">
+                                Upload a ZIP file containing PNG images for badges. Each image will be converted to a badge.
+                                The image filename (without extension) will be used as the badge title.
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <div class="submit-row">
+                    <input type="submit" value="Upload ZIP" class="default" name="_upload">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

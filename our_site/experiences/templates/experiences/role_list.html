@@ -1,0 +1,30 @@
+{% extends "experiences/role_base.html" %}
+
+{% block title %}
+    Roles
+{% endblock %}
+
+{% block content %}
+    <h2>Roles</h2>
+    {% if user.is_staff or user.is_superuser%}
+        <h3><a href={% url "experiences:role_create" %}>Create new Role</a></h3>
+    {% endif %}
+    <hr>
+    <input type="text" placeholder="Search..." id="search" 
+        _="on keyup 
+            if the event's key is 'Escape'
+                set my value to '' 
+                trigger keyup
+            else
+                show <li/> in #role_list when its textContent.toLowerCase() contains my value.toLowerCase()">  
+    <ul id="role_list">
+    {% for role in role_list %}
+        <li style="--d:flex; --ai:center; --jc:space-between">
+            <a href={% url "experiences:role_detail" role.pk %}>{{ role }}</a> 
+    </li>
+    {% empty %}
+        <li>No Roles yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

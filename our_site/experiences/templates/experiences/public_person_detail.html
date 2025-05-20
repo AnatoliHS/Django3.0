@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}{{ person.user.get_full_name|default:person.user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="container" style="--maxw:800px; --m:0 auto; --p:20px">
+    <div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+        <div style="--d:flex; --ai:center; --mb:20px">
+            {% if person.profile_picture %}
+                <img src="{{ person.profile_picture.url }}" alt="{{ person }}" style="--w:100px; --h:100px; --radius:50%; --objf:cover; --mr:20px">
+            {% else %}
+                <div style="--w:100px; --h:100px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:20px">
+                    <span style="--size:36px; --c:#fff">{{ person.user.first_name|first }}{{ person.user.last_name|first }}</span>
+                </div>
+            {% endif %}
+            <div>
+                <h1 style="--m:0">{{ person.user.get_full_name|default:person.user.username }}</h1>
+                {% if person.role %}
+                    <p style="--m:5px 0 0 0">{{ person.role.title }}</p>
+                {% endif %}
+                {% if person.graduating_year %}
+                    <p style="--m:5px 0 0 0">Graduating Year: {{ person.graduating_year }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if participations and person.show_activities_publicly %}
+    <div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+        <h2>{{ person.user.get_full_name|default:person.user.username }}'s Activities</h2>
+        <ul style="--lis:none; --pl:0">
+            {% for participation in participations %}
+                <li style="--mb:15px; --p:10px; --b:1px solid #eee; --radius:5px">
+                    <h3 style="--m:0 0 5px 0">{{ participation.group.name }}</h3>
+                    <p style="--m:0 0 5px 0">Years: {{ participation.format_school_years }}</p>
+                    {% if participation.hours %}
+                        <p style="--m:0 0 5px 0">Hours: {{ participation.hours }}</p>
+                    {% endif %}
+                    {% if participation.special_recognition %}
+                        <p style="--m:0 0 5px 0">Special Recognition: {{ participation.special_recognition }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if guardian_relationships and person.show_guardians_publicly %}
+    <div class="card" style="--mb:20px; --p:15px; --b:1px solid #ddd; --radius:5px">
+        <h2>Guardians</h2>
+        <ul style="--lis:none; --pl:0">
+            {% for relationship in guardian_relationships %}
+                {% if relationship.is_active %}
+                <li style="--mb:10px; --d:flex; --ai:center">
+                    {% if relationship.guardian.profile_picture %}
+                        <img src="{{ relationship.guardian.profile_picture.url }}" alt="{{ relationship.guardian }}" style="--w:50px; --h:50px; --radius:50%; --objf:cover; --mr:10px">
+                    {% else %}
+                        <div style="--w:50px; --h:50px; --radius:50%; --bgc:#ccc; --d:flex; --ai:center; --jc:center; --mr:10px">
+                            <span style="--size:18px; --c:#fff">{{ relationship.guardian.user.first_name|first }}{{ relationship.guardian.user.last_name|first }}</span>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <p style="--m:0">{{ relationship.guardian.user.get_full_name|default:relationship.guardian.user.username }}</p>
+                        <p style="--m:0">Relationship: {{ relationship.relationship }}</p>
+                    </div>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

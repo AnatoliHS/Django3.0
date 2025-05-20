@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome to Startr{% endblock %}
+
+{% block title-bar %}
+{{ block.super }}
+<!-- You can override or add to the title-bar block here -->
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <article style="--d:flex; gap:2em; --p:1em 0; --p-sm:1em 2em">
+        <section style="--d:flex; --fd:column; --jc:space-around; --minw:4em; --m:0 1em">
+            <img src="{% static 'images/basketball.webp' %}" alt="Basketball">
+            <img src="{% static 'images/music.webp' %}" alt="Music">
+            <img src="{% static 'images/world.webp' %}" alt="World">
+            <img src="{% static 'images/robot.webp' %}" alt="Robotics">
+        </section>
+        <section style="--d:flex; --fd:column; --jc:space-around">
+            {% if user.is_superuser %}
+            <p>Welcome {{ user.username }}! As an administrator, you have the ability to add teams, clubs, and
+                activities so that students
+                can be
+                recognized for their co-curricular achievements during the course of the year. You also have the ability
+                to change all aspects of the app.</p>
+            {% elif user.is_staff %}
+            <p>Welcome {{ user.username }}. As a staff member, you can manage student activities, review submissions,
+                and help maintain
+                the system. You have access to most administrative functions needed for day-to-day operations.</p>
+            {% else %}
+            <p>Welcome {{ user.username }}. As a student, you can view your profile and the activities you are involved
+                in. You can also add
+                activities, update your roster, and seniorlight someone for special recognition.</p>
+            {% endif %}
+
+            <p><b>Dashboard:</b> Update your profile, change your password, logout and have a quick view at what
+                activities your daughter is involved</p>
+            <p><strong>Experiences:</strong> View all the experiences offered at The Study and which core competencies
+                they are attached
+                to.
+            </p>
+            <p><b>Activities:</b> View all the activities offered at The Study and which core competencies they are
+                attached
+                to.
+
+    </article>
+</div>
+
+
+{% endblock %}

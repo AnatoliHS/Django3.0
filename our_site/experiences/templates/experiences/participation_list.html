@@ -1,0 +1,88 @@
+{% extends "experiences/participation_base.html" %}
+{% load startr_filters %}
+{% block title %}
+All Activity Participation
+{% endblock %}
+
+{% block content %}
+<h2>All Activity Participation</h2>
+{%if user.is_authenticated %}
+<input type="text" placeholder="Search..." id="search" style="--mb:0.6em"
+    _="on keyup 
+                if the event's key is 'Escape'
+                    set my value to '' 
+                    trigger keyup
+                else
+                    show <li/> in #participation_list when its textContent.toLowerCase() contains my value.toLowerCase()">
+{% if can_create %}
+<h3><a href={% url "experiences:participation_create" %}>Create new Participation</a></h3>
+{% else %}
+<div class="info-message"
+    style="--bgc:#f8f9fa; --bl:4px solid #17a2b8; --p:10px; --mb:15px; --radius:4px">
+    <p>You are viewing your activity participations and your children's activity participations.</p>
+</div>
+{% endif %}
+<hr>
+<ul id="participation_list">
+    {% for participation in participation_list %}
+    <li
+        style="--mb:10px; {% if participation.person.user == user %}background-color:#f0f8ff; --p:5px; --radius:3px; {% endif %}">
+        <a href={% url "experiences:participation_detail" participation.pk %}>
+            {{ participation }}
+        </a>
+        {% if participation.person.user == user %}
+        <span class="badge badge-primary">Your record</span>
+        {% else %}
+        <span class="badge badge-info">Your child's record</span>
+        <div style="--mt:3px; --ml:10px; --size:90%; --c:#6c757d">
+            {{ participation.person.user.get_full_name|default:participation.person.user.username }}
+        </div>
+        {% endif %}
+
+        <div style="--mt:3px; --ml:10px; --size:90%">
+            {% if participation.years %}
+            Years: {{ participation.years|join:", " }} •
+            {% endif %}
+            {% if participation.hours %}
+            {{ participation.hours }} hours
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    <li>No Activity Participation records found.</li>
+    {% endfor %}
+</ul>
+
+<style>
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        margin-left: 0.5rem;
+    }
+
+    .badge-primary {
+        color: #fff;
+        background-color: #007bff;
+    }
+
+    .badge-secondary {
+        color: #fff;
+        background-color: #6c757d;
+    }
+
+    .badge-info {
+        color: #fff;
+        background-color: #17a2b8;
+    }
+</style>
+{% else %}
+<p>Please <a href="{% url 'login' %}">login</a> to see participation info.</p>
+{% endif %}
+{% endblock %}
