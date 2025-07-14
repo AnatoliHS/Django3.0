@@ -66,6 +66,8 @@ urlpatterns = [
     path("experiences/", include("experiences.urls")),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('auth/', include('django.contrib.auth.urls')),
+    # WHMIS Cert lives in polls for now
+    path('polls/', include("polls.urls")),
     # Include backup/restore URLs under the admin path
     path("admin/", include(backup_urlpatterns)),
     path("admin/", admin.site.urls), # Keep the standard admin URLs

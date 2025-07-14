@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_startr',
     'experiences',
     'accounts',
+    'polls',
     'translate',  # Add the new translate app
     'our_site.apps.OurSiteConfig',  # Add the main app with its management commands
     'django.contrib.admin',
