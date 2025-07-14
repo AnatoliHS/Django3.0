@@ -1,0 +1,831 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e4e5e6, #00416a);
+            background-attachment: fixed;
+            background-size: cover;  
+            
+             
+        }
+        .quiz-container {
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            max-width: 900px;
+            margin: auto;
+            background-color: rgba(242, 242, 242, 0.8);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+            display: block;
+        }
+
+        .info-box3 {
+				width: 90%; /* Adjust width as needed */
+				background-color: rgba(255, 204, 102, 0.8); /* Semi-transparent white */
+				padding: 15px; /* Ensure even spacing inside the box */
+				border-radius: 10px;
+				border: 1px solid black;
+				box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+				text-align: left;
+				font-size: 18px;
+				list-style-position: inside; /* Ensures bullets align properly */
+				
+			}
+        .option {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 25px;
+            color: black;
+        }
+        .quiz-btn {
+            margin-top: 30px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 25px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+        }
+        .quiz-btn:hover {
+            background-color: #00ccff;
+        }
+        input[type="radio"] {
+            transform: scale(2);
+            margin-right: 20px;
+        }
+
+        .line {
+				flex-grow: 1;
+				height: 2px;
+				background-color: black;
+			}
+            .title-container {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 20px;
+				gap: 10px; /* Space between lines and box */
+					}
+
+			.title-box {
+				padding: 10px 20px;
+				border: 2px solid black;
+				border-radius: 10px;
+				box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+				font-weight: bold;
+				text-align: center;
+				background-color: rgba(255, 255, 255, 0.3); /* Light transparency */
+				color: #631314;
+			}
+
+            .result-score {
+                font-size: 50px; /* Increase the font size */
+                font-weight: bold;
+                color: #333; /* Dark color for contrast */
+                text-align: center;
+                margin-top: 20px;
+            }
+
+    </style>
+     <script>
+        const staticBase = "{% static 'images/' %}";
+
+        
+				const dashboardUrl = "{% url 'accounts:dashboard' %}";
+
+				function exitCourse() {
+					window.location.href = dashboardUrl;
+				}
+    </script>
+</head>
+<body>
+    <div class="title-container">
+        <span class="line"></span>
+        <p class="title-box" style="color: #bb1414; font-size: 40px;">FINAL ASSESSMENT</p>
+        <span class="line"></span>
+        </div>
+
+    <div id="quiz"></div>
+    <div class="button-row" style="position: fixed; top: 15px;  z-index: 1000;">
+  <div class="button-wrap">
+    <button class="glass-button" onclick="exitCourse()">
+      <span style="letter-spacing: 0.15em;">EXIT TEST</span>
+    </button>
+    <div class="button-shadow"></div>
+  </div>
+</div>
+    <script>
+        const questionsSet1 = [
+            {
+                question: "What does WHMIS stand for?",
+                options: [
+                    "Workplace Hazardous Materials Information System",
+                    "World Health Management and Injury System",
+                    "Workers’ Hazard Monitoring and Identification Scheme"
+                ],
+                answer: "A"
+            },
+            {
+                question: "Employers must keep an SDS (Safety Data Sheet) for each hazardous product.",
+                options: ["True", "False"],
+                answer: "A"
+            },
+            {
+                question: " Who is responsible for providing WHMIS training to workers?",
+                options: [
+                    "The workers themselves",
+                    "The employer",
+                    "The patients"
+                ],
+                answer: "B"
+            },
+            {
+                question: "Which WHMIS hazard type is indicated by the Health Hazard pictogram? ",
+                options: [
+                    "Acute toxicity causing immediate poisoning ",
+                    "Chronic health effects like cancer or organ damage",
+                    "Radioactivity"
+                ],
+                answer: "B",
+                image: staticBase + "health_hazard.png"
+            },
+            {
+                question: "What does the WHMIS pictogram with a flame symbolize?",
+                options: [
+                    "Corrosive materials",
+                    "Biohazardous infectious materials",
+                    "Flammable or combustible substances"
+                ],
+                answer: "C",
+                image: staticBase + "flame.png"
+            },
+            {
+                question: "What does the Corrosion pictogram represent?",
+                options: [
+                    "Products that may explode if heated",
+                    "Substances that cause skin burns and eye damage",
+                    "Products that release toxic fumes"
+                ],
+                answer: "B",
+                image: staticBase + "corrosion.png"
+            },
+            {
+                question: "Pictograms on a WHMIS label will always be red diamonds with black symbols inside.",
+                options: ["True", "False"],
+                answer: "A"
+            },
+            {
+                question: "Which information is NOT required on a WHMIS supplier label?",
+                options: [
+                    "Product name",
+                    "Expiration date of the product",
+                    "Precautionary statements"
+                ],
+                answer: "B"
+            },
+            {
+                question: "You have a spray bottle with no label that you suspect contains disinfectant. What should you do?",
+                options: [
+                    "Smell it to identify it.",
+                    "Assume it’s water and use it freely.",
+                    "Do not use it until it’s identified and properly labeled."
+                ],
+                answer: "C"
+            },
+            {
+                question: "You want to know if a certain chemical in your clinic can react dangerously with another. Which SDS section is most likely to have that info?",
+                options: [
+                    "Section 5 – Fire-fighting Measures",
+                    "Section 10 – Stability and Reactivity",
+                    "Section 15 – Regulatory Information"
+                ],
+                answer: "B"
+            },
+            {
+                question: "Which of the following would likely REQUIRE a workplace label in a dental office?",
+                options: [
+                    "A sealed bottle of cavity liner received from a supplier with its original label",
+                    "A secondary jar into which you’ve poured some monomer for immediate use and you use it all, then throw it out",
+                    "A small container where you’re storing some diluted bleach for use over the next week"
+                ],
+                answer: "C"
+            },
+            {
+                question: "What is the best method to reduce inhalation exposure to chemical fumes?",
+                options: [
+                    "Wearing a surgical mask at all times",
+                    "Opening a window for fresh air",
+                    "Using local exhaust ventilation (LEV) or working under a fume hood"
+                ],
+                answer: "C"
+            },
+            {
+                question: "Safety Data Sheets must be updated by the supplier at least every 3 years under WHMIS 2015.",
+                options: ["True", "False"],
+                answer: "B"
+            },
+            {
+                question: "Which type of gloves generally provide the best protection against a wide range of dental chemicals like disinfectants and solvents?",
+                options: [
+                    "Cotton gloves",
+                    "Nitrile gloves",
+                    "Latex gloves"
+                ],
+                answer: "B"
+            },
+            {
+                question: "Where is the best place to store chemicals?",
+                options: [
+                    "In a dedicated, labeled chemical storage cabinet away from patient treatment and food areas",
+                    "In the same cabinets as food and beverages for convenience",
+                    "On any open shelf as long as the containers are sealed tightly"
+                ],
+                answer: "A"
+            },
+        ];
+
+       const questionsSet2 = [
+    {
+        question: "What is the main purpose of WHMIS?",
+        options: [
+            "To ensure hazardous materials are properly labelled and handled safely",
+            "To reduce workplace accidents by 50%",
+            "To regulate working hours in hazardous environments"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which of the following is not an element of WHMIS?",
+        options: [
+            "Hazard classification of products",
+            "Mandatory weekly inspections by a government agent",
+            "Safety Data Sheets with detailed information"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Who must ensure that hazardous products have proper WHMIS labels?",
+        options: [
+            "The supplier",
+            "The worker",
+            "The government inspector"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What color and shape are WHMIS pictograms generally displayed in?",
+        options: [
+            "Red circle",
+            "Yellow dimond",
+            "Red diamond"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What does the Exploding Bomb pictogram represent?",
+                options: [
+                    "Corrosive materials",
+                    "Explosive or self-reactive substances",
+                    "Oxidizing agents"
+                ],
+                answer: "B",
+                image: staticBase + "exploding_bomb.png"
+    },
+    {
+        question: "What does the Skull and Crossbones pictogram represent?",
+                options: [
+                    "Long-term health effects like cancer",
+                    "Skin irritation",
+                    "Immediate and severe toxic effects that could be fatal"
+                ],
+                answer: "C",
+                image: staticBase + "skull_crossbones.png"
+    },
+    {
+        question: "What does the Gas Cylinder pictogram represent?",
+                options: [
+                    "Products that are gases stored under pressure",
+                    "Products that explode when dropped",
+                    "Products that corrode skin"
+                ],
+                answer: "A",
+                image: staticBase + "gas_cylinder.png"
+    },
+    {
+        question: "A workplace label must include:",
+        options: [
+            "The chemical’s common name, safe handling instructions, and a reference to the SDS",
+            "Only the supplier's name",
+            "Expiration date"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which section of the SDS would you check to find out what personal protective equipment (PPE) you should wear when using a chemical?",
+        options: [
+            "Section 4 – First Aid Measures",
+            "Section 8 – Exposure Controls/Personal Protection",
+            "Section 12 – Ecological Information"
+        ],
+        answer: "B",
+        
+    },
+    {
+        question: "If a product has multiple hazards, how many pictograms should appear on the label?",
+        options: [
+            "One, the most serious hazard only",
+            "All applicable hazard pictograms",
+            "None, just the product name"
+        ],
+        answer: "B"
+    },
+    {
+        question: "How often should WHMIS training be refreshed?",
+        options: [
+            "Every year or when new products are introduced",
+            "Every 5 years",
+            "Only once at the start of employment"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the primary responsibility of workers under WHMIS?",
+        options: [
+            "To read and understand labels and SDSs before using a hazardous product",
+            "To prepare SDSs",
+            "To label products"
+        ],
+        answer: "A"
+    },
+    {
+        question: "The Exclamation Mark pictogram represents:",
+        options: [
+            "Serious health hazards",
+            "Irritation or less severe toxicity",
+            "Radioactivity"
+        ],
+        answer: "B",
+        image: staticBase + "exclamation_mark.png"
+    },
+    {
+        question: "Why is it important to label secondary containers that hold hazardous chemicals?",
+        options: [
+            "It looks more professional",
+            "It helps others know how much chemical is left",
+            "It prevents accidental misuse or exposure by clearly identifying the contents and hazards"
+        ],
+        answer: "C"
+    },
+    {
+        question: "If a chemical spills, what should you consult first?",
+        options: [
+            "The SDS and your workplace emergency procedures",
+            "The supplier's website",
+            "Your supervisor’s email"
+        ],
+        answer: "A"
+    },
+];
+
+const questionsSet3 = [
+    {
+        question: "What is the significance of the Flame over Circle pictogram?",
+        options: [
+            "Substances that burn without air and intensify fire",
+            "Flammable liquids only",
+            "Gases under pressure"
+        ],
+        answer: "B",
+        image: staticBase + "flame_circle.png"
+    },
+    {
+        question: "Which WHMIS component provides detailed information on hazards, handling, and emergency measures?",
+        options: [
+            "The supplier label",
+            "The Safety Data Sheet (SDS)",
+            "The workplace label"
+        ],
+        answer: "B"
+    },
+    {
+        question: "If a product’s original label is damaged or removed, what must be done?",
+        options: [
+            "Nothing if you know the product",
+            "Apply a workplace label immediately",
+            "Throw away the product"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of precautionary statements on WHMIS labels?",
+        options: [
+            "To give instructions on safe handling and use",
+            "To list ingredients",
+            "To provide the price of the product"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the significance of the Biohazard pictogram?",
+        options: [
+            "Explosive or self-reactive substances",
+            "Contain living organisms or toxins that can cause serious disease",
+            "Radioactive"
+        ],
+        answer: "B",
+        image: staticBase + "biohazardous.png"
+    },
+    {
+        question: "What does the environmental hazard pictogram indicate?",
+        options: [
+            "The product can harm aquatic life or ecosystems",
+            "The product is safe to dispose of down the sink",
+            "The product is only hazardous if ingested by humans"
+        ],
+        answer: "A",
+        image: staticBase + "environment.png"
+    },
+    {
+        question: "Where on the SDS would you find whether a chemical has any long-term health effects like cancer or reproductive harm?  ",
+        options: [
+            "Section 11 – Toxicological Information",
+            "Section 7 – Handling and Storage",
+            "Section 2 – Hazard Identification"
+        ],
+        answer: "A"
+    },
+    {
+        question: "In the event of a fire involving WHMIS hazardous products, you should first:",
+        options: [
+            "Use water to extinguish immediately",
+            "Refer to the SDS for fire-fighting measures",
+            "Evacuate and ignore the fire"
+        ],
+        answer: "B"
+    },
+    {
+        question: "An SDS can contain information about environmental impacts of a product, such as its toxicity to fish or how to dispose of it safely.",
+                options: ["True", "False"],
+                answer: "A"
+    },
+    {
+        question: "What type of gloves should NOT be used when handling solvents and disinfectants?",
+        options: [
+            "Nitrile gloves",
+            "Latex gloves",
+            "Cotton gloves"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which of the following is true about workplace labels?",
+        options: [
+            "They can be handwritten",
+            "They must be printed by the supplier",
+            "They are optional if product has a supplier label"
+        ],
+        answer: "A"
+    },
+    {
+        question: "WHMIS 2015 is aligned with which global system?",
+        options: [
+            "Globally Harmonized System (GHS)",
+            "International Maritime Dangerous Goods (IMDG) code",
+            "OSHA Hazard Communication Standard"
+        ],
+        answer: "A"
+    },
+    {
+        question: "A product labeled with the gas cylinder pictogram indicates:",
+        options: [
+            "Flammable gases",
+            "Compressed gases under pressure",
+            "Toxic gases only"
+        ],
+        answer: "B",
+        image: staticBase + "gas_cylinder.png"
+    },
+    {
+        question: "If you are unsure about the hazards of a product, what should you do?",
+        options: [
+            "Ask your supervisor or refer to the SDS",
+            "Use it carefully without further information",
+            "Dispose of it immediately"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Who is responsible for ensuring the workplace SDSs are available and accessible?",
+        options: [
+            "The employer",
+            "The worker",
+            "The supplier"
+        ],
+        answer: "A"
+    },
+];
+
+
+
+        const allTests = [questionsSet1, questionsSet2, questionsSet3];
+        let testIndex = 0;
+        let questions = allTests[testIndex];
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        function loadQuestion() {
+            const quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = "";
+
+            let questionObj = questions[currentQuestion];
+            let questionHTML = `<div class='quiz-container'>
+                <p style='text-align: center; font-size: 20px;'><strong>Test Version: ${testIndex + 1}</strong></p>
+                <p class='info-box3' style='font-size: 30px; color: black;'>${questionObj.question}</p>`;
+
+            if (questionObj.image) {
+                questionHTML += `<img src='${questionObj.image}' alt='WHMIS pictogram' style='width: 150px; display: block; margin: 10px auto;'>`;
+            }
+
+            questionObj.options.forEach((option, index) => {
+                let optionLetter = String.fromCharCode(65 + index);
+                questionHTML += `<div class='option'>
+                    <input type='radio' name='answer' value='${optionLetter}' id='q${currentQuestion}${optionLetter}'>
+                    <label for='q${currentQuestion}${optionLetter}'>${optionLetter}. ${option}</label>
+                </div>`;
+            });
+
+            let buttonText = currentQuestion === questions.length - 1 ? "Submit" : "Next";
+            questionHTML += `<button class='quiz-btn' onclick='nextQuestion()'>${buttonText}</button>`;
+            questionHTML += "</div>";
+            quizDiv.innerHTML = questionHTML;
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector("input[name='answer']:checked");
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+            userAnswers.push(selected.value);
+            if (selected.value === questions[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const quizDiv = document.getElementById("quiz");
+            let percentage = (score / questions.length) * 100;
+
+            let resultHTML = `<div class='quiz-container'>
+                <p class='result-score'>Your Score: ${percentage.toFixed(2)}%</p>`;
+
+            if (percentage >= 80) {
+                resultHTML += `<p style='font-size: 30px; color: green; text-align: center;'>Congratulations! You have passed the test.</p>
+                    <button class='quiz-btn' onclick='claimCertificate()'>Claim Your Certificate</button>`;
+            } else {
+                resultHTML += `<p style='font-size: 30px; color: red; text-align: center;'>Sorry, please retry the test.</p>
+                    <button class='quiz-btn' onclick='restartQuiz()'>Re-Try</button>`;
+            }
+
+            resultHTML += "</div>";
+            quizDiv.innerHTML = resultHTML;
+        }
+
+        function restartQuiz() {
+            testIndex = (testIndex + 1) % allTests.length;
+            questions = allTests[testIndex];
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            loadQuestion();
+        }
+        
+        const certificateUrl = "{% url 'certificate' %}";
+        function claimCertificate() {
+            window.location.href = certificateUrl;
+        }
+
+        window.onload = loadQuestion;
+    </script>
+
+<style>
+    @property --angle-1 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -75deg;
+    }
+
+    @property --angle-2 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -45deg;
+    }
+
+    :root {
+      --global--size: clamp(2rem, 4vw, 5rem);
+      --anim--hover-time: 400ms;
+      --anim--hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-wrap {
+      position: relative;
+      z-index: 2;
+      border-radius: 999vw;
+      background: transparent;
+      pointer-events: none;
+      transition: all var(--anim--hover-time) var(--anim--hover-ease);
+    }
+
+    .button-shadow {
+      --shadow-cuttoff-fix: 2em;
+      position: absolute;
+      width: calc(100% + var(--shadow-cuttoff-fix));
+      height: calc(100% + var(--shadow-cuttoff-fix));
+      top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      filter: blur(clamp(2px, 0.125em, 12px));
+      pointer-events: none;
+    }
+
+    .button-shadow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999vw;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+      width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+      left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+      padding: 0.125em;
+      box-sizing: border-box;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+    }
+
+    .glass-button {
+      --border-width: clamp(1px, 0.0625em, 4px);
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      z-index: 3;
+      pointer-events: auto;
+      border-radius: 999vw;
+      background: linear-gradient(-75deg, rgba(247, 250, 249, 0.05), rgba(247, 250, 249, 0.05), rgba(247, 250, 249, 0.05));
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0,0,0,0.05),
+        inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
+        0 0.25em 0.125em -0.125em rgba(0,0,0,0.2),
+        0 0 0.1em 0.25em inset rgba(255,255,255,0.2),
+        0 0 0 0 rgba(255,255,255,1);
+      backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      transition: all var(--anim--hover-time) var(--anim--hover-ease);
+      min-width: 220px;
+      text-align: center;
+      font-size: 15px;
+      -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          user-select: none;
+    }
+
+    .glass-button:hover {
+      transform: scale(0.975);
+      backdrop-filter: blur(0.01em);
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0,0,0,0.05),
+        inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
+        0 0.15em 0.05em -0.1em rgba(0,0,0,0.25),
+        0 0 0.05em 0.1em inset rgba(255,255,255,0.5),
+        0 0 0 0 rgba(255,255,255,1);
+    }
+
+    .glass-button span {
+      display: block;
+      position: relative;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      color: #323232;
+      text-shadow: 0em 0.25em 0.05em rgba(0,0,0,0.1);
+      padding: 0.875em 1.5em;
+    }
+
+    .glass-button span::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: calc(100% - var(--border-width));
+      height: calc(100% - var(--border-width));
+      top: calc(var(--border-width) / 2);
+      left: calc(var(--border-width) / 2);
+      border-radius: 999vw;
+      background: linear-gradient(var(--angle-2), rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 40% 50%, rgba(255,255,255,0) 55%);
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      transition: background-position calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease), --angle-2 calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease);
+    }
+
+    .glass-button:hover span::after {
+      background-position: 25% 50%;
+    }
+
+    .glass-button:active span::after {
+      background-position: 50% 15%;
+      --angle-2: -15deg;
+    }
+
+    .glass-button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999vw;
+      width: calc(100% + var(--border-width));
+      height: calc(100% + var(--border-width));
+      top: calc(0% - var(--border-width) / 2);
+      left: calc(0% - var(--border-width) / 2);
+      padding: var(--border-width);
+      background: conic-gradient(
+        from var(--angle-1) at 50% 50%,
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0) 5% 40%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0) 60% 95%,
+        rgba(0,0,0,0.5)
+      ),
+      linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition: all var(--anim--hover-time) var(--anim--hover-ease), --angle-1 500ms ease;
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255,255,255,0.5);
+    }
+
+    .glass-button:hover::after {
+      --angle-1: -125deg;
+    }
+
+    .glass-button:active::after {
+      --angle-1: -75deg;
+    }
+
+    .button-container {
+      --w: 100%;
+      --ai: center;
+      --fd: column;
+      --d: flex;
+      --mt: 50px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 50px;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      padding: 0 5vw;
+      gap: 80px;
+      
+    }
+    @media (max-width: 768px) {
+       
+        .button-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 0 5vw;
+        }
+            
+        .button-wrap {
+            width: 100%;
+        }
+
+        .glass-button {
+            width: 100%;
+            
+        }
+    }
+  </style>
+
+</body>
+</html>
