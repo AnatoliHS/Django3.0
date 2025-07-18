@@ -41,8 +41,8 @@ def home_view(request):
         # Use the login template with a welcome message
         return LoginView.as_view(template_name='registration/login.html', 
                                 extra_context={
-                                    'title': 'Particip8',
-                                    'welcome_message': 'Where participation becomes portfolio'
+                                    'title': 'Login',
+                                    'welcome_message': 'Empowering Safe Workplaces Through WHMIS Education'
                                     })(request)
 
 # Define backup/restore URL patterns
@@ -67,7 +67,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('auth/', include('django.contrib.auth.urls')),
     # WHMIS Cert lives in polls for now
-    path('polls/', include("polls.urls")),
+    path('polls/', include(("polls.urls", "polls"), namespace='polls')),
     # Include backup/restore URLs under the admin path
     path("admin/", include(backup_urlpatterns)),
     path("admin/", admin.site.urls), # Keep the standard admin URLs

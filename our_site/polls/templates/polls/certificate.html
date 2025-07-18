@@ -12,12 +12,47 @@
           window.location.href = dashboardUrl; 
         }
 
+   // AUTO-EMAIL ON PAGE LOAD
+   window.addEventListener('DOMContentLoaded', () => {
+    const cert = document.querySelector('.certificate');
+
+    html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+      const base64 = canvas.toDataURL('image/png').split(',')[1];
+
+     fetch("{% url 'polls:upload_certificate' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ image: base64 })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log('Certificate auto-uploaded for email on page load');
+      });
+    });
+  });
+
+  // EXISTING DOWNLOAD BUTTON FUNCTIONALITY
   function downloadCertificate() {
     const cert = document.querySelector('.certificate');
-    html2canvas(cert, {
-      scale: 2,
-      useCORS: true
-    }).then(canvas => {
+    html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+      const base64 = canvas.toDataURL('image/png').split(',')[1];
+
+      // Send image to Django via fetch
+      fetch("{% url 'polls:upload_certificate' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ image: base64 })
+      }).then(res => res.json()).then(data => {
+        console.log('Certificate uploaded for emailing.');
+      });
+
+      // Download image to user
       const link = document.createElement('a');
       link.download = 'WHMIS_Certificate.png';
       link.href = canvas.toDataURL('image/png');

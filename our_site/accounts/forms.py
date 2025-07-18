@@ -8,13 +8,23 @@ from constance import config
 
 class UserRegistrationForm(UserCreationForm):
     """Form for user registration."""
+    USER_TYPE_CHOICES = [
+        ('individual', 'Individual'),
+        ('organization', 'Organization'),
+    ]
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
+    user_type = forms.ChoiceField(
+        choices=USER_TYPE_CHOICES,
+        widget=forms.Select(attrs={'id': 'id_user_type'}),
+        label='Registering as',
+        required=True
+    )
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'user_type')
     
     def save(self, commit=True):
         user = super().save(commit=False)
