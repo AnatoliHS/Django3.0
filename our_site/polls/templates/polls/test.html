@@ -617,7 +617,7 @@ const questionsSet3 = [
             loadQuestion();
         }
         
-        const certificateUrl = "{% url 'certificate' %}";
+        const certificateUrl = "{% url 'polls:certificate' %}";
         function claimCertificate() {
             window.location.href = certificateUrl;
         }
