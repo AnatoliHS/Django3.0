@@ -112,11 +112,26 @@
                     </li>
                  {% endfor %}
             </ul>
+
             {% if has_more_participations %}
                 <a href="{% url 'experiences:participation_list' %}?person={{ person.id }}">View all certifications</a>
             {% endif %}
+
         {% else %}
-            <p>You have no Certifications yet!</p>
+            <!-- START OF CERTIFICATE BUTTON ADDITION -->
+            {% if certificate %}
+                <div class="button-row" style="--mt:30px;">
+                    <div class="button-wrap">
+                        <a href="{% url 'polls:certificate' %}" class="glass-button" style="font-size: 20px;">
+                            <span>🎓 View your Certificate</span>
+                        </a>
+                        <div class="button-shadow"></div>
+                    </div>
+                </div>
+            {% else %}
+            <!-- END OF CERTIFICATE BUTTON ADDITION -->
+                <p>You have no Certifications yet!</p>
+                {% endif %}
             {% if person.role|lower == 'parent' %}
                 <div class="parent-suggestion" style="--mt:15px; --p:10px; --bgc:#f8f9fa; --bl:4px solid #7091e6; --radius:4px">
                     <p><strong>Get Involved!</strong> As a parent, you can participate in our vibrant parent community. Learn more at <a href="https://www.thestudy.qc.ca/about/parent-community" target="_blank">thestudy.qc.ca/about/parent-community</a>.</p>

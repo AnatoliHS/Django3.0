@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from .models import Certificate
 
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -41,6 +42,9 @@ def certificate(request):
     user = request.user
     completion_date = now().strftime("%B %d, %Y")
 
+     # Check if the user already has a certificate
+    certificate_obj, created = Certificate.objects.get_or_create(user=user)
+
     if not request.session.get("certificate_emailed", False):
         # Render message from template
         message = render_to_string("emails/whmis_congrats.html", {
@@ -66,7 +70,8 @@ def certificate(request):
 
     return render(request, "polls/certificate.html", {
         "user": user,
-        "completion_date": completion_date
+        "completion_date": completion_date,
+        "certificate": certificate_obj
     })
 
 @csrf_exempt

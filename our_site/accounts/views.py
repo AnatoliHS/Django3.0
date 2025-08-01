@@ -23,6 +23,10 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
             
             # Get the user's students if they're a guardian
             context['students'] = person.students.all()
+
+            # Check if the user has students and if they are set to is guardian context is True 
+            # Checks if a user has more than zero students
+            context['is_guardian'] = context['students'].exists()
             
             # Get relationship information for each student
             student_relationships = {}
@@ -47,6 +51,17 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
             all_parts = person.participation_set.all()
             context['participations_preview'] = all_parts[:5]
             context['has_more_participations'] = all_parts.count() > 5
+
+            # Get the user's certificate if it exists
+            context['certificate_emailed'] = self.request.session.get('certificate_emailed', False)
+            
+            #Populate context['certificate'] with the user's certificate object
+           # try:
+                #certificate_obj = user.certificate
+            context['certificate'] = True
+           # except Certificate.DoesNotExist:
+               # context['certificate'] = None
+           
             
         except Person.DoesNotExist:
             context['profile_exists'] = False

@@ -241,6 +241,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'anatoli.chastik@gmail.com'  # Replace with your actual email
-EMAIL_HOST_PASSWORD = 'enter_password'  # Use a secure method!
+EMAIL_HOST_PASSWORD = 'odjkwncjedeeyobf'  # Use a secure method!
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
