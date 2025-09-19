@@ -590,23 +590,23 @@ const questionsSet3 = [
         }
 
         function showResults() {
-            const quizDiv = document.getElementById("quiz");
-            let percentage = (score / questions.length) * 100;
+  const quizDiv = document.getElementById("quiz");
+  let percentage = (score / questions.length) * 100;
 
-            let resultHTML = `<div class='quiz-container'>
-                <p class='result-score'>Your Score: ${percentage.toFixed(2)}%</p>`;
+  let resultHTML = `<div class='quiz-container'>
+      <p class='result-score'>Your Score: ${percentage.toFixed(2)}%</p>`;
 
-            if (percentage >= 80) {
-                resultHTML += `<p style='font-size: 30px; color: green; text-align: center;'>Congratulations! You have passed the test.</p>
-                    <button class='quiz-btn' onclick='claimCertificate()'>Claim Your Certificate</button>`;
-            } else {
-                resultHTML += `<p style='font-size: 30px; color: red; text-align: center;'>Sorry, please retry the test.</p>
-                    <button class='quiz-btn' onclick='restartQuiz()'>Re-Try</button>`;
-            }
+  if (percentage >= 80) {
+      resultHTML += `<p style='font-size: 30px; color: green; text-align: center;'>Congratulations! You have passed the test.</p>
+          <button class='quiz-btn' onclick='claimCertificate()'>Claim Your Certificate</button>`;
+  } else {
+      resultHTML += `<p style='font-size: 30px; color: red; text-align: center;'>Sorry, please retry the test.</p>
+          <button class='quiz-btn' onclick='restartQuiz()'>Re-Try</button>`;
+  }
 
-            resultHTML += "</div>";
-            quizDiv.innerHTML = resultHTML;
-        }
+  resultHTML += "</div>";
+  quizDiv.innerHTML = resultHTML;
+}
 
         function restartQuiz() {
             testIndex = (testIndex + 1) % allTests.length;
@@ -617,10 +617,26 @@ const questionsSet3 = [
             loadQuestion();
         }
         
-        const certificateUrl = "{% url 'polls:certificate' %}";
         function claimCertificate() {
-            window.location.href = certificateUrl;
+    // Send POST request to mark certificate as completed
+    fetch("{% url 'polls:complete_certificate' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
         }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            sessionStorage.setItem('sendCertificate', 'true');
+            window.location.href = "{% url 'polls:certificate' %}";
+        } else {
+            alert('Error marking certificate as complete.');
+        }
+    })
+    .catch(err => console.error('❌ Error:', err));
+}
 
         window.onload = loadQuestion;
     </script>

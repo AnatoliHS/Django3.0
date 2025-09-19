@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Certificate
-
+from django.views.decorators.http import require_POST
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.timezone import now
@@ -42,31 +42,8 @@ def certificate(request):
     user = request.user
     completion_date = now().strftime("%B %d, %Y")
 
-     # Check if the user already has a certificate
+    # Just get or create the certificate object
     certificate_obj, created = Certificate.objects.get_or_create(user=user)
-
-    if not request.session.get("certificate_emailed", False):
-        # Render message from template
-        message = render_to_string("emails/whmis_congrats.html", {
-            "user": user,
-            "completion_date": completion_date
-        })
-
-        email = EmailMessage(
-            subject="🎉 Your WHMIS Certificate is Ready!",
-            body=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[user.email],
-        )
-        email.content_subtype = "html"
-
-        # Optional: Attach a certificate image if you've uploaded it via AJAX (see Step 3)
-        cert_data = request.session.get("certificate_base64")
-        if cert_data:
-            email.attach("WHMIS_Certificate.png", base64.b64decode(cert_data), "image/png")
-
-        email.send()
-        request.session["certificate_emailed"] = True
 
     return render(request, "polls/certificate.html", {
         "user": user,
@@ -75,23 +52,44 @@ def certificate(request):
     })
 
 @csrf_exempt
+@login_required
 def upload_certificate(request):
     if request.method == "POST":
         data = json.loads(request.body)
         image_data = data.get("image")
+        user = request.user
+        completion_date = timezone.now().strftime("%B %d, %Y")
 
         if image_data:
-            image_content = ContentFile(base64.b64decode(image_data), "certificate.png")
+            # Decode the image
+            image_content = base64.b64decode(image_data)
 
-            # Prepare email
+            # Render the HTML message
+            message = render_to_string("emails/whmis_congrats.html", {
+                "user": user,
+                "completion_date": completion_date
+            })
+
+            # Send the email with attachment
             email = EmailMessage(
-                "Congratulations! Here's your WHMIS Certificate",
-                "Attached is your certificate of completion.",
-                to=[request.user.email]  # or hardcoded for testing
+                subject="🎉 Your WHMIS Certificate is Ready!",
+                body=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[user.email],
             )
-            email.attach("WHMIS_Certificate.png", image_content.read(), "image/png")
+            email.content_subtype = "html"
+            email.attach("WHMIS_Certificate.png", image_content, "image/png")
             email.send()
 
             return JsonResponse({"status": "success"})
 
     return JsonResponse({"status": "failed"}, status=400)
+
+@login_required
+@require_POST
+def complete_certificate(request):
+    user = request.user
+    certificate_obj, created = Certificate.objects.get_or_create(user=user)
+    certificate_obj.completed = True
+    certificate_obj.save()
+    return JsonResponse({"status": "success"})

@@ -640,6 +640,35 @@
 
 				</section>
 
+				<section data-background-gradient="linear-gradient(to bottom, #17b2c3, #283b95)">
+								<div class="title-container">
+									
+								<h5 class="title-box" style="color: #b30000;">COURSE NAVIGATION</h5>
+									
+								</div>
+								<p class="content" style="font-size: 20px;">This course features straightforward navigation to help you move through the content with ease. Please review the instructions below to become familiar with how to navigate the course.</p>
+								<div class="image-text-container">
+									<img style="height:60px;width: auto;" src="{% static 'images/leftandright.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
+									<p class="hazard-text">
+										Left and Right Arrow Keys – Moving Between Course Sections. Use the Right Arrow (→) key to advance to the next section of the course. Each section represents a major topic or module. Use the Left Arrow (←) key to return to the previous section if you would like to review earlier material.
+									</p>
+								</div>
+								<div class="image-text-container">
+									<img style="height:70px;width: auto;" src="{% static 'images/unfold.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
+									<p class="hazard-text">
+										Up and Down Arrow Keys – Navigating Within a Section. Once you are inside a section, use the Down Arrow (↓) key to move deeper into that section’s content. Use the Up Arrow (↑) key to scroll back through the material you have already seen within the same section.
+									</p>
+								</div>
+								<div class="image-text-container">
+									<img style="height:70px;width: auto;" src="{% static 'images/space.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
+									<p class="hazard-text">
+										Spacebar – Advancing to the Next Slide in Sequence. Press the Spacebar to move to the next slide in the overall course sequence. This control follows the intended learning flow, ensuring you proceed in the correct order through all slides.
+									</p>
+								</div>
+								
+							</section>
+
+
 <!-- Slide number 2a -->
 
 				<section data-background-gradient="linear-gradient(to bottom, #32d5e7, #283b95)">
@@ -3452,7 +3481,7 @@
 							<div class="button-row" style="position: fixed; top: 30px; z-index: 1000;">
 						<div class="button-wrap">
 							<button class="glass-button" onclick="exitCourse()">
-							<span style="letter-spacing: 0.15em;">EXIT COURSE</span>
+							<span style="letter-spacing: 0.15em;">EXIT</span>
 							</button>
 							<div class="button-shadow"></div>
 						</div>
@@ -3548,7 +3577,7 @@
         0 0 0 0 rgba(255,255,255,1);
       backdrop-filter: blur(clamp(1px, 0.125em, 4px));
       transition: all var(--anim--hover-time) var(--anim--hover-ease);
-      min-width: 220px;
+      min-width: 120px;
       text-align: center;
       font-size: 15px;
       -webkit-tap-highlight-color: transparent;

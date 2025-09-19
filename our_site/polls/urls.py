@@ -10,4 +10,6 @@ urlpatterns = [
     path("test/", views.test, name="test"),
     path("certificate/", views.certificate, name="certificate"),
     path('upload_certificate/', views.upload_certificate, name='upload_certificate'),
+    path('complete-certificate/', views.complete_certificate, name='complete_certificate'),
+
 ]

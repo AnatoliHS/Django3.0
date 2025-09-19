@@ -13,26 +13,36 @@
         }
 
    // AUTO-EMAIL ON PAGE LOAD
-   window.addEventListener('DOMContentLoaded', () => {
-    const cert = document.querySelector('.certificate');
+   function sendCertificateWithImage() {
+  const cert = document.querySelector('.certificate');
 
-    html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
-      const base64 = canvas.toDataURL('image/png').split(',')[1];
+  html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+    const base64 = canvas.toDataURL('image/png').split(',')[1]; // Strip "data:image/png;base64,"
 
-     fetch("{% url 'polls:upload_certificate' %}", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({ image: base64 })
+    fetch("{% url 'polls:upload_certificate' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify({
+        image: base64
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log('Certificate auto-uploaded for email on page load');
-      });
-    });
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('✅ Certificate uploaded and email sent with attachment.');
+      sessionStorage.removeItem('sendCertificate'); // Prevent repeat sending
+    })
+    .catch(err => console.error('❌ Error sending certificate:', err));
   });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('sendCertificate') === 'true') {
+    sendCertificateWithImage();
+  }
+});
 
   // EXISTING DOWNLOAD BUTTON FUNCTIONALITY
   function downloadCertificate() {

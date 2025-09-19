@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import ProfilePictureForm, UserRegistrationForm
 from constance import config
+from polls.models import Certificate
 
 class AccountDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/dashboard.html'
@@ -58,7 +59,9 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
             #Populate context['certificate'] with the user's certificate object
            # try:
                 #certificate_obj = user.certificate
-            context['certificate'] = True
+            # Get the user's certificate if it exists
+            certificate_obj = Certificate.objects.filter(user=user).first()
+            context['certificate'] = certificate_obj  # None if not completed
            # except Certificate.DoesNotExist:
                # context['certificate'] = None
            
