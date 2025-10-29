@@ -6,6 +6,8 @@ from django.utils.html import format_html
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+
 class BaseVisibilityModel(models.Model):
     is_public = models.BooleanField(
         default=True,

@@ -9,8 +9,9 @@ from constance import config
 class UserRegistrationForm(UserCreationForm):
     """Form for user registration."""
     USER_TYPE_CHOICES = [
-        ('individual', 'Individual'),
-        ('organization', 'Organization'),
+        ('general', 'General'),
+        ('pharmacy', 'Pharmacy'),
+        ('dental clinic', 'Dental Clinic'),
     ]
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, required=True)
