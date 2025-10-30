@@ -1,31 +1,30 @@
 from django import forms
-from experiences.models import Person
+from experiences.models import Person, Group
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.conf import settings
 from constance import config
 
 class UserRegistrationForm(UserCreationForm):
     """Form for user registration."""
-    USER_TYPE_CHOICES = [
-        ('general', 'General'),
-        ('pharmacy', 'Pharmacy'),
-        ('dental clinic', 'Dental Clinic'),
-    ]
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    user_type = forms.ChoiceField(
-        choices=USER_TYPE_CHOICES,
-        widget=forms.Select(attrs={'id': 'id_user_type'}),
-        label='Registering as',
-        required=True
+    group = forms.ModelChoiceField(
+        queryset=Group.objects.none(),
+        label='Join activity group',
+        required=True,
+        help_text='Select the group you would like to participate in.'
     )
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'user_type')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'group')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Limit the available groups to those that are visible to the public
+        self.fields['group'].queryset = Group.objects.filter(is_public=True).order_by('name')
     
     def save(self, commit=True):
         user = super().save(commit=False)

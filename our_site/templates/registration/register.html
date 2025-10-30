@@ -76,11 +76,14 @@
         </div>
 
         <div style="--mb:1em">
-            <label for="id_user_type" style="--c:#7091e6; --weight:bold">{{ form.user_type.label }}</label>
-            {{ form.user_type }}
-            {% if form.user_type.errors %}
-            <p style="--c:#d9534f; --fs:0.8em">{{ form.user_type.errors.0 }}</p>
-            {% endif %}
+          <label for="id_group" style="--c:#7091e6; --weight:bold">{{ form.group.label }}</label>
+          {{ form.group }}
+          {% if form.group.help_text %}
+          <small style="--c:#6c757d; --d:block; --mt:0.25em">{{ form.group.help_text }}</small>
+          {% endif %}
+          {% if form.group.errors %}
+          <p style="--c:#d9534f; --fs:0.8em">{{ form.group.errors.0 }}</p>
+          {% endif %}
         </div>
 
         <div style="--mb:1em">

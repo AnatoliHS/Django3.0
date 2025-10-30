@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from experiences.models import Person, GuardianStudent, Participation
-from django.contrib.auth.models import User
+from experiences.models import Person, GuardianStudent, Participation, Role
 from django.contrib import messages
 from .forms import ProfilePictureForm, UserRegistrationForm
 from constance import config
 from polls.models import Certificate
+from django.db import transaction
+from django.utils import timezone
 
 class AccountDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/dashboard.html'
@@ -79,7 +80,25 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            with transaction.atomic():
+                user = form.save()
+                selected_group = form.cleaned_data['group']
+
+                # Ensure a student role exists for newly registered users
+                student_role = Role.objects.filter(title__iexact='student').order_by('id').first()
+                if student_role is None:
+                    student_role = Role.objects.create(title='Student', description='Auto-created student role')
+
+                person = Person.objects.create(user=user, role=student_role)
+
+                # Capture the current academic year for participation tracking
+                current_year = timezone.now().year
+                Participation.objects.create(
+                    person=person,
+                    group=selected_group,
+                    years=[current_year]
+                )
+
             if config.SIGNUP_NEW_ACCOUNTS_PENDING:
                 messages.info(request, "Your account has been created and is pending approval. You will be notified when an administrator approves your account.")
             else:
