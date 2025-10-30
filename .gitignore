@@ -6,6 +6,9 @@ our_site/tmp/*
 our_site/backups/*
 !our_site/backups/README.md
 
+# The certificates
+our_site/media/certificates/*_certificate*
+
 # Apple files
 .DS_Store
 
