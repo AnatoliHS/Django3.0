@@ -80,18 +80,28 @@
     {% endif %}
 
     <div class="card">
-        <h3>Your Activities</h3>
-         <div class="button-row" style="--mt: 30px; --mb: 30px;">
-        <div class="button-wrap">
-            <a href="{% url 'polls:slideshow' %}" class="glass-button" style=" font-size: 25px;">
-                <br>
-                <img src="{% static 'images/hazardous-chemical.png' %}"  style="width: 120px;" alt="Corrosion symbol" class="pictogram">
-                <span><strong>Launch WHMIS <br> Slideshow</strong></span>
-                <br>
-            </a>
-            <div class="button-shadow"></div>
-        </div>
+  <h3>Your Activities</h3>
+  <div class="button-row" style="--mt: 30px; --mb: 30px;">
+    <div class="button-wrap">
+      {% if slideshow_url %}
+        <a href="{{ slideshow_url }}" class="glass-button" style="font-size: 25px;">
+          <br>
+          <img src="{% static 'images/hazardous-chemical.png' %}" style="width: 120px;" alt="Corrosion symbol" class="pictogram">
+          <span><strong>Launch WHMIS <br> Slideshow</strong></span>
+          <br>
+        </a>
+      {% else %}
+        <a class="glass-button disabled" style="font-size: 25px; opacity: 0.6; pointer-events: none;">
+          <br>
+          <img src="{% static 'images/hazardous-chemical.png' %}" style="width: 120px;" alt="Corrosion symbol" class="pictogram">
+          <span><strong>No WHMIS Assigned</strong></span>
+          <br>
+        </a>
+      {% endif %}
+      <div class="button-shadow"></div>
     </div>
+  </div>
+</div>
         {% if participations_preview %}
             <ul>
                 {% for participation in participations_preview %}

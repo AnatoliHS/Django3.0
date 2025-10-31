@@ -22,6 +22,22 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
             person = user.person
             context['person'] = person
             context['profile_exists'] = True
+
+            # Determine which slideshow URL to show
+            participation = person.participation_set.first()
+            if participation and participation.group:
+                group_name = participation.group.name.strip()
+
+                if group_name == "Dental WHMIS":
+                    context["slideshow_url"] = "/polls/slide/"
+                elif group_name == "Pharmacy WHMIS":
+                    context["slideshow_url"] = "/polls/slidePharm/"
+                elif group_name == "General WHMIS":
+                    context["slideshow_url"] = "/polls/slideReg/"
+                else:
+                    context["slideshow_url"] = None
+            else:
+                context["slideshow_url"] = None
             
             # Get the user's students if they're a guardian
             context['students'] = person.students.all()
