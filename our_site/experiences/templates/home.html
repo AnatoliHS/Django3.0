@@ -4,47 +4,84 @@
 
 {% block title-bar %}
 {{ block.super }}
-<!-- You can override or add to the title-bar block here -->
 {% endblock %}
 
 {% block content %}
+<style>
+    .homepage-icons img {
+        width: 70px;
+        height: auto;
+    }
+
+    /* Slide-up animation */
+    .slide-up {
+        opacity: 0;
+        transform: translateY(25px);
+        animation: slideUp 0.6s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
 <div class="card">
     <article style="--d:flex; gap:2em; --p:1em 0; --p-sm:1em 2em">
-        <section style="--d:flex; --fd:column; --jc:space-around; --minw:4em; --m:0 1em">
-            <img src="{% static 'images/basketball.webp' %}" alt="Basketball">
-            <img src="{% static 'images/music.webp' %}" alt="Music">
-            <img src="{% static 'images/world.webp' %}" alt="World">
-            <img src="{% static 'images/robot.webp' %}" alt="Robotics">
+
+        <!-- ICONS -->
+        <section class="homepage-icons" style="--d:flex; --fd:column; --jc:space-around; --minw:4em; --m:0 1em">
+            <img src="{% static 'images/mat.png' %}" alt="Mat"
+                 class="slide-up" style="animation-delay: 0.1s;">
+            <img src="{% static 'images/computer.png' %}" alt="Computer"
+                 class="slide-up" style="animation-delay: 0.2s;">
+            <img src="{% static 'images/learning.png' %}" alt="Learning"
+                 class="slide-up" style="animation-delay: 0.3s;">
+            <img src="{% static 'images/test.png' %}" alt="Test"
+                 class="slide-up" style="animation-delay: 0.4s;">
         </section>
+
+        <!-- TEXT CONTENT -->
         <section style="--d:flex; --fd:column; --jc:space-around">
+
             {% if user.is_superuser %}
-            <p>Welcome {{ user.username }}! As an administrator, you have the ability to add teams, clubs, and
-                activities so that students
-                can be
-                recognized for their co-curricular achievements during the course of the year. You also have the ability
-                to change all aspects of the app.</p>
+            <p class="slide-up" style="animation-delay: 0.5s;">
+                Welcome {{ user.username }}! As an administrator, you have the ability to manage all WHMIS training content,
+                users, modules, and certificates.
+            </p>
+
             {% elif user.is_staff %}
-            <p>Welcome {{ user.username }}. As a staff member, you can manage student activities, review submissions,
-                and help maintain
-                the system. You have access to most administrative functions needed for day-to-day operations.</p>
+            <p class="slide-up" style="animation-delay: 0.5s;">
+                Welcome {{ user.username }}. As a staff member, you may review trainee progress, assist students,
+                and oversee day-to-day WHMIS operations.
+            </p>
+
             {% else %}
-            <p>Welcome {{ user.username }}. As a student, you can view your profile and the activities you are involved
-                in. You can also add
-                activities, update your roster, and seniorlight someone for special recognition.</p>
+            <p class="slide-up" style="animation-delay: 0.5s;">
+                Welcome {{ user.username }}! Your WHMIS training begins here. This course helps you recognize and work safely
+                with hazardous products in the workplace.
+            </p>
             {% endif %}
 
-            <p><b>Dashboard:</b> Update your profile, change your password, logout and have a quick view at what
-                activities your daughter is involved</p>
-            <p><strong>Experiences:</strong> View all the experiences offered at The Study and which core competencies
-                they are attached
-                to.
+            <p class="slide-up" style="animation-delay: 0.6s;">
+                <b>Your Dashboard:</b> Start your training, check your progress, and return to unfinished modules at any time.
             </p>
-            <p><b>Activities:</b> View all the activities offered at The Study and which core competencies they are
-                attached
-                to.
+
+            <p class="slide-up" style="animation-delay: 0.7s;">
+                <strong>What You’ll Learn:</strong> Hazard classes, WHMIS symbols, safe handling procedures, PPE, and how
+                to read Safety Data Sheets (SDS).
+            </p>
+
+            <p class="slide-up" style="animation-delay: 0.8s;">
+                <b>Final Exam:</b> After completing all modules, the final exam becomes available. Passing it unlocks your
+                official WHMIS Certificate.
+            </p>
+
+        </section>
 
     </article>
 </div>
-
 
 {% endblock %}

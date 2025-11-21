@@ -39,17 +39,32 @@ def test(request):
 @login_required
 def certificate(request):
     user = request.user
-
-    # Get or create the certificate once — issued_at will only set on first creation
     certificate_obj, created = Certificate.objects.get_or_create(user=user)
-
-    # Use the stored issued_at date
     completion_date = certificate_obj.issued_at.strftime("%B %d, %Y")
+
+    # Get the linked Person object (if any)
+    person = getattr(user, "person", None)
+    group_name = "General WHMIS"  # default fallback
+
+    if person:
+        participation = person.participation_set.first()
+        if participation and participation.group:
+            group_name = participation.group.name.strip()
+
+    # Choose logo based on group name
+    if group_name == "Pharmacy WHMIS":
+        logo_image = "images/pharmaWhmis2.png"
+    elif group_name == "Dental WHMIS":
+        logo_image = "images/whimiswise.png"
+    else:  # General WHMIS
+        logo_image = "images/whimiswise2.png"
 
     return render(request, "polls/certificate.html", {
         "user": user,
         "completion_date": completion_date,
         "certificate": certificate_obj,
+        "logo_image": logo_image,
+        "group_name": group_name,
     })
 
 
