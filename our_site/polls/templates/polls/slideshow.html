@@ -576,17 +576,147 @@
 					margin-right: 20px;
 				}
 
+				/* Makes the progress bar background track */
+				.reveal .progress {
+					height: 5px !important;      /* bigger bar */
+					bottom: 1px !important;      /* move it up */
+					background: rgba(0, 0, 0, 0.2); /* track color */
+				}
+
+				/* Makes the fill thicker, brighter, and consistent */
+				.reveal .progress span {
+					background: #03acee !important; /* your custom color */
+					opacity: 1;
+				}
+				#progressPercent {
+					position: fixed;
+					top: 20px;
+					right: 45px;
+					font-size: 22px;
+					font-weight: bold;
+					color: white;
+					background: rgba(0,0,0,0.8);
+					padding: 5px 12px;
+					border-radius: 10px;
+					z-index: 999999;
+				}
+
+				/* Menu Button */
+#menuButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 999999;
+}
+
+/* Slide-Out Menu */
+#sideMenu {
+    position: fixed;
+    top: 0;
+    left: -350px;
+    width: 280px;
+    height: 94%;
+    background: #111;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.4);
+    transition: left 0.3s ease;
+    z-index: 999998;
+    overflow-y: auto;
+}
+
+#sideMenu h3 {
+    margin-top: 0;
+    color: #5dc8e3;
+}
+
+/* Remove default UL styling */
+#sideMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Top-level items */
+#sideMenu > ul > li {
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    color: white;
+}
+
+/* Hover highlight */
+#sideMenu > ul > li:hover .menu-item-content span.text-label {
+    color: #5dc8e3;
+}
+
+/* Vertical slide items */
+#sideMenu ul ul li {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    color: #ddd;
+}
+
+/* Hover for vertical items */
+#sideMenu ul ul li:hover .menu-item-content span.text-label {
+    color: #5dc8e3;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+}
+
+/* Dropdown children */
+#sideMenu ul ul {
+    display: none;
+    padding-left: 15px;
+}
+
+/* Show when parent is open */
+#sideMenu ul li.open > ul {
+    display: block;
+}
+
+/* Flex wrapper for circle + text */
+.menu-item-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Circle indicator */
+.menu-item-content .circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #aaa;
+    background: transparent;
+    flex-shrink: 0;
+}
+
+/* Completed slide */
+.menu-item-content .circle.completed {
+    background: #4cbca9;
+    border-color: #4cbca9;
+}
+
+/* Label text */
+.text-label {
+    display: inline-block;
+}
+				
 		</style>
 	</head>
 	<body>
+		<div id="progressPercent"></div>
                 <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
 				<script>
-					window.onload = function() {
-						Reveal.initialize();
-						
-					};
-
-
+					
 				
 					function checkAnswer(questionName, correctAnswer, resultId) {
 						const selected = document.querySelector(`input[name="${questionName}"]:checked`);
@@ -623,14 +753,35 @@
 				</script>
 				
 	
- <!-- Slide number 1 -->	
+			<!-- Slide number 1 -->
+			<!-- Slide-Out Menu Button -->
+			<div id="menuButton">☰</div>
+
+			<!-- Slide-Out Menu Panel -->
+			<div id="sideMenu">
+				<br>
+				<br>
+				<br>
+				<ul id="menuList"></ul>
+			</div>	
+
                 <div class="reveal">
                  <div class="slides">
 
-				<section data-background-gradient="linear-gradient(to bottom, #2bb0ee, #f4ae71 )" class="center-slide">
+				<section 
+					data-background-image="{% static 'images/originalG7.png' %}" 
+					data-background-size="cover" 
+					data-background-position="center" 
+					data-background-repeat="no-repeat"
+					class="center-slide">
 					<img src="{% static 'images/whimiswise.png' %}" alt="Image 1">
 				</section>
-				<section data-background-gradient="linear-gradient(to bottom, #17b2c3, #283b95)">
+				<section
+					data-background-image="{% static 'images/originalG7.png' %}" 
+					data-background-size="cover" 
+					data-background-position="center" 
+					data-background-repeat="no-repeat"
+					class="center-slide">
 					<div class="title-container">
 						<span class="line"></span>
 						<div class="title-box">WHIMIS FOR CLINICAL SETTING</div>
@@ -655,7 +806,12 @@
 
 				</section>
 
-				<section data-background-gradient="linear-gradient(to bottom, #17b2c3, #283b95)">
+				<section data-title="Navigation"
+					data-background-image="{% static 'images/originalG7.png' %}" 
+					data-background-size="cover" 
+					data-background-position="center" 
+					data-background-repeat="no-repeat"
+					class="center-slide">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">COURSE NAVIGATION</h5>
@@ -686,7 +842,13 @@
 
 <!-- Slide number 2a -->
 
-				<section data-background-gradient="linear-gradient(to bottom, #32d5e7, #283b95)">
+				<section data-title="Module 1: What is WHIMIS"
+					data-background-image="{% static 'images/originalG7.png' %}" 
+					data-background-size="cover" 
+					data-background-position="center" 
+					data-background-repeat="no-repeat"
+					class="center-slide">
+
 					<section><div class="title-container">
 						<span class="line"></span>
 						<div class="title-box">What is WHIMIS</div>
@@ -695,7 +857,7 @@
 					
 				</section>
 
-<section>
+				<section data-title="WHMIS Overview">
 					<div class="title-container">
 						
 						<div class="title-box">What is WHIMIS</div>
@@ -733,7 +895,7 @@
 					</div>
 					</section>
 
-					<section>
+					<section data-title="WHMIS legislation">
 					<div class="title-container">
 						
 						<div class="title-box">What is WHIMIS</div>
@@ -777,7 +939,7 @@
 
 <!-- Slide number 2b -->					
 
-					<section>
+					<section data-title="WHMIS purpose">
 						<div class="title-container">
 							
 							<div class="title-box">What is WHIMIS</div>
@@ -802,7 +964,7 @@
 
 <!-- Slide number 2c -->					
 
-					<section>
+					<section data-title="WHMIS product exclusions">
 						<div class="title-container">
 							
 							<div class="title-box">What is WHIMIS</div>
@@ -842,13 +1004,14 @@
 					</section>
 
 
-					<section><div class="title-container">
+					<section>
+						<div class="title-container">
 						<span class="line"></span>
 						<div class="title-box"> Responsibilities under WHIMIS</div>
 						<span class="line"></span>
 					</div>
 				</section>
-					<section>
+					<section data-title="Employer Responsibility">
 					<div class="title-container">
 						
 						<div class="title-box"> Responsibilities under WHIMIS</div>
@@ -889,7 +1052,7 @@
 
 <!-- Slide number 3b -->
 
-					<section>
+					<section data-title="Employee Responsibility">
 						<div class="title-container">
 							
 							<div class="title-box"> Responsibilities under WHIMIS</div>
@@ -940,7 +1103,7 @@
 
 
 
-						<section data-auto-animate>
+						<section data-auto-animate data-title="QUIZ #1">
 							<div class="title-container">
 							
 							<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -1006,14 +1169,21 @@
 				</section>
 
 <!-- Slide number 4a -->
-				<section data-background-gradient="linear-gradient(to bottom, #2bb0ee, #f4ae71)">
-					<section><div class="title-container">
+				<section data-title="Module 2: Hazard Classification"
+					data-background-image="{% static 'images/originalG6.png' %}" 
+					data-background-size="cover" 
+					data-background-position="center" 
+					data-background-repeat="no-repeat"
+					class="center-slide">
+				
+					<section>
+						<div class="title-container">
 						<span class="line"></span>
 						<div class="title-box"> Hazard Classification: Overview</div>
 						<span class="line"></span>
 					</div>
 				</section>
-					<section>
+					<section data-title="Hazard Classification Overview">
 						<div class="title-container">
 							
 							<div class="title-box"> Hazard Classification: Overview</div>
@@ -1046,7 +1216,7 @@
 							</div>
 						  <p class="content">WHMIS and the Globally Harmonized System (GHS) group hazards into three broad categories: physical hazards, health hazards, and environmental hazards. Each hazardous product can have one or more of these types of hazards.</p>
 						  <p class="title-box3">Physical Hazards</p>
-						  <p style="text-align: left; font-size: 20px;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
+						  <p style="text-align: left; font-size: 20px; color: black;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
 						</section>
 						<section data-auto-animate>
 							<div class="title-container">
@@ -1056,11 +1226,11 @@
 							</div>
 							<p class="content">WHMIS and the Globally Harmonized System (GHS) group hazards into three broad categories: physical hazards, health hazards, and environmental hazards. Each hazardous product can have one or more of these types of hazards.</p>
 							<p class="title-box3">Physical Hazards</p>
-							<p style="text-align: left; font-size: 20px;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
+							<p style="text-align: left; font-size: 20px; color: black;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
 							<p class="title-box3">Health Hazards</p>
-							<p style="text-align: left; font-size: 20px;">Health hazards are properties of a substance that can cause adverse health effects in humans. These hazards might be acute (immediate effects like poisoning, burns, or irritation) or chronic (long-term effects like cancer or organ damage).</p>
+							<p style="text-align: left; font-size: 20px; color: black;">Health hazards are properties of a substance that can cause adverse health effects in humans. These hazards might be acute (immediate effects like poisoning, burns, or irritation) or chronic (long-term effects like cancer or organ damage).</p>
 						  </section>
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Groups">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">GROUPS</h3>
@@ -1068,11 +1238,11 @@
 							</div>
 							<p class="content">WHMIS and the Globally Harmonized System (GHS) group hazards into three broad categories: physical hazards, health hazards, and environmental hazards. Each hazardous product can have one or more of these types of hazards.</p>
 							<p class="title-box3">Physical Hazards</p>
-							<p style="text-align: left; font-size: 20px;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
+							<p style="text-align: left; font-size: 20px; color: black;">Physical hazards are properties of a chemical or substance that relate to its ability to physically harm people or property through fire, explosion, or reactive properties.</p>
 							<p class="title-box3">Health Hazards</p>
-							<p style="text-align: left; font-size: 20px;">Health hazards are properties of a substance that can cause adverse health effects in humans. These hazards might be acute (immediate effects like poisoning, burns, or irritation) or chronic (long-term effects like cancer or organ damage).</p>
+							<p style="text-align: left; font-size: 20px; color: black;">Health hazards are properties of a substance that can cause adverse health effects in humans. These hazards might be acute (immediate effects like poisoning, burns, or irritation) or chronic (long-term effects like cancer or organ damage).</p>
 							<p class="title-box3">Environmental Hazards</p>
-							<p style="text-align: left; font-size: 20px;">Environmental hazards refer to the potential of a chemical to harm the environment, particularly aquatic ecosystems.</p>
+							<p style="text-align: left; font-size: 20px; color: black;">Environmental hazards refer to the potential of a chemical to harm the environment, particularly aquatic ecosystems.</p>
 						</section>
 
 <!-- Slide number 4b -->
@@ -1092,7 +1262,7 @@
 							</div>
 							<p class="content">Hazard Classes are the broadest level of categorization. They describe the type of hazard associated with a substance. These can be physical (like flammability) or health-related (like carcinogenicity).</p>
 						  </section>
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Classes">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #047494;">CLASSES</h3>
@@ -1139,7 +1309,7 @@
 								</div>
 								<p class="content">Categories provide a more detailed level of classification, usually representing the level of severity or risk within a given class or group. Categories are used to define the degree of hazard a substance poses. Category 1 is considered more hazardous than Category 2, and this pattern continues. Within a category, Subcategory 1A is more hazardous than 1B, and so on. Some classes use types instead of categories, where Type A is more hazardous than Type B, and this pattern continues as well.</p>
 							  </section>
-							  <section data-auto-animate>
+							  <section data-auto-animate data-title="Categories">
 								<div class="title-container">
 									
 								<h3 class="title-box" style="color: #1f7a1f;">CATEGORIES</h3>
@@ -1181,7 +1351,7 @@
 
 
 
-								<section data-auto-animate>
+								<section data-auto-animate data-title="QUIZ #2">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -1244,14 +1414,19 @@
 
 <!-- Slide number 5a -->
 
-					<section data-background-gradient="linear-gradient(to bottom, #eaecc6, #2bc0e4)">
+					<section data-title="Module 3: Physical Hazards"
+						data-background-image="{% static 'images/originalG4.png' %}" 
+						data-background-size="cover" 
+						data-background-position="center" 
+						data-background-repeat="no-repeat"
+						class="center-slide">
 						<section><div class="title-container">
 							<span class="line"></span>
 							<div class="title-box">Physical Hazards</div>
 							<span class="line"></span>
 						</div>
 					</section>
-						<section>
+						<section data-title="Hazard Classification Overview">
 							<div class="title-container">
 								
 								<div class="title-box">Physical Hazards</div>
@@ -1293,7 +1468,7 @@
 									</p>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Explosives">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">EXPLOSIVES</h5>
@@ -1351,7 +1526,7 @@
 									</p>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Flamable">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">FLAMABLE</h5>
@@ -1417,7 +1592,7 @@
 									</p>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Oxidizers">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">OXIDIZERS</h5>
@@ -1475,7 +1650,7 @@
 									</p>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Gases Under Pressure">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">GASES UNDER PRESSURE</h5>
@@ -1533,7 +1708,7 @@
 									</p>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Corrosion">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">CORROSION</h5>
@@ -1568,7 +1743,7 @@
 									<span class="line"></span>
 								</div>
 							</section>
-							<section data-auto-animate>
+							<section data-auto-animate >
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">PICTOGRAMS</h5>
@@ -1577,7 +1752,7 @@
 								<p class="content" style="font-size: 20px;">Pictograms are symbols used to visually communicate the hazards associated with hazardous products in workplaces.</p>
 							</section>
 							
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Pictograms">
 								<div class="image-text-container2">
 									<img src="{% static 'images/exploding_bomb.png' %}" alt="flame over circle Symbol" class="hazard-image2">
 									<p class="hazard-text2" style="color: black">
@@ -1622,7 +1797,7 @@
 
 
 
-								<section data-auto-animate>
+								<section data-auto-animate data-title="QUIZ #3">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -1656,14 +1831,19 @@
 
 <!-- Slide number 6a -->
 
-					<section data-background-gradient="linear-gradient(to bottom, #ba8dd8, #8c8c8c)">
+					<section data-title="Module 4: Health Hazards"
+						data-background-image="{% static 'images/originalG8.png' %}" 
+						data-background-size="cover" 
+						data-background-position="center" 
+						data-background-repeat="no-repeat"
+						class="center-slide">
 						<section><div class="title-container">
 							<span class="line"></span>
 							<div class="title-box">Health Hazards</div>
 							<span class="line"></span>
 						</div>
 					</section>
-						<section>
+						<section data-title="Hazard Classification Overview">
 							<div class="title-container">
 								
 								<div class="title-box">Health Hazards</div>
@@ -1700,12 +1880,12 @@
 							<p class="content" style="font-size: 20px;">Corrosive (to skin/eyes): These chemicals can cause severe skin burns and eye damage on contact. </p>
 							<div class="image-text-container">
 								<img src="{% static 'images/corrosion.png' %}" alt="flame over circle Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									The corrosion pictogram is used to indicate substances that can cause severe damage to metals, skin, and eyes. It is represented by an image of test tubes pouring a corrosive substance onto a hand and a metal surface, both showing visible damage. While corrosion to metals might not be a primary concern in the clinic (except for maintaining equipment), it is related to chemical reactivity. 
 								</p>
 							</div>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Corrosion">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">CORROSION</h5>
@@ -1714,7 +1894,7 @@
 							<p class="content" style="font-size: 20px;">Corrosive (to skin/eyes): These chemicals can cause severe skin burns and eye damage on contact. </p>
 							<div class="image-text-container">
 								<img src="{% static 'images/corrosion.png' %}" alt="flame over circle Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									The corrosion pictogram is used to indicate substances that can cause severe damage to metals, skin, and eyes. It is represented by an image of test tubes pouring a corrosive substance onto a hand and a metal surface, both showing visible damage. While corrosion to metals might not be a primary concern in the clinic (except for maintaining equipment), it is related to chemical reactivity.
 								</p>
 							</div>
@@ -1758,12 +1938,12 @@
 							<p class="content" style="font-size: 20px;">(Harmful, Toxic, or Fatal): These classes cover chemicals that can cause effects after a short exposure – by inhalation, ingestion, or skin absorption.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/skull_crossbones.png' %}" alt="flame over circle Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									Skull and Crossbones pictogram is used for the most acutely toxic substances (those that can cause death or serious harm even in small amounts). In a clinical setting, you might not have many substances with the Skull and Crossbones symbol, as those are extremely dangerous chemicals (like cyanides or arsenic compounds). However, one example could be phenol (found in some dental formulations or local anesthetic formulations in very low concentrations) – phenol is quite toxic if ingested or absorbed in significant amount.
 								</p>
 							</div>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Acute Toxicity">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">ACUTE TOXICITY</h5>
@@ -1772,7 +1952,7 @@
 							<p class="content" style="font-size: 20px;">(Harmful, Toxic, or Fatal): These classes cover chemicals that can cause effects after a short exposure – by inhalation, ingestion, or skin absorption.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/skull_crossbones.png' %}" alt="flame over circle Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									Skull and Crossbones pictogram is used for the most acutely toxic substances (those that can cause death or serious harm even in small amounts). In a clinical setting, you might not have many substances with the Skull and Crossbones symbol, as those are extremely dangerous chemicals (like cyanides or arsenic compounds). However, one example could be phenol (found in some dental formulations or local anesthetic formulations in very low concentrations) – phenol is quite toxic if ingested or absorbed in significant amount.
 								</p>
 							</div>
@@ -1814,12 +1994,12 @@
 							<p class="content" style="font-size: 20px;">Serious Health Effects: Some substances may not make you sick immediately but can cause serious health issues over time.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/health_hazard.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									 Health Hazard pictogram (silhouette of a person with a star-shaped burst in the chest) indicating hazards like carcinogenicity, reproductive toxicity, respiratory sensitization, specific organ toxicity, etc. Unlike immediate dangers (such as acute toxicity), these hazards may develop over time and impact major body systems.
 								</p>
 							</div>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Health Hazard">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">HEALTH HAZARD</h5>
@@ -1828,7 +2008,7 @@
 							<p class="content" style="font-size: 20px;">Serious Health Effects: Some substances may not make you sick immediately but can cause serious health issues over time.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/health_hazard.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									Health Hazard pictogram (silhouette of a person with a star-shaped burst in the chest) indicating hazards like carcinogenicity, reproductive toxicity, respiratory sensitization, specific organ toxicity, etc. Unlike immediate dangers (such as acute toxicity), these hazards may develop over time and impact major body systems.
 								</p>
 							</div>
@@ -1876,12 +2056,12 @@
 							<p class="content" style="font-size: 20px;">These substances cause less severe health effects but still can harm. These chemicals can cause irritation, allergic reactions, drowsiness, or other temporary health effects but are not necessarily fatal or chronically damaging.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/exclamation_mark.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									 The Exclamation Mark pictogram warns about less severe health hazards compared to the Health Hazard or Skull and Crossbones pictograms. Many clinical chemicals are irritants, such as surface disinfectants, euginol, or acrylic monomers.
 								</p>
 							</div>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Irritant">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">IRRITANT</h5>
@@ -1890,7 +2070,7 @@
 							<p class="content" style="font-size: 20px;">These substances cause less severe health effects but still can harm. These chemicals can cause irritation, allergic reactions, drowsiness, or other temporary health effects but are not necessarily fatal or chronically damaging.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/exclamation_mark.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									The Exclamation Mark pictogram warns about less severe health hazards compared to the Health Hazard or Skull and Crossbones pictograms. Many clinical chemicals are irritants, such as surface disinfectants, euginol, or acrylic monomers.
 								</p>
 							</div>
@@ -1936,12 +2116,12 @@
 							<p class="content" style="font-size: 20px;">A biohazard is any biological substance that can cause harm. Proper handling, protective equipment, and disposal methods are essential to prevent infections and contamination.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/biohazardous.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									 The Biohazard symbol is used to indicate the presence of biological substances that pose a risk to human health, animals, or the environment. These hazards include bacteria, viruses, toxins, or other microorganisms that can cause infections, diseases, or other harmful biological effects.
 								</p>
 							</div>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Biohazardous">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">BIOHAZARDOUS</h5>
@@ -1950,7 +2130,7 @@
 							<p class="content" style="font-size: 20px;">A biohazard is any biological substance that can cause harm. Proper handling, protective equipment, and disposal methods are essential to prevent infections and contamination.</p>
 							<div class="image-text-container">
 								<img src="{% static 'images/biohazardous.png' %}" alt="flame Symbol" class="hazard-image">
-								<p class="hazard-text-b">
+								<p class="hazard-text">
 									The Biohazard symbol is used to indicate the presence of biological substances that pose a risk to human health, animals, or the environment. These hazards include bacteria, viruses, toxins, or other microorganisms that can cause infections, diseases, or other harmful biological effects.
 								</p>
 							</div>
@@ -1987,7 +2167,7 @@
 
 <!-- Slide number 6h -->						
 						
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Pictograms">
 							<div class="image-text-container2">
 								<img src="{% static 'images/corrosion.png' %}" alt="flame over circle Symbol" class="hazard-image2">
 								<p class="hazard-text2">
@@ -2032,7 +2212,7 @@
 
 
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="QUIZ #4">
 								<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -2065,14 +2245,19 @@
 											
 <!-- Slide number 7a -->
 
-					<section data-background-gradient="linear-gradient(to bottom, #e9d362, #8c8c8c)">
+					<section data-title="Module 5: Environmental Hazards" 
+							data-background-image="{% static 'images/originalG9.png' %}" 
+							data-background-size="cover" 
+							data-background-position="center" 
+							data-background-repeat="no-repeat"
+							class="center-slide">
 						<section><div class="title-container">
 							<span class="line"></span>
 							<div class="title-box">Environmental Hazards</div>
 							<span class="line"></span>
 						</div>
 					</section>
-						<section>
+						<section data-title="Hazard Classification Overview">
 							<div class="title-container">
 								
 								<div class="title-box">Environmental Hazards</div>
@@ -2114,7 +2299,7 @@
 								</div>
 							</section>
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="Environmental Hazards">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #b30000;">ENVIRONMENTAL</h5>
@@ -2152,7 +2337,7 @@
 
 
 
-								<section data-auto-animate>
+								<section data-auto-animate data-title="QUIZ #5">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -2185,14 +2370,19 @@
 
 <!-- Slide number 8a -->					
 
-					<section data-background-gradient="linear-gradient(to bottom, #88ddd8, #556270)">
+					<section data-title="Module 6: Labels" 
+							data-background-image="{% static 'images/originalG10.png' %}" 
+							data-background-size="cover" 
+							data-background-position="center" 
+							data-background-repeat="no-repeat"
+							class="center-slide">
 						<section><div class="title-container">
 							<span class="line"></span>
 							<div class="title-box">Labels</div>
 							<span class="line"></span>
 						</div>
 					</section>
-						<section>
+						<section data-title="Understanding and Application">
 						<div class="title-container">
 							
 							<div class="title-box">Labels</div>
@@ -2225,7 +2415,7 @@
 							<p class="content">A supplier label is the label that comes on a hazardous product when you receive it from the manufacturer or supplier. It’s required by law to have specific information in English and French, presented clearly on the container. Whenever you pick up a bottle or container and see the full suite of hazard information, you’re likely looking at a supplier label.</p>
 						  </section>
 
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Supplier Label">
 							<div class="title-container">
 								
 								<h5 class="title-box" style="color: #bb1414;">SUPPLIER LABEL</h5>
@@ -2261,7 +2451,7 @@
 								</div>
 						</section>
 
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Example Supplier Label">
 							<div class="title-container">
 								
 							<h5 class="title-box" style="color: #b30000;">EXAMPLE LABEL</h5>
@@ -2331,7 +2521,7 @@
 							<p class="content">A workplace label is a simplified label that employers produce and affix to hazardous materials under certain circumstances in the workplace. Unlike supplier labels, workplace labels are for internal use only – they’re not the original label from the manufacturer, but one we create at the clinic when needed.</p>
 						  </section>
 
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Workplace Label">
 							<div class="title-container">
 								
 								<h5 class="title-box" style="color: #bb1414;">WORKPLACE LABEL</h5>
@@ -2365,7 +2555,7 @@
 
 <!-- Slide number QUIZ SIX -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="QUIZ #6">
 								<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -2432,7 +2622,12 @@
 
 <!-- Slide number 9a -->
 
-					<section data-background-gradient="linear-gradient(to bottom, #df9fbf, #264d73)">
+					<section data-title="Module 7: Safety Data Sheets (SDS)" 
+							data-background-image="{% static 'images/originalG11.png' %}" 
+							data-background-size="cover" 
+							data-background-position="center" 
+							data-background-repeat="no-repeat"
+							class="center-slide">
 						<section>
 							<div class="title-container">
 							<span class="line"></span>
@@ -2440,7 +2635,7 @@
 							<span class="line"></span>
 						</div>
 					</section>
-						<section>
+						<section data-title="SDS Overview">
 						<div class="title-container">
 							
 							<div class="title-box">Safety Data Sheets (SDS)</div>
@@ -2456,7 +2651,7 @@
 
 <!-- Slide number 9b -->
 
-						<section>
+						<section data-title="Why do you Need SDS?">
 							<div class="title-container">
 								
 								<div class="title-box">Safety Data Sheets (SDS)</div>
@@ -2472,7 +2667,7 @@
 
 <!-- Slide number 9c -->
 
-							<section>
+							<section data-title="Purpose of SDS">
 								<div class="title-container">
 									
 									<div class="title-box">Safety Data Sheets (SDS)</div>
@@ -2498,7 +2693,7 @@
 
 	<!-- Slide number 9d -->									
 
-							<section>
+							<section data-title="When to Consult SDS">
 								<div class="title-container">
 									
 									<div class="title-box">Safety Data Sheets (SDS)</div>
@@ -2534,7 +2729,7 @@
 
 <!-- Slide number 9f -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Sections 1-3">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2558,7 +2753,7 @@
 
 <!-- Slide number 9g -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Sections 4-5">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2582,7 +2777,7 @@
 
 <!-- Slide number 9h -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Sections 7-9">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2606,7 +2801,7 @@
 
 <!-- Slide number 9i -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Sections 10-12">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2630,7 +2825,7 @@
 
 <!-- Slide number 9j -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Sections 13-15">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2654,7 +2849,7 @@
 
 <!-- Slide number 9k -->
 
-							<section data-auto-animate>
+							<section data-auto-animate data-title="SDS Section 16">
 								<div class="title-container">
 									
 								<h5 class="title-box" style="color: #5c0a0a;">SECTIONS OF SDS</h5>
@@ -2687,7 +2882,7 @@
 
 
 
-								<section data-auto-animate>
+								<section data-auto-animate data-title="QUIZ #7">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -2748,7 +2943,12 @@
 
 <!-- Slide number 10a -->
 
-							<section data-background-gradient="linear-gradient(to bottom, #e4e5e6, #00416a)">
+							<section data-title="Module 8: Protective Measures Safe Handling Practices" 
+							data-background-image="{% static 'images/originalG4.png' %}" 
+							data-background-size="cover" 
+							data-background-position="center" 
+							data-background-repeat="no-repeat"
+							class="center-slide">
 								<section>
 									<div class="title-container">
 									<span class="line"></span>
@@ -2759,7 +2959,7 @@
 
 <!-- Slide number 10b -->
 
-							<section>
+							<section data-title="Protective Measures Overview">
 								<div class="title-container">
 								
 								<div class="title-box">Protective Measures</div>
@@ -2800,7 +3000,7 @@
 							</div>
 						  <p class="content">Always wear appropriate gloves when handling chemicals. For most routine dental procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic barrier. However, not all gloves are equal for all chemicals:</p>
 						  <p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
-						  <p style="text-align: left; font-size: 17px;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
+						  <p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
 						</section>
 
 						<section data-auto-animate>
@@ -2811,12 +3011,12 @@
 							</div>
 							<p class="content">Always wear appropriate gloves when handling chemicals. For most routine dental procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic barrier. However, not all gloves are equal for all chemicals:</p>
 							<p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
-							<p style="text-align: left; font-size: 17px;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
 							<p class="title-box3" style="background-color: #ffe6cc; color: black">Latex Gloves</p>
-							<p style="text-align: left; font-size: 17px;">Latex gloves offer good dexterity but can degrade with certain chemicals (like solvents will make them sticky or they may allow certain chemicals through faster). Also, latex can cause allergies in some workers. Use nitrile if possible for chemical tasks, as nitrile is more chemically resistant.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Latex gloves offer good dexterity but can degrade with certain chemicals (like solvents will make them sticky or they may allow certain chemicals through faster). Also, latex can cause allergies in some workers. Use nitrile if possible for chemical tasks, as nitrile is more chemically resistant.</p>
 						  </section>
 						  
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Gloves">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
@@ -2824,11 +3024,11 @@
 							</div>
 							<p class="content">Always wear appropriate gloves when handling chemicals. For most routine dental procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic barrier. However, not all gloves are equal for all chemicals:</p>
 							<p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
-							<p style="text-align: left; font-size: 17px;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant to many solvents and chemicals and are a good all-purpose choice in dentistry. They are typically recommended for handling things like disinfectants, cleaners, and even mercury (they resist permeation better than latex).</p>
 							<p class="title-box3" style="background-color: #ffe6cc; color: black">Latex Gloves</p>
-							<p style="text-align: left; font-size: 17px;">Latex gloves offer good dexterity but can degrade with certain chemicals (like solvents will make them sticky or they may allow certain chemicals through faster). Also, latex can cause allergies in some workers. Use nitrile if possible for chemical tasks, as nitrile is more chemically resistant.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Latex gloves offer good dexterity but can degrade with certain chemicals (like solvents will make them sticky or they may allow certain chemicals through faster). Also, latex can cause allergies in some workers. Use nitrile if possible for chemical tasks, as nitrile is more chemically resistant.</p>
 							<p class="title-box3" style="background-color: #e6e600; color: black">Utility Gloves</p>
-							<p style="text-align: left; font-size: 17px;"> Utility gloves (heavy-duty rubber gloves): For tasks like handling concentrated chemicals, scrubbing instruments in potent cleaning agents, or dealing with chemical spills, thicker neoprene or rubber utility gloves (often reusable) should be worn over or instead of exam gloves.</p>
+							<p style="text-align: left; font-size: 17px; color: black;"> Utility gloves (heavy-duty rubber gloves): For tasks like handling concentrated chemicals, scrubbing instruments in potent cleaning agents, or dealing with chemical spills, thicker neoprene or rubber utility gloves (often reusable) should be worn over or instead of exam gloves.</p>
 						</section>
 
 <!-- Slide number 10d -->
@@ -2856,9 +3056,9 @@
 							</div>
 						  <p class="content">Chemical splash goggles or a face shield (with safety glasses) are vital when there’s any risk of a chemical splashing or spraying into your eyes or face. Regular prescription glasses or dental loupes are not sufficient – chemicals can go around the edges.</p>
 						  <p class="title-box3" style="background-color: #ffb366; color: black">Goggles</p>
-						  <p style="text-align: left; font-size: 17px;"> For tasks like preparing etchant, pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal against the face. Goggles protect from direct splashes to the eyes. Many dental staff wear safety glasses routinely for patient care (which is good for flying debris), but for chemical handling, upgrade to goggles.</p>
+						  <p style="text-align: left; font-size: 17px; color: black;"> For tasks like preparing etchant, pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal against the face. Goggles protect from direct splashes to the eyes. Many dental staff wear safety glasses routinely for patient care (which is good for flying debris), but for chemical handling, upgrade to goggles.</p>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Eye / Face Protection">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">EYE / FACE</h3>
@@ -2866,9 +3066,9 @@
 							</div>
 							<p class="content">Chemical splash goggles or a face shield (with safety glasses) are vital when there’s any risk of a chemical splashing or spraying into your eyes or face. Regular prescription glasses or dental loupes are not sufficient – chemicals can go around the edges.</p>
 							<p class="title-box3" style="background-color: #ffb366; color: black">Goggles</p>
-							<p style="text-align: left; font-size: 17px;"> For tasks like preparing etchant, pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal against the face. Goggles protect from direct splashes to the eyes. Many dental staff wear safety glasses routinely for patient care (which is good for flying debris), but for chemical handling, upgrade to goggles.</p>
+							<p style="text-align: left; font-size: 17px; color: black;"> For tasks like preparing etchant, pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal against the face. Goggles protect from direct splashes to the eyes. Many dental staff wear safety glasses routinely for patient care (which is good for flying debris), but for chemical handling, upgrade to goggles.</p>
 							<p class="title-box3" style="background-color: #d279a6; color: black">Face Shield</p>
-							<p style="text-align: left; font-size: 17px;"> If working with a volume of liquid that could splash to your whole face or if you’re pouring something overhead, use a face shield in addition to goggles (face shield alone doesn’t seal the eyes, but it adds extra splash coverage for your skin and face).</p>
+							<p style="text-align: left; font-size: 17px; color: black;"> If working with a volume of liquid that could splash to your whole face or if you’re pouring something overhead, use a face shield in addition to goggles (face shield alone doesn’t seal the eyes, but it adds extra splash coverage for your skin and face).</p>
 						  </section>
 
 <!-- Slide number 10e -->
@@ -2896,7 +3096,7 @@
 							</div>
 						  <p class="content">Most dental environments have you wearing a surgical mask or similar for infection control. These masks provide limited protection against chemical vapors – mostly they guard against splashes and large droplets.</p>
 						  <p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-						  <p style="text-align: left; font-size: 17px;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
+						  <p style="text-align: left; font-size: 17px; color: black;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
 						</section>
 						<section data-auto-animate>
 							<div class="title-container">
@@ -2906,11 +3106,11 @@
 							</div>
 							<p class="content">Most dental environments have you wearing a surgical mask or similar for infection control. These masks provide limited protection against chemical vapors – mostly they guard against splashes and large droplets.</p>
 							<p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-							<p style="text-align: left; font-size: 17px;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
 							<p class="title-box3" style="background-color: #cc6600; color: black">Local Exhaust Ventilation (LEV):</p>
-							<p style="text-align: left; font-size: 17px;">Before resorting to respirators, use engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures, do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point suction (like extraoral suction devices) can reduce inhalation risks for things like monomer, formalin jars, or large volumes of disinfectant.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Before resorting to respirators, use engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures, do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point suction (like extraoral suction devices) can reduce inhalation risks for things like monomer, formalin jars, or large volumes of disinfectant.</p>
 						  </section>
-						  <section data-auto-animate>
+						  <section data-auto-animate data-title="Respiratory Protection">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
@@ -2918,11 +3118,11 @@
 							</div>
 							<p class="content">Most dental environments have you wearing a surgical mask or similar for infection control. These masks provide limited protection against chemical vapors – mostly they guard against splashes and large droplets.</p>
 							<p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-							<p style="text-align: left; font-size: 17px;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">For many dental chemicals, general room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth. However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
 							<p class="title-box3" style="background-color: #cc6600; color: black">Local Exhaust Ventilation (LEV):</p>
-							<p style="text-align: left; font-size: 17px;">Before resorting to respirators, use engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures, do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point suction (like extraoral suction devices) can reduce inhalation risks for things like monomer, formalin jars, or large volumes of disinfectant.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">Before resorting to respirators, use engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures, do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point suction (like extraoral suction devices) can reduce inhalation risks for things like monomer, formalin jars, or large volumes of disinfectant.</p>
 							<p class="title-box3" style="background-color: #00e6e6; color: black">Respirators</p>
-							<p style="text-align: left; font-size: 17px;"> If ventilation isn’t enough or if a worker is particularly sensitive, a respirator might be needed. This could be an N95 mask or a half-face respirator with appropriate chemical cartridges.</p>
+							<p style="text-align: left; font-size: 17px; color: black;"> If ventilation isn’t enough or if a worker is particularly sensitive, a respirator might be needed. This could be an N95 mask or a half-face respirator with appropriate chemical cartridges.</p>
 						</section>
 
 <!-- Slide number 10f -->
@@ -2950,9 +3150,9 @@
 							</div>
 						  <p class="content">Wear a lab coat or gown when dealing with chemicals, preferably one that is resistant to liquids. For infection control, you likely already wear a disposable or reusable gown. Ensure it’s covering you fully (closed front, long sleeves with snug cuffs) so that if a splash occurs, it hits the gown, not your skin or your street clothes.</p>
 						  <p class="title-box3" style="background-color: #7070db; color: black">Chemical Resistant Apron</p>
-						  <p style="text-align: left; font-size: 17px;"> For higher-risk chemical tasks, chemical-resistant aprons (e.g., rubber or plastic aprons) can be worn over your coat. Say you’re handling the hazardous waste container for fixer – wearing a vinyl apron will protect your torso from any leak.</p>
+						  <p style="text-align: left; font-size: 17px; color: black;"> For higher-risk chemical tasks, chemical-resistant aprons (e.g., rubber or plastic aprons) can be worn over your coat. Say you’re handling the hazardous waste container for fixer – wearing a vinyl apron will protect your torso from any leak.</p>
 						</section>
-						<section data-auto-animate>
+						<section data-auto-animate data-title="Skin Protection">
 							<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">SKIN PROTECTION</h3>
@@ -2960,15 +3160,15 @@
 							</div>
 							<p class="content">Wear a lab coat or gown when dealing with chemicals, preferably one that is resistant to liquids. For infection control, you likely already wear a disposable or reusable gown. Ensure it’s covering you fully (closed front, long sleeves with snug cuffs) so that if a splash occurs, it hits the gown, not your skin or your street clothes.</p>
 							<p class="title-box3" style="background-color: #7070db; color: black">Chemical Resistant Apron</p>
-							<p style="text-align: left; font-size: 17px;"> For higher-risk chemical tasks, chemical-resistant aprons (e.g., rubber or plastic aprons) can be worn over your coat. Say you’re handling the hazardous waste container for fixer – wearing a vinyl apron will protect your torso from any leak.</p>
+							<p style="text-align: left; font-size: 17px; color: black;"> For higher-risk chemical tasks, chemical-resistant aprons (e.g., rubber or plastic aprons) can be worn over your coat. Say you’re handling the hazardous waste container for fixer – wearing a vinyl apron will protect your torso from any leak.</p>
 							<p class="title-box3" style="background-color: #e64d00; color: black">Closed-toe shoes</p>
-							<p style="text-align: left; font-size: 17px;">  These are a must (which should already be a clinic policy). If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid mesh athletic shoes on days you work with chemicals – a solid material shoe is better as a barrier.</p>
+							<p style="text-align: left; font-size: 17px; color: black;">  These are a must (which should already be a clinic policy). If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid mesh athletic shoes on days you work with chemicals – a solid material shoe is better as a barrier.</p>
 						  </section>
 
 <!-- Slide number 10g -->
 
 							
-							<section>
+							<section data-title="Safe Handling Overview">
 							<div class="title-container">
 
 							<div class="title-box">Safe Handling</div>
@@ -3043,7 +3243,7 @@
 								
 							  </section>
 
-							  <section data-auto-animate>
+							  <section data-auto-animate data-title="Safe Handling Practices Part 1">
 								<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">SAFE HANDLING PRACTICES</h3>
@@ -3132,7 +3332,7 @@
 								
 							  </section>
 
-							  <section data-auto-animate>
+							  <section data-auto-animate data-title="Safe Handling Practices Part 2">
 								<div class="title-container">
 								
 								<h3 class="title-box" style="color: #bb1414;">SAFE HANDLING PRACTICES</h3>
@@ -3182,7 +3382,7 @@
 
 <!-- Slide number 10l -->
 
-								<section data-auto-animate>
+								<section data-auto-animate data-title="Safe Storage Practices Overview">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">SAFE STORAGE PRACTICES</h3>
@@ -3235,7 +3435,7 @@
 <!-- Slide number 10n -->
 
 	
-								  <section data-auto-animate>
+								  <section data-auto-animate data-title="Safe Storage Practices Part 1">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">SAFE STORAGE PRACTICES</h3>
@@ -3328,7 +3528,7 @@
 
 <!-- Slide number 10q -->								  
 	
-								  <section data-auto-animate>
+								  <section data-auto-animate data-title="Safe Storage Practices Part 2">
 									<div class="title-container">
 									
 									<h3 class="title-box" style="color: #bb1414;">SAFE STORAGE PRACTICES</h3>
@@ -3378,7 +3578,7 @@
 
 
 
-									<section data-auto-animate>
+									<section data-auto-animate data-title="QUIZ #8">
 										<div class="title-container">
 										
 										<h3 class="title-box" style="color: #bb1414;">QUIZ</h3>
@@ -3438,7 +3638,12 @@
 								
 							</section>
 
-							<section data-background-gradient="linear-gradient(to bottom, #e4e5e6, #80ceff)">
+							<section 
+							data-background-image="{% static 'images/originalG7.png' %}" 
+							data-background-size="cover" 
+							data-background-position="center" 
+							data-background-repeat="no-repeat"
+							class="center-slide">
 								<section>
 									<div class="title-container">
 									
@@ -3493,7 +3698,7 @@
 								</div>
 							</div>
 
-							<div class="button-row" style="position: fixed; top: 30px; z-index: 1000;">
+							<div class="button-row" style="position: fixed; top: 15px; right: 80px; z-index: 1000;">
 						<div class="button-wrap">
 							<button class="glass-button" onclick="exitCourse()">
 							<span style="letter-spacing: 0.15em;">EXIT</span>
@@ -3508,16 +3713,160 @@
          <script src="https://unpkg.com/reveal.js/plugin/markdown/markdown.js"></script>
          <script src="https://unpkg.com/reveal.js/plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    // Initialize Reveal
+    Reveal.initialize({
+        hash: true,
+        progress: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
+    let maxPercent = 0; // store maximum reached progress
+
+    function updatePercent() {
+        const current = Reveal.getSlidePastCount() + 1;
+        const total = Reveal.getTotalSlides();
+        const percent = Math.round((current / total) * 100);
+
+        // Only update if we progress forward
+        if (percent > maxPercent) {
+            maxPercent = percent;
+            document.getElementById("progressPercent").textContent = maxPercent + "%";
+        }
+    }
+
+    // Fire on first load
+    Reveal.on("ready", updatePercent);
+
+    // Fire on every slide change
+    Reveal.on("slidechanged", updatePercent);
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton = document.getElementById("menuButton");
+    const sideMenu   = document.getElementById("sideMenu");
+    const menuList   = document.getElementById("menuList");
+
+    menuButton.addEventListener("click", () => {
+        sideMenu.style.left = (sideMenu.style.left === "0px") ? "-350px" : "0px";
+    });
+
+    menuList.innerHTML = ""; // clear menu
+
+    const slideMap = {}; // store references for completion marks
+    const childMap = {}; // track children per parent
+
+    const hSlides = document.querySelectorAll(".reveal .slides > section");
+
+    hSlides.forEach((hSlide, hIndex) => {
+
+        const hTitle = hSlide.getAttribute("data-title");
+        if (!hTitle) return;
+
+        const li = document.createElement("li");
+
+        const wrap = document.createElement("div");
+        wrap.classList.add("menu-item-content");
+
+        const circle = document.createElement("span");
+        circle.classList.add("circle");
+
+        const text = document.createElement("span");
+        text.textContent = hTitle;
+        text.classList.add("text-label");
+
+        wrap.appendChild(circle);
+        wrap.appendChild(text);
+        li.appendChild(wrap);
+
+        slideMap[hIndex] = { circle: circle };
+
+        // Track child completion for this parent
+        childMap[hIndex] = [];
+
+        const vSlides = hSlide.querySelectorAll(":scope > section");
+        const vList = document.createElement("ul");
+
+        vSlides.forEach((vSlide, vIndex) => {
+
+            const vTitle = vSlide.getAttribute("data-title");
+            if (!vTitle) return;
+
+            const vLi = document.createElement("li");
+
+            const vWrap = document.createElement("div");
+            vWrap.classList.add("menu-item-content");
+
+            const vCircle = document.createElement("span");
+            vCircle.classList.add("circle");
+
+            const vText = document.createElement("span");
+            vText.textContent = vTitle;
+            vText.classList.add("text-label");
+
+            vWrap.appendChild(vCircle);
+            vWrap.appendChild(vText);
+            vLi.appendChild(vWrap);
+
+            // Store references
+            slideMap[hIndex][vIndex] = vCircle;
+            childMap[hIndex].push(vCircle);
+
+            vLi.addEventListener("click", (e) => {
+                e.stopPropagation();
+                Reveal.slide(hIndex, vIndex);
+                sideMenu.style.left = "-350px";
+            });
+
+            vList.appendChild(vLi);
+        });
+
+        if (vList.childElementCount > 0) {
+            li.appendChild(vList);
+            li.addEventListener("click", () => {
+                li.classList.toggle("open");
+            });
+        } else {
+            li.addEventListener("click", () => {
+                Reveal.slide(hIndex);
+                sideMenu.style.left = "-350px";
+            });
+        }
+
+        menuList.appendChild(li);
+    });
+
+    /* ------------------------------
+       Track Slide Completion
+    ------------------------------ */
+    Reveal.on("slidechanged", function (event) {
+
+        const h = event.indexh;
+        const v = event.indexv || 0;
+
+        // Mark current slide completed
+        if (slideMap[h]) {
+            if (slideMap[h].circle && (!childMap[h] || childMap[h].length === 0)) {
+                // parent without children → mark immediately
+                slideMap[h].circle.classList.add("completed");
+            }
+            if (slideMap[h][v]) {
+                slideMap[h][v].classList.add("completed");
+            }
+
+            // Check if all children are completed
+            if (childMap[h] && childMap[h].length > 0) {
+                const allDone = childMap[h].every(childCircle => childCircle.classList.contains("completed"));
+                if (allDone) {
+                    slideMap[h].circle.classList.add("completed");
+                }
+            }
+        }
+    });
+
+});
+</script>
 
 
 		<style>

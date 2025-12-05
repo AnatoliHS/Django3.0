@@ -1,15 +1,20 @@
 {% load static %} {% load startr_filters %}
 <!DOCTYPE html>
 <html
-  style="--bg:{% if user.is_authenticated %}{% if user.is_staff or user.is_superuser %} #ede8f5 {% else %} #ede8f5{% endif %}{% else %}
-   #ede8f5
-   {% endif %}"
+   style="
+    background-image: url('/static/images/originalG4.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  "
 >
   <head>
     <title>{% block title %}A Startr/WEB-Django Site{% endblock %}</title>
     <script src="https://unpkg.com/hyperscript.org@0.9.14"></script>
     <link rel="stylesheet" type="text/css" href="https://startr.style/style.css" />
     <style>
+      
       h1 {
         font-size: 2em;
         margin: 0;
