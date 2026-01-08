@@ -124,6 +124,29 @@
 				gap: 10px; /* Space between lines and box */
 					}
 
+			.main-title {
+				margin-left: auto;  /* 🔥 pushes it to the far right */
+				margin-right: 0;
+				margin-top: 0;
+				margin-bottom: 0;
+				font-size: 70px;
+			}
+			.main-title2 {
+				margin-left: auto;  /* 🔥 pushes it to the far right */
+				margin-right: 0;
+				margin-top: 0;
+				margin-bottom: 0;
+				font-size: 60px;
+			}
+
+			.main-title3 {
+				margin-left: auto;  /* 🔥 pushes it to the far right */
+				margin-right: 0;
+				margin-top: 0;
+				margin-bottom: 0;
+				font-size: 50px;
+			}
+
 			.title-box {
 				padding: 10px 20px;
 				border: 2px solid black;
@@ -160,6 +183,26 @@
 				white-space: nowrap;
 				color: white;
 				margin-left: 0; 
+			}
+
+			.title-box5 {	
+				display: flex; 
+				width: 100%; 
+				min-height: 300px;	
+				align-items: center;
+				background-image: var(--banner-image);
+				background-size: cover;          /* fills the box */
+				background-position: center;     /* centers image */
+				background-repeat: no-repeat;		
+				padding: 20px 40px;
+				border: 1px solid black;
+				border-radius: 10px;
+				box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
+				font-weight: bold;
+				white-space: nowrap;
+				justify-content: flex-end; 
+				background-color: rgba(255, 255, 255, 0.3); /* Light transparency */
+				color: #c51c1f;
 			}
 
 			.line {
@@ -602,113 +645,195 @@
 				}
 
 				/* Menu Button */
-#menuButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    font-size: 28px;
-    background: rgba(0,0,0,0.75);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 999999;
-}
+				/* Menu Button */
+				#menuButton {
+					position: fixed;
+					top: 20px;
+					left: 20px;
+					width: 44px;
+					height: 38px;
+					background: rgba(0,0,0,0.75);
+					border: none;
+					border-radius: 8px;
+					cursor: pointer;
+					z-index: 999999;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					padding: 6px;
+				}
 
-/* Slide-Out Menu */
-#sideMenu {
-    position: fixed;
-    top: 0;
-    left: -350px;
-    width: 280px;
-    height: 94%;
-    background: #111;
-    color: white;
-    padding: 20px;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.4);
-    transition: left 0.3s ease;
-    z-index: 999998;
-    overflow-y: auto;
-}
+				/* Hamburger lines */
+				#menuButton span {
+					display: block;
+					width: 100%;
+					height: 3px;
+					background: white;
+					margin: 4px 0;
+					border-radius: 2px;
 
-#sideMenu h3 {
-    margin-top: 0;
-    color: #5dc8e3;
-}
+					/* 🔥 Thickness & rendering fix */
+					box-sizing: border-box;
+					transform-origin: center;
+					backface-visibility: hidden;
+					will-change: transform, opacity;
 
-/* Remove default UL styling */
-#sideMenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+					transition:
+						transform 0.35s ease,
+						opacity 0.25s ease;
+				}
 
-/* Top-level items */
-#sideMenu > ul > li {
-    padding: 10px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-    color: white;
-}
+				/* OPEN → X animation */
+				#menuButton.open span:nth-child(1) {
+					transform: translateY(8.6px) rotate(45deg);
+				}
 
-/* Hover highlight */
-#sideMenu > ul > li:hover .menu-item-content span.text-label {
-    color: #5dc8e3;
-}
+				#menuButton.open span:nth-child(2) {
+					opacity: 0;
+				}
 
-/* Vertical slide items */
-#sideMenu ul ul li {
-    padding: 8px 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    cursor: pointer;
-    color: #ddd;
-}
+				#menuButton.open span:nth-child(3) {
+					transform: translateY(-8.6px) rotate(-45deg);
+				}
 
-/* Hover for vertical items */
-#sideMenu ul ul li:hover .menu-item-content span.text-label {
-    color: #5dc8e3;
-    background: rgba(255,255,255,0.05);
-    border-radius: 4px;
-}
+				/* Slide-Out Menu */
+				#sideMenu {
+					position: fixed;
+					top: 0;
+					left: -350px;
+					width: 280px;
+					height: 94%;
+					background: #111;
+					color: white;
+					padding: 20px;
+					box-shadow: 2px 0 8px rgba(0,0,0,0.4);
+					transition: left 0.3s ease;
+					z-index: 999998;
+					overflow-y: auto;
+				}
 
-/* Dropdown children */
-#sideMenu ul ul {
-    display: none;
-    padding-left: 15px;
-}
+				#sideMenu h3 {
+					margin-top: 0;
+					color: #5dc8e3;
+				}
 
-/* Show when parent is open */
-#sideMenu ul li.open > ul {
-    display: block;
-}
+				/* Remove default UL styling */
+				#sideMenu ul {
+					list-style: none;
+					padding: 0;
+					margin: 0;
+				}
 
-/* Flex wrapper for circle + text */
-.menu-item-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+				/* Top-level items */
+				#sideMenu > ul > li {
+					padding: 10px 10px;
+					border-bottom: 1px solid rgba(255,255,255,0.1);
+					cursor: pointer;
+					color: white;
+				}
 
-/* Circle indicator */
-.menu-item-content .circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid #aaa;
-    background: transparent;
-    flex-shrink: 0;
-}
+				/* Hover highlight */
+				#sideMenu > ul > li:hover .menu-item-content span.text-label {
+					color: #5dc8e3;
+				}
 
-/* Completed slide */
-.menu-item-content .circle.completed {
-    background: #4cbca9;
-    border-color: #4cbca9;
-}
+				/* Vertical slide items */
+				#sideMenu ul ul li {
+					padding: 8px 12px;
+					border-bottom: 1px solid rgba(255,255,255,0.05);
+					cursor: pointer;
+					color: #ddd;
+				}
 
-/* Label text */
-.text-label {
-    display: inline-block;
-}
+				/* Hover for vertical items */
+				#sideMenu ul ul li:hover .menu-item-content span.text-label {
+					color: #5dc8e3;
+					background: rgba(255,255,255,0.05);
+					border-radius: 4px;
+				}
+
+				/* Dropdown children */
+				#sideMenu ul ul {
+					display: none;
+					padding-left: 15px;
+				}
+
+				/* Show when parent is open */
+				#sideMenu ul li.open > ul {
+					display: block;
+				}
+
+				/* Flex wrapper for circle + text */
+				.menu-item-content {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+				}
+
+				/* Circle indicator */
+				.menu-item-content .circle {
+					width: 10px;
+					height: 10px;
+					border-radius: 50%;
+					border: 2px solid #aaa;
+					background: transparent;
+					flex-shrink: 0;
+				}
+
+				/* Completed slide */
+				.menu-item-content .circle.completed {
+					background: #4cbca9;
+					border-color: #4cbca9;
+				}
+
+				/* Label text */
+				.text-label {
+					display: inline-block;
+				}
+
+				.reveal .controls .navigate-right,
+				.reveal .controls .navigate-left,
+				.reveal .controls .navigate-up,
+				.reveal .controls .navigate-down {
+					display: none !important;
+				}
+
+				.nav-container {
+					position: fixed;
+					bottom: 16px;
+					right: 20px;
+					display: flex;
+					gap: 28px;
+					z-index: 999999;
+				}
+
+				.nav-item {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+				}
+
+				.nav-btn {
+					background: rgba(0,0,0,0.75);
+					color: white;
+					border: none;
+					font-size: 26px;
+					padding: 10px 16px;
+					cursor: pointer;
+					border-radius: 10px;
+				}
+
+				.nav-btn:hover {
+					background: rgba(0,0,0,0.9);
+				}
+
+				.nav-label {
+					margin-top: 6px;
+					font-size: 12px;
+					color: #020202;
+					letter-spacing: 0.4px;
+					user-select: none;
+				}
 				
 		</style>
 	</head>
@@ -755,7 +880,11 @@
 	
 			<!-- Slide number 1 -->
 			<!-- Slide-Out Menu Button -->
-			<div id="menuButton">☰</div>
+			<button id="menuButton" aria-label="Toggle menu">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
 
 			<!-- Slide-Out Menu Panel -->
 			<div id="sideMenu">
@@ -764,6 +893,18 @@
 				<br>
 				<ul id="menuList"></ul>
 			</div>	
+
+			<div class="nav-container">
+    <div class="nav-item">
+        <button id="navPrev" class="nav-btn">❮</button>
+        <div class="nav-label">Prev</div>
+    </div>
+
+    <div class="nav-item">
+        <button id="navNext" class="nav-btn">❯</button>
+        <div class="nav-label">Next</div>
+    </div>
+</div>
 
                 <div class="reveal">
                  <div class="slides">
@@ -787,6 +928,7 @@
 						<div class="title-box">WHIMIS FOR CLINICAL SETTING</div>
 						<span class="line"></span>
 					</div>
+
 					<p class="content" style="font-size: 20px;">Welcome to WHMISWise, your essential guide to workplace safety in the dental setting.
 						As dental professionals, you work with a variety of materials — from disinfectants and sterilization chemicals to anesthetics and dental compounds. Understanding WHMIS (Workplace Hazardous Materials Information System) helps you recognize, handle, and store these substances safely, protecting yourself, your colleagues, and your patients.</p>
 					<div class="image-container">
@@ -821,13 +963,13 @@
 								<div class="image-text-container">
 									<img style="height:60px;width: auto;" src="{% static 'images/leftandright.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
 									<p class="hazard-text">
-										Left and Right Arrow Keys – Moving Between Course Sections. Use the Right Arrow (→) key to advance to the next section of the course. Each section represents a major topic or module. Use the Left Arrow (←) key to return to the previous section if you would like to review earlier material.
+										Use the Right Arrow (→) key or the Next button to advance through the course in sequence, progressing slide by slide across all modules. Use the Left Arrow (←) key or the Prev button to move backward through previously viewed content, allowing you to review earlier material at any time.
 									</p>
 								</div>
 								<div class="image-text-container">
-									<img style="height:70px;width: auto;" src="{% static 'images/unfold.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
+									<img style="height:50px;width: auto;" src="{% static 'images/menu.png' %}" alt="Exploding Bomb Symbol" class="hazard-image">
 									<p class="hazard-text">
-										Up and Down Arrow Keys – Navigating Within a Section. Once you are inside a section, use the Down Arrow (↓) key to move deeper into that section’s content. Use the Up Arrow (↑) key to scroll back through the material you have already seen within the same section.
+										The side menu allows you to quickly navigate between modules and their content. Click the menu button (☰) at the top-left corner to open or close the menu. To view a module’s sections, click on the module name to expand or collapse the list. Clicking on any section will take you directly to that content. Your progress can be tracked through the highlighter circle adjacent to each menu item, which illuminates green once the corresponding module or section has been viewed.
 									</p>
 								</div>
 								<div class="image-text-container">
@@ -849,10 +991,13 @@
 					data-background-repeat="no-repeat"
 					class="center-slide">
 
-					<section><div class="title-container">
-						<span class="line"></span>
-						<div class="title-box">What is WHIMIS</div>
-						<span class="line"></span>
+					<section>
+						<div class="title-container">
+						
+						<div class="title-box5" style="--banner-image: url('/static/images/banner-image.png');">
+							<p class="main-title">What is WHIMIS</p>
+						</div>
+						
 					</div>
 					
 				</section>
@@ -1170,7 +1315,7 @@
 
 <!-- Slide number 4a -->
 				<section data-title="Module 2: Hazard Classification"
-					data-background-image="{% static 'images/originalG6.png' %}" 
+					data-background-image="{% static 'images/originalG7.png' %}"  
 					data-background-size="cover" 
 					data-background-position="center" 
 					data-background-repeat="no-repeat"
@@ -1178,9 +1323,11 @@
 				
 					<section>
 						<div class="title-container">
-						<span class="line"></span>
-						<div class="title-box"> Hazard Classification: Overview</div>
-						<span class="line"></span>
+						
+						<div class="title-box5" style="--banner-image: url('/static/images/banner-image2.png');"> 
+							<p class="main-title2">Hazard Classification:<br> Overview</p>
+						</div>
+						
 					</div>
 				</section>
 					<section data-title="Hazard Classification Overview">
@@ -1415,17 +1562,21 @@
 <!-- Slide number 5a -->
 
 					<section data-title="Module 3: Physical Hazards"
-						data-background-image="{% static 'images/originalG4.png' %}" 
+						data-background-image="{% static 'images/originalG7.png' %}"  
 						data-background-size="cover" 
 						data-background-position="center" 
 						data-background-repeat="no-repeat"
 						class="center-slide">
+
 						<section><div class="title-container">
-							<span class="line"></span>
-							<div class="title-box">Physical Hazards</div>
-							<span class="line"></span>
+							
+							<div class="title-box5" style="--banner-image: url('/static/images/banner-image3.png');">
+								<p class="main-title">Physical <br>Hazards</p>
+							</div>
+							
 						</div>
 					</section>
+
 						<section data-title="Hazard Classification Overview">
 							<div class="title-container">
 								
@@ -1832,15 +1983,17 @@
 <!-- Slide number 6a -->
 
 					<section data-title="Module 4: Health Hazards"
-						data-background-image="{% static 'images/originalG8.png' %}" 
+						data-background-image="{% static 'images/originalG7.png' %}" 
 						data-background-size="cover" 
 						data-background-position="center" 
 						data-background-repeat="no-repeat"
 						class="center-slide">
 						<section><div class="title-container">
-							<span class="line"></span>
-							<div class="title-box">Health Hazards</div>
-							<span class="line"></span>
+							
+							<div class="title-box5" style="--banner-image: url('/static/images/banner-image4.png');">
+								<p class="main-title">Health <br>Hazards</p>
+							</div>
+							
 						</div>
 					</section>
 						<section data-title="Hazard Classification Overview">
@@ -2246,15 +2399,17 @@
 <!-- Slide number 7a -->
 
 					<section data-title="Module 5: Environmental Hazards" 
-							data-background-image="{% static 'images/originalG9.png' %}" 
+							data-background-image="{% static 'images/originalG7.png' %}"  
 							data-background-size="cover" 
 							data-background-position="center" 
 							data-background-repeat="no-repeat"
 							class="center-slide">
 						<section><div class="title-container">
-							<span class="line"></span>
-							<div class="title-box">Environmental Hazards</div>
-							<span class="line"></span>
+							
+							<div class="title-box5" style="--banner-image: url('/static/images/banner-image5.png'); background-position: center 30%;">
+								<p class="main-title2">Environmental <br>Hazards</p>
+							</div>
+							
 						</div>
 					</section>
 						<section data-title="Hazard Classification Overview">
@@ -2371,15 +2526,17 @@
 <!-- Slide number 8a -->					
 
 					<section data-title="Module 6: Labels" 
-							data-background-image="{% static 'images/originalG10.png' %}" 
+							data-background-image="{% static 'images/originalG7.png' %}" 
 							data-background-size="cover" 
 							data-background-position="center" 
 							data-background-repeat="no-repeat"
 							class="center-slide">
 						<section><div class="title-container">
-							<span class="line"></span>
-							<div class="title-box">Labels</div>
-							<span class="line"></span>
+							
+							<div class="title-box5" style="--banner-image: url('/static/images/banner-labels.png');">
+								<p class="main-title">Labels</p>
+							</div>
+							
 						</div>
 					</section>
 						<section data-title="Understanding and Application">
@@ -2623,16 +2780,18 @@
 <!-- Slide number 9a -->
 
 					<section data-title="Module 7: Safety Data Sheets (SDS)" 
-							data-background-image="{% static 'images/originalG11.png' %}" 
+							data-background-image="{% static 'images/originalG7.png' %}" 
 							data-background-size="cover" 
 							data-background-position="center" 
 							data-background-repeat="no-repeat"
 							class="center-slide">
 						<section>
 							<div class="title-container">
-							<span class="line"></span>
-							<div class="title-box">Safety Data Sheets (SDS)</div>
-							<span class="line"></span>
+							
+							<div class="title-box5">
+								<p class="main-title2">Safety Data Sheets <br>(SDS)</p>
+							</div>
+							
 						</div>
 					</section>
 						<section data-title="SDS Overview">
@@ -2944,16 +3103,18 @@
 <!-- Slide number 10a -->
 
 							<section data-title="Module 8: Protective Measures Safe Handling Practices" 
-							data-background-image="{% static 'images/originalG4.png' %}" 
+							data-background-image="{% static 'images/originalG7.png' %}"  
 							data-background-size="cover" 
 							data-background-position="center" 
 							data-background-repeat="no-repeat"
 							class="center-slide">
 								<section>
 									<div class="title-container">
-									<span class="line"></span>
-									<div class="title-box">Protective Measures Safe Handling Practices</div>
-									<span class="line"></span>
+									
+									<div class="title-box5" style="--banner-image: url('/static/images/banner-ppe.png');">
+										<p class="main-title3">Protective Measures <br>and<br> Safe Handling Practices</p>
+									</div>
+									
 								</div>
 							</section>
 
@@ -3712,27 +3873,55 @@
          <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
          <script src="https://unpkg.com/reveal.js/plugin/markdown/markdown.js"></script>
          <script src="https://unpkg.com/reveal.js/plugin/highlight/highlight.js"></script>
+
 		<script>
+    let maxPercent = 0; // store maximum reached progress
+
     // Initialize Reveal
     Reveal.initialize({
         hash: true,
         progress: true,
-        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+        // Linear left/right navigation only
+        keyboard: {
+            37: () => Reveal.prev(), // Left arrow → previous slide
+            39: () => Reveal.next(), // Right arrow → next slide
+            38: null,                // Up arrow disabled
+            40: null,                // Down arrow disabled
+            32: () => Reveal.next()  // Space → next slide (optional)
+        }
     });
 
-    let maxPercent = 0; // store maximum reached progress
+	document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("navNext").addEventListener("click", () => {
+        Reveal.next(); // linear forward
+    });
 
+    document.getElementById("navPrev").addEventListener("click", () => {
+        Reveal.prev(); // linear backward
+    });
+});
+
+    // Update % progress
     function updatePercent() {
         const current = Reveal.getSlidePastCount() + 1;
         const total = Reveal.getTotalSlides();
         const percent = Math.round((current / total) * 100);
 
-        // Only update if we progress forward
+        // Only progress forward
         if (percent > maxPercent) {
             maxPercent = percent;
             document.getElementById("progressPercent").textContent = maxPercent + "%";
         }
     }
+
+    // Fire on first load
+    Reveal.on("ready", updatePercent);
+
+    // Fire on every slide change
+    Reveal.on("slidechanged", updatePercent);
+</script>
 
     // Fire on first load
     Reveal.on("ready", updatePercent);
@@ -3748,14 +3937,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const sideMenu   = document.getElementById("sideMenu");
     const menuList   = document.getElementById("menuList");
 
+    /* ------------------------------
+       Toggle Menu + Hamburger Animation
+    ------------------------------ */
     menuButton.addEventListener("click", () => {
-        sideMenu.style.left = (sideMenu.style.left === "0px") ? "-350px" : "0px";
+        const isOpen = sideMenu.style.left === "0px";
+
+        sideMenu.style.left = isOpen ? "-350px" : "0px";
+
+        // 🔥 Animate hamburger ↔ X
+        menuButton.classList.toggle("open", !isOpen);
     });
 
     menuList.innerHTML = ""; // clear menu
 
-    const slideMap = {}; // store references for completion marks
-    const childMap = {}; // track children per parent
+    const slideMap = {};   // store references for completion marks
+    const childMap = {};   // track children per parent
 
     const hSlides = document.querySelectorAll(".reveal .slides > section");
 
@@ -3781,8 +3978,6 @@ document.addEventListener("DOMContentLoaded", function () {
         li.appendChild(wrap);
 
         slideMap[hIndex] = { circle: circle };
-
-        // Track child completion for this parent
         childMap[hIndex] = [];
 
         const vSlides = hSlide.querySelectorAll(":scope > section");
@@ -3809,14 +4004,16 @@ document.addEventListener("DOMContentLoaded", function () {
             vWrap.appendChild(vText);
             vLi.appendChild(vWrap);
 
-            // Store references
             slideMap[hIndex][vIndex] = vCircle;
             childMap[hIndex].push(vCircle);
 
             vLi.addEventListener("click", (e) => {
                 e.stopPropagation();
                 Reveal.slide(hIndex, vIndex);
+
+                // Close menu + reset hamburger
                 sideMenu.style.left = "-350px";
+                menuButton.classList.remove("open");
             });
 
             vList.appendChild(vLi);
@@ -3831,6 +4028,7 @@ document.addEventListener("DOMContentLoaded", function () {
             li.addEventListener("click", () => {
                 Reveal.slide(hIndex);
                 sideMenu.style.left = "-350px";
+                menuButton.classList.remove("open");
             });
         }
 
@@ -3845,19 +4043,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const h = event.indexh;
         const v = event.indexv || 0;
 
-        // Mark current slide completed
         if (slideMap[h]) {
+
             if (slideMap[h].circle && (!childMap[h] || childMap[h].length === 0)) {
-                // parent without children → mark immediately
                 slideMap[h].circle.classList.add("completed");
             }
+
             if (slideMap[h][v]) {
                 slideMap[h][v].classList.add("completed");
             }
 
-            // Check if all children are completed
             if (childMap[h] && childMap[h].length > 0) {
-                const allDone = childMap[h].every(childCircle => childCircle.classList.contains("completed"));
+                const allDone = childMap[h].every(c =>
+                    c.classList.contains("completed")
+                );
                 if (allDone) {
                     slideMap[h].circle.classList.add("completed");
                 }
@@ -3867,6 +4066,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
 
 
 		<style>

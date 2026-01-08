@@ -11,9 +11,10 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #e4e5e6, #00416a);
+             background-image: url("{% static 'images/originalG7.png' %}");
             background-attachment: fixed;
             background-size: cover;  
+            background-position: center center;
             
              
         }
@@ -110,13 +111,13 @@
 </head>
 <body>
     <div class="title-container">
-        <span class="line"></span>
+        
         <p class="title-box" style="color: #bb1414; font-size: 40px;">FINAL ASSESSMENT</p>
-        <span class="line"></span>
+        
         </div>
 
     <div id="quiz"></div>
-    <div class="button-row" style="position: fixed; top: 15px;  z-index: 1000;">
+    <div class="button-row" style="position: fixed; top: 50px; right: 10px;  z-index: 1000;">
   <div class="button-wrap">
     <button class="glass-button" onclick="exitCourse()">
       <span style="letter-spacing: 0.15em;">EXIT TEST</span>
@@ -550,7 +551,7 @@ const questionsSet3 = [
 
             let questionObj = questions[currentQuestion];
             let questionHTML = `<div class='quiz-container'>
-                <p style='text-align: center; font-size: 20px;'><strong>Test Version: ${testIndex + 1}</strong></p>
+                
                 <p class='info-box3' style='font-size: 30px; color: black;'>${questionObj.question}</p>`;
 
             if (questionObj.image) {
