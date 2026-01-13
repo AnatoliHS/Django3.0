@@ -23,3 +23,22 @@
   - [ ] Register new handlers in `our_site/urls.py`
   - [ ] Test/verify error pages in DEBUG=False (production simulation)
   - [ ] Update documentation with error handling details
+
+## Slideshows App Implementation (New Architecture)
+- [ ] **Initialize App**: Create `slideshows` app via `make django`
+- [ ] **Implement Model**: Create `SlideshowProgress` model
+  - [ ] Define user + slug unique constraint
+  - [ ] Fields: current_h, current_v, max_percentage, completed
+- [ ] **Implement API**: Create views for progress tracking
+  - [ ] `save_progress` (POST, login_required)
+  - [ ] `get_progress` (GET, login_required)
+  - [ ] Configure URLs
+- [ ] **Frontend**: Create `slideshow_progress.js`
+  - [ ] Implementing debounced save logic
+  - [ ] Implement auto-resume logic
+- [ ] **Integration**: Connect to existing `polls` templates
+  - [ ] Update `polls/views.py` to pass slugs
+  - [ ] Inject JS into slideshow templates
+- [ ] **Verify**:
+  - [ ] Run automated tests
+  - [ ] Manual verification flow
