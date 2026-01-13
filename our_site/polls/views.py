@@ -19,15 +19,15 @@ def index(request):
 
 @login_required
 def slideshow(request):
-    return render(request, "polls/slideshow.html")
+    return render(request, "polls/slideshow.html", {"slideshow_slug": "whmis-general"})
 
 @login_required
 def slideshowPharm(request):
-    return render(request, "polls/slideshowPharm.html")
+    return render(request, "polls/slideshowPharm.html", {"slideshow_slug": "whmis-pharmacy"})
 
 @login_required
 def slideshowReg(request):
-    return render(request, "polls/slideshowReg.html")
+    return render(request, "polls/slideshowReg.html", {"slideshow_slug": "whmis-dental"})
 
 
 @login_required

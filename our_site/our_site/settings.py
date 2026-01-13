@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'our_site.apps.ConstanceConfig',  # Use our custom app config instead of 'constance'
     'constance.backends.database',
     'debug_toolbar',  # Add Django Debug Toolbar
+    'slideshows', # Add the new slideshows app
 ]
 
 MIDDLEWARE = [
