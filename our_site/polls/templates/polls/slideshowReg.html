@@ -211,7 +211,7 @@
 		.title-box5 {
 			display: flex;
 			width: 100%;
-			min-height: 300px;
+			min-height: 460px;
 			align-items: center;
 			background-image: var(--banner-image);
 			background-size: cover;
@@ -1098,10 +1098,11 @@
 				class="center-slide">
 
 				<section>
+					<p class="main-title" style="color: #c51c1f;">What is WHMIS</p>
 					<div class="title-container">
-
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image.png');">
-							<p class="main-title">What is WHMIS</p>
+						
+						<div class="title-box5" style="--banner-image: url('/static/images/topicOne.png');">
+							
 						</div>
 
 					</div>
@@ -1771,10 +1772,11 @@
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
 
 				<section>
+					<p class="main-title" style="color: #c51c1f;">Physical Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image3.png');">
-							<p class="main-title">Physical <br>Hazards</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicThree.png');">
+							
 						</div>
 
 					</div>
@@ -2264,10 +2266,12 @@
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
 				<section>
+					
+					<p class="main-title" style="color: #c51c1f;">Health Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image4.png');">
-							<p class="main-title">Health <br>Hazards</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicFour.png');">
+							
 						</div>
 
 					</div>
@@ -2765,12 +2769,14 @@
 			<section data-title="Module 5: Environmental Hazards"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
+
 				<section>
+					<p class="main-title2" style="color: #c51c1f;">Environmental Hazards</p>
 					<div class="title-container">
 
 						<div class="title-box5"
-							style="--banner-image: url('/static/images/banner-image5.png'); background-position: center 30%;">
-							<p class="main-title2">Environmental <br>Hazards</p>
+							style="--banner-image: url('/static/images/topicFive.png');">
+							
 						</div>
 
 					</div>
@@ -3000,71 +3006,22 @@
 
 				<!-- Slide number 8c -->
 
-				<section data-auto-animate>
-					<div class="title-container">
-						<span class="line"></span>
-						<h5 class="title-box" style="color: #b30000;">EXAMPLE LABEL</h5>
-						<span class="line"></span>
-					</div>
-				</section>
-
+				
 				<section data-auto-animate data-title="Example Supplier Label">
 					<div class="title-container">
+					<h5 class="title-box" style="color: #b30000; ">EXAMPLE SUPPLIER LABEL</h5>
+					</div>
+					<div class="title-container">
 
-						<h5 class="title-box" style="color: #b30000;">EXAMPLE LABEL</h5>
+						<div class="title-box5"
+							style="--banner-image: url('/static/images/SupplierLabel.png');">
+							
+						</div>
+
+						
 					</div>
 
-					<div class="whmis-label">
-						<div class="label-section">
-							<span class="circle" data-tooltip="Product identifier">1</span>
-							<div
-								style="border: 1px solid black; border-radius: 5px; padding: 10px; font-size: 20px; font-weight: bold;">
-								ACME pharmacy X-ray Fixer
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Signal Word">2</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								<span class="danger">Danger</span>
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Pictogram">3</span>
-							<div class="pictogram-container" style="background-color: rgba(255, 204, 102, 0.8);">
-								<img src="{% static 'images/corrosion.png' %}" alt="Corrosion symbol" class="pictogram">
-								<img src="{% static 'images/environment.png' %}" alt="Environment symbol"
-									class="pictogram">
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Hazard Statement">4</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;"> Causes serious eye
-								damage. Harmful if swallowed. May cause skin irritation. Toxic to aquatic life with
-								long-lasting effects.
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Precautionary Statement">5</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								Do not breathe vapours. Wear eye protection and gloves. Wash hands thoroughly after
-								handling. First Aid: IF IN EYES: Rinse cautiously with water for several minutes. Remove
-								contact lenses, continue rinsing. Immediately call a POISON CENTER or doctor. IF
-								SWALLOWED: Rinse mouth. Call a POISON CENTER if you feel unwell. Spill: Absorb spillage
-								to prevent material damage.
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Supplier identifier">6</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								ACME Chemicals Ltd., 123 Lab St., Ottawa, ON K1A 2B3, 1-800-123-4567.
-							</div>
-						</div>
-					</div>
+					
 				</section>
 
 				<!-- Slide number 8d -->
@@ -3123,6 +3080,23 @@
 							</ul>
 						</div>
 					</div>
+				</section>
+
+				<section data-auto-animate data-title="Example Workplace Label">
+					<div class="title-container">
+					<h5 class="title-box" style="color: #b30000; ">EXAMPLE WORKPLACE LABEL</h5>
+					</div>
+					<div class="title-container">
+
+						<div class="title-box5"
+							style="--banner-image: url('/static/images/WorkplaceLabel.png');">
+							
+						</div>
+
+						
+					</div>
+
+					
 				</section>
 
 

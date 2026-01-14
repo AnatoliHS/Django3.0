@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'polls',
     'translate',  # Add the new translate app
     'our_site.apps.OurSiteConfig',  # Add the main app with its management commands
-    'django.contrib.admin',
+    'our_site.apps.CustomAdminConfig', # Custom admin config to reorder apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
