@@ -102,7 +102,7 @@
     </div>
   </div>
 </div>
-        {% if participations_preview %}
+        <!--{% if participations_preview %}
             <ul>
                 {% for participation in participations_preview %}
                     <li style="--mb:15px; --d:flex; --ai:center; --jc:space-between">
@@ -110,7 +110,7 @@
                             <a href="{% url 'experiences:participation_detail' participation.id %}">
                                 {{ participation.group.name }} ({{ participation.years|join:", " }})
                             </a>
-                            <!-- visibility toggle -->
+                            visibility toggle 
                             <form method="post" action="{% url 'accounts:toggle_participation_visibility' participation.id %}" style="--d:inline">
                                 {% csrf_token %}
                                 <label>
@@ -125,7 +125,7 @@
 
             {% if has_more_participations %}
                 <a href="{% url 'experiences:participation_list' %}?person={{ person.id }}">View all certifications</a>
-            {% endif %}
+            {% endif %} -->
 
         {% else %}
             <!-- START OF CERTIFICATE BUTTON ADDITION -->

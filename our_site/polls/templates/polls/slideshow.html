@@ -211,7 +211,7 @@
 		.title-box5 {
 			display: flex;
 			width: 100%;
-			min-height: 300px;
+			min-height: 460px;
 			align-items: center;
 			background-image: var(--banner-image);
 			background-size: cover;
@@ -524,6 +524,11 @@
 			position: relative;
 			flex-shrink: 0;
 			/* Prevent shrinking of the circle */
+		}
+
+		.circle.completed {
+			background-color: #28a745 !important;
+			/* Green for completion */
 		}
 
 		.circle:hover::after {
@@ -1054,40 +1059,14 @@
 					<h5 class="title-box" style="color: #b30000;">COURSE NAVIGATION</h5>
 
 				</div>
-				<p class="content" style="font-size: 20px;">This course features straightforward navigation to help you
-					move through the content with ease. Please review the instructions below to become familiar with how
-					to navigate the course.</p>
-				<div class="image-text-container">
-					<img style="height:60px;width: auto;" src="{% static 'images/leftandright.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						Use the Right Arrow (→) key or the Next button to advance through the course in sequence,
-						progressing slide by slide across all modules. Use the Left Arrow (←) key or the Prev button to
-						move backward through previously viewed content, allowing you to review earlier material at any
-						time.
-					</p>
-				</div>
-				<div class="image-text-container">
-					<img style="height:50px;width: auto;" src="{% static 'images/menu.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						The side menu allows you to quickly navigate between modules and their content. Click the menu
-						button (☰) at the top-left corner to open or close the menu. To view a module’s sections, click
-						on the module name to expand or collapse the list. Clicking on any section will take you
-						directly to that content. Your progress can be tracked through the highlighter circle adjacent
-						to each menu item, which illuminates green once the corresponding module or section has been
-						viewed.
-					</p>
-				</div>
-				<div class="image-text-container">
-					<img style="height:70px;width: auto;" src="{% static 'images/space.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						Spacebar – Advancing to the Next Slide in Sequence. Press the Spacebar to move to the next slide
-						in the overall course sequence. This control follows the intended learning flow, ensuring you
-						proceed in the correct order through all slides.
-					</p>
-				</div>
+				<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
+
+						</div>
+
+					</div>
+
 
 			</section>
 
@@ -1098,11 +1077,12 @@
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
 
-				<section>
+				<section data-title="A Quick Guide to WHMIS">
+					<p class="main-title" style="color: #c51c1f;">What is WHMIS</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image.png');">
-							<p class="main-title">What is WHIMIS</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicOne1.png');">
+
 						</div>
 
 					</div>
@@ -1129,33 +1109,22 @@
 							In a dental clinic, where various chemicals and materials are used daily, WHMIS is crucial
 							to keep staff informed about product dangers and precautions.
 						</p>
-						<br>
-						<ul class="info-box2" style=" font-size: 14px; font-style: italic;">
-							<br>
-							<li>
-								Product Classification – Hazardous products are categorized by their properties (e.g.
-								flammable, toxic, corrosive) so that appropriate caution can be taken.
-							</li>
-							<br>
-							<li>
-								Labels – Containers of hazardous products must have labels providing basic hazard
-								information to workers in a standardized format.
-							</li>
-							<br>
-							<li>
-								Safety Data Sheets (SDSs) – Detailed information sheets that supplement labels with
-								in-depth data about the product’s properties, risks, and safety precautions.
-							</li>
-							<br>
-							<li>
-								Worker Education and Training – Employers must educate and train workers to understand
-								labels and SDSs, and to apply this knowledge on the job.
-							</li>
-						</ul>
-						<br>
-						</ul>
+						
 
 					</div>
+				</section>
+
+				<section data-title="4 Pillars of WHMIS">
+					<div class="title-container">
+
+						<div class="title-box">What is WHMIS</div>
+
+					</div>
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/Pillars.png'); min-height: 470px;">
+
+						</div>
 				</section>
 
 				<section data-title="WHMIS legislation">
@@ -1479,15 +1448,17 @@
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
 
-				<section>
+				<section data-title="A Quick Guide to Hazard Classification">
+					<p class="main-title2" style="color: #c51c1f;">Hazard Classification: Overview</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image2.png');">
-							<p class="main-title2">Hazard Classification:<br> Overview</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicTwo.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 				<section data-title="Hazard Classification Overview">
 					<div class="title-container">
 
@@ -1768,11 +1739,12 @@
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
 
-				<section>
+				<section data-title="A Quick Guide to Physical Hazards">
+					<p class="main-title" style="color: #c51c1f;">Physical Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image3.png');">
-							<p class="main-title">Physical <br>Hazards</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicThree3.png');">
+
 						</div>
 
 					</div>
@@ -2261,15 +2233,18 @@
 			<section data-title="Module 4: Health Hazards" data-background-image="{% static 'images/originalG7.png' %}"
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Health Hazards">
+					<p class="main-title" style="color: #c51c1f;">Health Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-image4.png');">
-							<p class="main-title">Health <br>Hazards</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicFour.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 				<section data-title="Hazard Classification Overview">
 					<div class="title-container">
 
@@ -2763,16 +2738,18 @@
 			<section data-title="Module 5: Environmental Hazards"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Environmental Hazards">
+					<p class="main-title" style="color: #c51c1f;">Environmental Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5"
-							style="--banner-image: url('/static/images/banner-image5.png'); background-position: center 30%;">
-							<p class="main-title2">Environmental <br>Hazards</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/WHMIS-Environment.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 				<section data-title="Hazard Classification Overview">
 					<div class="title-container">
 
@@ -2907,15 +2884,18 @@
 			<section data-title="Module 6: Labels" data-background-image="{% static 'images/originalG7.png' %}"
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Labels">
+					<p class="main-title" style="color: #c51c1f;">Labels</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-labels.png');">
-							<p class="main-title">Labels</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicSix.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 				<section data-title="Understanding and Application">
 					<div class="title-container">
 
@@ -2998,71 +2978,20 @@
 
 				<!-- Slide number 8c -->
 
-				<section data-auto-animate>
-					<div class="title-container">
-						<span class="line"></span>
-						<h5 class="title-box" style="color: #b30000;">EXAMPLE LABEL</h5>
-						<span class="line"></span>
-					</div>
-				</section>
-
 				<section data-auto-animate data-title="Example Supplier Label">
 					<div class="title-container">
+						<h5 class="title-box" style="color: #b30000; ">EXAMPLE SUPPLIER LABEL</h5>
+					</div>
+					<div class="title-container">
 
-						<h5 class="title-box" style="color: #b30000;">EXAMPLE LABEL</h5>
+						<div class="title-box5" style="--banner-image: url('/static/images/SupplierLabel.png');">
+
+						</div>
+
+
 					</div>
 
-					<div class="whmis-label">
-						<div class="label-section">
-							<span class="circle" data-tooltip="Product identifier">1</span>
-							<div
-								style="border: 1px solid black; border-radius: 5px; padding: 10px; font-size: 20px; font-weight: bold;">
-								ACME Dental X-ray Fixer
-							</div>
-						</div>
 
-						<div class="label-section">
-							<span class="circle" data-tooltip="Signal Word">2</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								<span class="danger">Danger</span>
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Pictogram">3</span>
-							<div class="pictogram-container" style="background-color: rgba(255, 204, 102, 0.8);">
-								<img src="{% static 'images/corrosion.png' %}" alt="Corrosion symbol" class="pictogram">
-								<img src="{% static 'images/environment.png' %}" alt="Environment symbol"
-									class="pictogram">
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Hazard Statement">4</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;"> Causes serious eye
-								damage. Harmful if swallowed. May cause skin irritation. Toxic to aquatic life with
-								long-lasting effects.
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Precautionary Statement">5</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								Do not breathe vapours. Wear eye protection and gloves. Wash hands thoroughly after
-								handling. First Aid: IF IN EYES: Rinse cautiously with water for several minutes. Remove
-								contact lenses, continue rinsing. Immediately call a POISON CENTER or doctor. IF
-								SWALLOWED: Rinse mouth. Call a POISON CENTER if you feel unwell. Spill: Absorb spillage
-								to prevent material damage.
-							</div>
-						</div>
-
-						<div class="label-section">
-							<span class="circle" data-tooltip="Supplier identifier">6</span>
-							<div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-								ACME Chemicals Ltd., 123 Lab St., Ottawa, ON K1A 2B3, 1-800-123-4567.
-							</div>
-						</div>
-					</div>
 				</section>
 
 				<!-- Slide number 8d -->
@@ -3121,6 +3050,22 @@
 							</ul>
 						</div>
 					</div>
+				</section>
+
+				<section data-auto-animate data-title="Example Workplace Label">
+					<div class="title-container">
+						<h5 class="title-box" style="color: #b30000; ">EXAMPLE WORKPLACE LABEL</h5>
+					</div>
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/WorkplaceLabel.png');">
+
+						</div>
+
+
+					</div>
+
+
 				</section>
 
 
@@ -3206,15 +3151,18 @@
 			<section data-title="Module 7: Safety Data Sheets (SDS)"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Safety Data Sheets">
+					<p class="main-title2" style="color: #c51c1f;">Safety Data Sheets</p>
 					<div class="title-container">
 
-						<div class="title-box5">
-							<p class="main-title2">Safety Data Sheets <br>(SDS)</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicSeven.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 				<section data-title="SDS Overview">
 					<div class="title-container">
 
@@ -3347,7 +3295,8 @@
 								medical instruments. Supplier: XYZ Corp, Tel: ... Emergency 24-hr Tel: ...”. _Why it
 								matters:_ Confirms you’re looking at the right SDS; has numbers to call in a transport
 								accident or large emergency; if a poison center or doctor needs details, you give them
-								this info.</div>
+								this info.
+							</div>
 						</div>
 						<div class="box-section">
 							<div class="title-box4">Section 2</div>
@@ -3690,15 +3639,18 @@
 			<section data-title="Module 8: Protective Measures Safe Handling Practices"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Protective Measures">
+					<p class="main-title3" style="color: #c51c1f;">Protective Measures & Handling Practices</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/banner-ppe.png');">
-							<p class="main-title3">Protective Measures <br>and<br> Safe Handling Practices</p>
+						<div class="title-box5" style="--banner-image: url('/static/images/topicEight8.png');">
+
 						</div>
 
 					</div>
 				</section>
+
 
 				<!-- Slide number 10b -->
 
@@ -3805,6 +3757,23 @@
 						(often reusable) should be worn over or instead of exam gloves.</p>
 				</section>
 
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/clinicalGlove.png');">
+
+						</div>
+
+					</div>
+
+				</section>
+
 				<!-- Slide number 10d -->
 
 				<section data-auto-animate>
@@ -3863,6 +3832,23 @@
 						could splash to your whole face or if you’re pouring something overhead, use a face shield in
 						addition to goggles (face shield alone doesn’t seal the eyes, but it adds extra splash coverage
 						for your skin and face).</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">EYE / FACE</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/eyeFace.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10e -->
@@ -3948,6 +3934,23 @@
 						half-face respirator with appropriate chemical cartridges.</p>
 				</section>
 
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/mask2.png');">
+
+						</div>
+
+					</div>
+
+				</section>
+
 				<!-- Slide number 10f -->
 
 				<section data-auto-animate>
@@ -4004,6 +4007,23 @@
 						be a clinic policy). If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid
 						mesh athletic shoes on days you work with chemicals – a solid material shoe is better as a
 						barrier.</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">SKIN PROTECTION</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/body.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10g -->
@@ -4729,6 +4749,8 @@
 
 			const slideMap = {};   // store references for completion marks
 			const childMap = {};   // track children per parent
+			window.slideMap = slideMap;
+			window.childMap = childMap;
 
 			const hSlides = document.querySelectorAll(".reveal .slides > section");
 

@@ -526,6 +526,11 @@
 			/* Prevent shrinking of the circle */
 		}
 
+		.circle.completed {
+			background-color: #28a745 !important;
+			/* Green for completion */
+		}
+
 		.circle:hover::after {
 			content: attr(data-tooltip);
 			position: absolute;
@@ -918,15 +923,19 @@
 		.nav-btn {
 			background: rgba(0, 0, 0, 0.75);
 			color: white;
-			border: none;
-			font-size: 26px;
+			border-color: black;
+			border-width: 2px;
+			font-size: 20px;
 			padding: 10px 16px;
 			cursor: pointer;
 			border-radius: 10px;
+			display: inline-block; /* Required for transform to work properly */
+    		transition: transform 0.3s ease;
 		}
 
 		.nav-btn:hover {
 			background: rgba(0, 0, 0, 0.9);
+			transform: scale(1.05);
 		}
 
 		.nav-label {
@@ -998,13 +1007,13 @@
 
 	<div class="nav-container">
 		<div class="nav-item">
-			<button id="navPrev" class="nav-btn">❮</button>
-			<div class="nav-label">Prev</div>
+			<button id="navPrev" class="nav-btn" style="background: rgba(250, 154, 80);">❮ Prev</button>
+			
 		</div>
 
 		<div class="nav-item">
-			<button id="navNext" class="nav-btn">❯</button>
-			<div class="nav-label">Next</div>
+			<button id="navNext" class="nav-btn" style="background: rgba(52, 172, 118);">Next ❯</button>
+			
 		</div>
 	</div>
 
@@ -1053,40 +1062,13 @@
 					<h5 class="title-box" style="color: #b30000;">COURSE NAVIGATION</h5>
 
 				</div>
-				<p class="content" style="font-size: 20px;">This course features straightforward navigation to help you
-					move through the content with ease. Please review the instructions below to become familiar with how
-					to navigate the course.</p>
-				<div class="image-text-container">
-					<img style="height:60px;width: auto;" src="{% static 'images/leftandright.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						Use the Right Arrow (→) key or the Next button to advance through the course in sequence,
-						progressing slide by slide across all modules. Use the Left Arrow (←) key or the Prev button to
-						move backward through previously viewed content, allowing you to review earlier material at any
-						time.
-					</p>
-				</div>
-				<div class="image-text-container">
-					<img style="height:50px;width: auto;" src="{% static 'images/menu.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						The side menu allows you to quickly navigate between modules and their content. Click the menu
-						button (☰) at the top-left corner to open or close the menu. To view a module’s sections, click
-						on the module name to expand or collapse the list. Clicking on any section will take you
-						directly to that content. Your progress can be tracked through the highlighter circle adjacent
-						to each menu item, which illuminates green once the corresponding module or section has been
-						viewed.
-					</p>
-				</div>
-				<div class="image-text-container">
-					<img style="height:70px;width: auto;" src="{% static 'images/space.png' %}"
-						alt="Exploding Bomb Symbol" class="hazard-image">
-					<p class="hazard-text">
-						Spacebar – Advancing to the Next Slide in Sequence. Press the Spacebar to move to the next slide
-						in the overall course sequence. This control follows the intended learning flow, ensuring you
-						proceed in the correct order through all slides.
-					</p>
-				</div>
+				<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
+
+						</div>
+
+					</div>
 
 			</section>
 
@@ -1097,12 +1079,12 @@
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
 
-				<section>
+				<section data-title="A Quick Guide to WHMIS">
 					<p class="main-title" style="color: #c51c1f;">What is WHMIS</p>
 					<div class="title-container">
-						
+
 						<div class="title-box5" style="--banner-image: url('/static/images/topicOne1.png');">
-							
+
 						</div>
 
 					</div>
@@ -1130,33 +1112,23 @@
 							ensuring workers are informed about potential hazards and the precautions required for safe
 							use.
 						</p>
-						<br>
-						<ul class="info-box2" style=" font-size: 14px; font-style: italic;">
-							<br>
-							<li>
-								Product Classification – Hazardous products are categorized by their properties (e.g.
-								flammable, toxic, corrosive) so that appropriate caution can be taken.
-							</li>
-							<br>
-							<li>
-								Labels – Containers of hazardous products must have labels providing basic hazard
-								information to workers in a standardized format.
-							</li>
-							<br>
-							<li>
-								Safety Data Sheets (SDSs) – Detailed information sheets that supplement labels with
-								in-depth data about the product’s properties, risks, and safety precautions.
-							</li>
-							<br>
-							<li>
-								Worker Education and Training – Employers must educate and train workers to understand
-								labels and SDSs, and to apply this knowledge on the job.
-							</li>
-						</ul>
-						<br>
-						</ul>
+						
+						
 
 					</div>
+				</section>
+
+				<section data-title="4 Pillars of WHMIS">
+					<div class="title-container">
+
+						<div class="title-box">What is WHMIS</div>
+
+					</div>
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/Pillars.png'); min-height: 470px;">
+
+						</div>
 				</section>
 
 				<section data-title="WHMIS legislation">
@@ -1307,12 +1279,12 @@
 						<ul class="info-box3" style=" font-size: 14px; font-style: italic;">
 							<li>
 								Identify and Inventory Hazardous Products: Keep an up-to-date inventory of all hazardous
-								chemicals and materials in the clinic (e.g., disinfectants, chemical cleaners, mercury,
+								chemicals and materials (e.g., disinfectants, chemical cleaners, mercury,
 								etc.)
 							</li>
 
 							<li>
-								Obtain and Make Available SDSs: For every hazardous product in the clinic, obtain a
+								Obtain and Make Available SDSs: For every hazardous product, obtain a
 								current Safety Data Sheet from the supplier and keep it accessible (for example, in a
 								binder or an electronic database that all staff can access).
 							</li>
@@ -1334,7 +1306,7 @@
 
 							<li>
 								Consult and Review: In Ontario, employers should consult the Joint Health and Safety
-								Committee or Health and Safety Representative (if applicable in the pharmacy office)
+								Committee or Health and Safety Representative (if applicable in the work office)
 								about the WHMIS training program and review the program’s effectiveness at least
 								annually.
 							</li>
@@ -1360,7 +1332,7 @@
 						<ul class="info-box3" style=" font-size: 14px; font-style: italic;">
 							<li>
 								Participate in Training: Workers must attend WHMIS training sessions provided by the
-								employer and pay attention so they understand the hazards of products in the clinic.
+								employer and pay attention so they understand the hazards of products.
 								Training is not a one-time event; workers should also participate in refreshers and new
 								training whenever procedures or products change.
 							</li>
@@ -1481,12 +1453,12 @@
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
 
-				<section>
+				<section data-title="A Quick Guide to Hazard Classification">
 					<p class="main-title2" style="color: #c51c1f;">Hazard Classification: Overview</p>
 					<div class="title-container">
 
 						<div class="title-box5" style="--banner-image: url('/static/images/topicTwo.png');">
-							
+
 						</div>
 
 					</div>
@@ -1776,7 +1748,7 @@
 					<p class="main-title" style="color: #c51c1f;">Physical Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/topicThree.png');">
+						<div class="title-box5" style="--banner-image: url('/static/images/topicThree3.png');">
 							
 						</div>
 
@@ -2866,6 +2838,8 @@
 					</div>
 				</section>
 
+
+				
 				<!-- Slide number QUIZ FIVE -->
 
 				<section data-auto-animate>
@@ -2916,12 +2890,13 @@
 			<section data-title="Module 6: Labels" data-background-image="{% static 'images/originalG7.png' %}"
 				data-background-size="cover" data-background-position="center" data-background-repeat="no-repeat"
 				class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Labels">
 					<p class="main-title" style="color: #c51c1f;">Labels</p>
 					<div class="title-container">
 
 						<div class="title-box5" style="--banner-image: url('/static/images/topicSix.png');">
-							
+
 						</div>
 
 					</div>
@@ -2935,7 +2910,7 @@
 					<div class="content">
 						<p class="title-box2">Understanding and Application:</p>
 						<p>WHMIS labels are often the first line of defense in hazard communication. Whenever you pick
-							up a bottle, jar, or container in the pharmacy, the label is there to warn you about any
+							up a bottle, jar, or container, the label is there to warn you about any potential
 							dangers and to guide you on safe handling. In this module, we will break down the components
 							of WHMIS labels, explain the pictograms (symbols) you see on them, and clarify the
 							difference between supplier labels and workplace labels. We’ll also cover how to properly
@@ -3008,22 +2983,21 @@
 
 				<!-- Slide number 8c -->
 
-				
+
 				<section data-auto-animate data-title="Example Supplier Label">
 					<div class="title-container">
-					<h5 class="title-box" style="color: #b30000; ">EXAMPLE SUPPLIER LABEL</h5>
+						<h5 class="title-box" style="color: #b30000; ">EXAMPLE SUPPLIER LABEL</h5>
 					</div>
 					<div class="title-container">
 
-						<div class="title-box5"
-							style="--banner-image: url('/static/images/SupplierLabel.png');">
-							
+						<div class="title-box5" style="--banner-image: url('/static/images/SupplierLabel.png');">
+
 						</div>
 
-						
+
 					</div>
 
-					
+
 				</section>
 
 				<!-- Slide number 8d -->
@@ -3045,7 +3019,7 @@
 					<p class="content">A workplace label is a simplified label that employers produce and affix to
 						hazardous materials under certain circumstances in the workplace. Unlike supplier labels,
 						workplace labels are for internal use only – they’re not the original label from the
-						manufacturer, but one we create at the clinic when needed.</p>
+						manufacturer, but one we create as it becomes needed.</p>
 				</section>
 
 				<section data-auto-animate data-title="Workplace Label">
@@ -3057,7 +3031,7 @@
 					<p class="content">A workplace label is a simplified label that employers produce and affix to
 						hazardous materials under certain circumstances in the workplace. Unlike supplier labels,
 						workplace labels are for internal use only – they’re not the original label from the
-						manufacturer, but one we create at the clinic when needed.</p>
+						manufacturer, but one we create as it becomes needed.</p>
 
 					<div class="content4">
 						<div class="hazard-title-container3">
@@ -3074,7 +3048,7 @@
 									label, or if over time the label falls off, gets spilled on, or becomes unreadable,
 									you need to label that container with a workplace label (unless you quickly replace
 									it with a proper supplier label).</li>
-								<li>Produced in the Workplace: If your workplace (pharmacy office) produces a hazardous
+								<li>Produced in the Workplace: If your workplace produces a hazardous
 									product (this is uncommon in dentistry, but imagine you mix two chemicals and create
 									a new solution that’s stored, or maybe you have a generator of a gas), that product
 									needs a WHMIS label.</li>
@@ -3086,19 +3060,18 @@
 
 				<section data-auto-animate data-title="Example Workplace Label">
 					<div class="title-container">
-					<h5 class="title-box" style="color: #b30000; ">EXAMPLE WORKPLACE LABEL</h5>
+						<h5 class="title-box" style="color: #b30000; ">EXAMPLE WORKPLACE LABEL</h5>
 					</div>
 					<div class="title-container">
 
-						<div class="title-box5"
-							style="--banner-image: url('/static/images/WorkplaceLabel.png');">
-							
+						<div class="title-box5" style="--banner-image: url('/static/images/WorkplaceLabel.png');">
+
 						</div>
 
-						
+
 					</div>
 
-					
+
 				</section>
 
 
@@ -3184,12 +3157,13 @@
 			<section data-title="Module 7: Safety Data Sheets (SDS)"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Safety Data Sheets">
 					<p class="main-title2" style="color: #c51c1f;">Safety Data Sheets</p>
 					<div class="title-container">
 
 						<div class="title-box5" style="--banner-image: url('/static/images/topicSeven.png');">
-							
+
 						</div>
 
 					</div>
@@ -3285,7 +3259,7 @@
 									dilute it significantly, or use it in a way not covered in training).</li>
 								<li>When a spill or exposure occurs, and you need detailed first aid or cleanup
 									instructions.</li>
-								<li>If you or someone in the clinic has a health condition or sensitivity – the SDS
+								<li>If you or someone else has a health condition or sensitivity – the SDS
 									might indicate if certain people should be extra cautious (for instance, some SDSs
 									say “medical conditions aggravated by exposure”).</li>
 								<li>Periodically during safety meetings or refreshers, reviewing SDSs can reinforce
@@ -3377,7 +3351,7 @@
 								fresh air. If breathing is difficult, give oxygen. If not breathing, give artificial
 								respiration. Seek medical attention if symptoms persist.” There’s often advice like
 								“Never give anything by mouth if unconscious” in ingestion case.” It might note specific
-								treatments. Why it matters: In a pharmacy office, if an exposure occurs, this section
+								treatments. Why it matters: At a workplace, if an exposure occurs, this section
 								guides you and medical professionals. As a worker, you should know where this info is so
 								you can quickly respond. Sometimes SDS first aid will mention things the label doesn’t –
 								e.g., “Symptoms may be delayed” or “Specific antidote: administer calcium gluconate for
@@ -3534,7 +3508,7 @@
 								on how to dispose of the product and contaminated packaging. It might say if it’s
 								considered a hazardous waste under regulations, and suggest methods (e.g., “Dispose via
 								licensed hazardous waste contractor. Do not pour into sewer. Rinse container before
-								recycling if appropriate.”). Why it matters: Clinics generate chemical waste (like
+								recycling if appropriate.”). Why it matters: Workplaces can generate chemical waste (like
 								fixer, mercury, etc.). The SDS disposal section often clearly states what to do.</div>
 						</div>
 						<div class="box-section">
@@ -3542,7 +3516,7 @@
 							<div class="text-content-section"> <strong style="font-size: 20px;">Transport
 									Information:</strong><br> This lists how the product is classified for shipping: the
 								UN number, proper shipping name, hazard class (for DOT/TDG), packing group, etc., and
-								any environmental hazards (like “Marine pollutant”). Why it matters:_ If your clinic
+								any environmental hazards (like “Marine pollutant”). Why it matters: If your work
 								ever ships out hazardous materials (maybe returning a chemical or sending waste), this
 								is for reference. </div>
 						</div>
@@ -3552,7 +3526,7 @@
 									Information:</strong><br>Lists specific safety, health, environmental regulations
 								for the product not covered elsewhere. It might mention if any ingredients are on
 								inventories (TSCA, DSL), or if any ingredient is subject to WHMIS disclosure exemptions,
-								or any specific provincial regulations. _Why it matters:_ Largely for compliance people.
+								or any specific provincial regulations. Why it matters: Largely for compliance people.
 								It’s not something a worker uses daily, but it might mentioned. </div>
 						</div>
 					</div>
@@ -3670,12 +3644,13 @@
 			<section data-title="Module 8: Protective Measures Safe Handling Practices"
 				data-background-image="{% static 'images/originalG7.png' %}" data-background-size="cover"
 				data-background-position="center" data-background-repeat="no-repeat" class="center-slide">
-				<section>
+
+				<section data-title="A Quick Guide to Protective Measures">
 					<p class="main-title3" style="color: #c51c1f;">Protective Measures & Handling Practices</p>
 					<div class="title-container">
 
 						<div class="title-box5" style="--banner-image: url('/static/images/topicEight.png');">
-							
+
 						</div>
 
 					</div>
@@ -3691,8 +3666,8 @@
 					</div>
 					<div class="content">
 						<p class="title-box2">Personal Protective Equipment (PPE):</p>
-						<p>Personal Protective Equipment is your last line of defense against hazards. In a clinic,
-							you’re likely already familiar with PPE for infection control (gloves, masks, eyewear, gowns
+						<p>Personal Protective Equipment is your last line of defense against hazards. 
+							You’re likely already familiar with PPE for infection control (gloves, masks, eyewear, gowns
 							to protect against bloodborne pathogens). Many of these also serve to protect against
 							chemical hazards – but sometimes, different or additional PPE is needed for certain tasks.
 							Here’s a breakdown of PPE use specifically related to chemical safety and hazardous
@@ -3718,7 +3693,7 @@
 						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
 
 					</div>
-					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine pharmacy
+					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine work
 						procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic
 						barrier. However, not all gloves are equal for all chemicals:</p>
 				</section>
@@ -3729,12 +3704,12 @@
 						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
 
 					</div>
-					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine pharmacy
+					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine work
 						procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic
 						barrier. However, not all gloves are equal for all chemicals:</p>
 					<p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
 					<p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant
-						to many solvents and chemicals and are a good all-purpose choice in dentistry. They are
+						to many solvents and chemicals and are a good all-purpose choice. They are
 						typically recommended for handling things like disinfectants, cleaners, and even mercury (they
 						resist permeation better than latex).</p>
 				</section>
@@ -3745,12 +3720,12 @@
 						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
 
 					</div>
-					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine pharmacy
+					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine work
 						procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic
 						barrier. However, not all gloves are equal for all chemicals:</p>
 					<p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
 					<p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant
-						to many solvents and chemicals and are a good all-purpose choice in dentistry. They are
+						to many solvents and chemicals and are a good all-purpose choice. They are
 						typically recommended for handling things like disinfectants, cleaners, and even mercury (they
 						resist permeation better than latex).</p>
 					<p class="title-box3" style="background-color: #ffe6cc; color: black">Latex Gloves</p>
@@ -3766,12 +3741,12 @@
 						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
 
 					</div>
-					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine pharmacy
+					<p class="content">Always wear appropriate gloves when handling chemicals. For most routine work
 						procedures and disinfection tasks, disposable nitrile or latex exam gloves provide a basic
 						barrier. However, not all gloves are equal for all chemicals:</p>
 					<p class="title-box3" style="background-color: #d9b3ff; color: black">Nitrile Gloves</p>
 					<p style="text-align: left; font-size: 17px; color: black;">Nitrile gloves are generally resistant
-						to many solvents and chemicals and are a good all-purpose choice in dentistry. They are
+						to many solvents and chemicals and are a good all-purpose choice. They are
 						typically recommended for handling things like disinfectants, cleaners, and even mercury (they
 						resist permeation better than latex).</p>
 					<p class="title-box3" style="background-color: #ffe6cc; color: black">Latex Gloves</p>
@@ -3784,6 +3759,23 @@
 						gloves): For tasks like handling concentrated chemicals, scrubbing instruments in potent
 						cleaning agents, or dealing with chemical spills, thicker neoprene or rubber utility gloves
 						(often reusable) should be worn over or instead of exam gloves.</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">GLOVES</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/foundationalGlove2.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10d -->
@@ -3803,7 +3795,7 @@
 					</div>
 					<p class="content">Chemical splash goggles or a face shield (with safety glasses) are vital when
 						there’s any risk of a chemical splashing or spraying into your eyes or face. Regular
-						prescription glasses or pharmacy loupes are not sufficient – chemicals can go around the edges.
+						prescription glasses are not sufficient – chemicals can go around the edges.
 					</p>
 				</section>
 				<section data-auto-animate>
@@ -3814,13 +3806,13 @@
 					</div>
 					<p class="content">Chemical splash goggles or a face shield (with safety glasses) are vital when
 						there’s any risk of a chemical splashing or spraying into your eyes or face. Regular
-						prescription glasses or pharmacy loupes are not sufficient – chemicals can go around the edges.
+						prescription glasses are not sufficient – chemicals can go around the edges.
 					</p>
 					<p class="title-box3" style="background-color: #ffb366; color: black">Goggles</p>
 					<p style="text-align: left; font-size: 17px; color: black;"> For tasks like preparing etchant,
 						pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal
-						against the face. Goggles protect from direct splashes to the eyes. Many pharmacy staff wear
-						safety glasses routinely for patient care (which is good for flying debris), but for chemical
+						against the face. Goggles protect from direct splashes to the eyes. Many work staff wear
+						safety glasses routinely (which is good for flying debris), but for chemical
 						handling, upgrade to goggles.</p>
 				</section>
 				<section data-auto-animate data-title="Eye / Face Protection">
@@ -3831,19 +3823,36 @@
 					</div>
 					<p class="content">Chemical splash goggles or a face shield (with safety glasses) are vital when
 						there’s any risk of a chemical splashing or spraying into your eyes or face. Regular
-						prescription glasses or pharmacy loupes are not sufficient – chemicals can go around the edges.
+						prescription glasses are not sufficient – chemicals can go around the edges.
 					</p>
 					<p class="title-box3" style="background-color: #ffb366; color: black">Goggles</p>
 					<p style="text-align: left; font-size: 17px; color: black;"> For tasks like preparing etchant,
 						pouring acids/bases, mixing fixer or developer, or cleaning up a spill, wear goggles that seal
-						against the face. Goggles protect from direct splashes to the eyes. Many pharmacy staff wear
-						safety glasses routinely for patient care (which is good for flying debris), but for chemical
+						against the face. Goggles protect from direct splashes to the eyes. Many work staff wear
+						safety glasses routinely (which is good for flying debris), but for chemical
 						handling, upgrade to goggles.</p>
 					<p class="title-box3" style="background-color: #d279a6; color: black">Face Shield</p>
 					<p style="text-align: left; font-size: 17px; color: black;"> If working with a volume of liquid that
 						could splash to your whole face or if you’re pouring something overhead, use a face shield in
 						addition to goggles (face shield alone doesn’t seal the eyes, but it adds extra splash coverage
 						for your skin and face).</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">EYE / FACE</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/eyeFace.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10e -->
@@ -3861,7 +3870,7 @@
 						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
 
 					</div>
-					<p class="content">Most pharmacy environments have you wearing a surgical mask or similar for
+					<p class="content">Most work environments have you wearing a surgical mask or similar for
 						infection control. These masks provide limited protection against chemical vapors – mostly they
 						guard against splashes and large droplets.</p>
 				</section>
@@ -3871,11 +3880,11 @@
 						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
 
 					</div>
-					<p class="content">Most pharmacy environments have you wearing a surgical mask or similar for
+					<p class="content">Most work environments have you wearing a surgical mask or similar for
 						infection control. These masks provide limited protection against chemical vapors – mostly they
 						guard against splashes and large droplets.</p>
 					<p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-					<p style="text-align: left; font-size: 17px; color: black;">For many pharmacy chemicals, general
+					<p style="text-align: left; font-size: 17px; color: black;">For many chemicals, general
 						room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth.
 						However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or
 						monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
@@ -3886,19 +3895,18 @@
 						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
 
 					</div>
-					<p class="content">Most pharmacy environments have you wearing a surgical mask or similar for
+					<p class="content">Most work environments have you wearing a surgical mask or similar for
 						infection control. These masks provide limited protection against chemical vapors – mostly they
 						guard against splashes and large droplets.</p>
 					<p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-					<p style="text-align: left; font-size: 17px; color: black;">For many pharmacy chemicals, general
+					<p style="text-align: left; font-size: 17px; color: black;">For many chemicals, general
 						room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth.
 						However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or
 						monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
 					<p class="title-box3" style="background-color: #cc6600; color: black">Local Exhaust Ventilation
 						(LEV):</p>
 					<p style="text-align: left; font-size: 17px; color: black;">Before resorting to respirators, use
-						engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures,
-						do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point
+						engineering controls. Good HVAC and point
 						suction (like extraoral suction devices) can reduce inhalation risks for things like monomer,
 						formalin jars, or large volumes of disinfectant.</p>
 				</section>
@@ -3908,25 +3916,41 @@
 						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
 
 					</div>
-					<p class="content">Most pharmacy environments have you wearing a surgical mask or similar for
+					<p class="content">Most work environments have you wearing a surgical mask or similar for
 						infection control. These masks provide limited protection against chemical vapors – mostly they
 						guard against splashes and large droplets.</p>
 					<p class="title-box3" style="background-color: #00ccff; color: black">Surgical Mask</p>
-					<p style="text-align: left; font-size: 17px; color: black;">For many pharmacy chemicals, general
+					<p style="text-align: left; font-size: 17px; color: black;">For many chemicals, general
 						room ventilation suffices and a surgical mask is enough to avoid direct splashes to nose/mouth.
 						However, if you notice strong fumes (like when using alcohol-based solutions in quantity, or
 						monomer fumes, or lots of spray aerosol), you may need better respiratory protection.</p>
 					<p class="title-box3" style="background-color: #cc6600; color: black">Local Exhaust Ventilation
 						(LEV):</p>
 					<p style="text-align: left; font-size: 17px; color: black;">Before resorting to respirators, use
-						engineering controls. For example, if you’re pouring methyl methacrylate monomer for dentures,
-						do it under a fume hood or at least near a source-extraction vacuum arm. Good HVAC and point
+						engineering controls. Good HVAC and point
 						suction (like extraoral suction devices) can reduce inhalation risks for things like monomer,
 						formalin jars, or large volumes of disinfectant.</p>
 					<p class="title-box3" style="background-color: #00e6e6; color: black">Respirators</p>
 					<p style="text-align: left; font-size: 17px; color: black;"> If ventilation isn’t enough or if a
 						worker is particularly sensitive, a respirator might be needed. This could be an N95 mask or a
 						half-face respirator with appropriate chemical cartridges.</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">RESPIRATORY PROTECTION</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/mask2.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10f -->
@@ -3981,10 +4005,26 @@
 						you’re handling the hazardous waste container for fixer – wearing a vinyl apron will protect
 						your torso from any leak.</p>
 					<p class="title-box3" style="background-color: #e64d00; color: black">Closed-toe shoes</p>
-					<p style="text-align: left; font-size: 17px; color: black;"> These are a must (which should already
-						be a clinic policy). If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid
+					<p style="text-align: left; font-size: 17px; color: black;"> These are a must! If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid
 						mesh athletic shoes on days you work with chemicals – a solid material shoe is better as a
 						barrier.</p>
+				</section>
+
+				<section data-auto-animate>
+					<div class="title-container">
+
+						<h3 class="title-box" style="color: #bb1414;">SKIN PROTECTION</h3>
+
+					</div>
+
+					<div class="title-container">
+
+						<div class="title-box5" style="--banner-image: url('/static/images/body.png');">
+
+						</div>
+
+					</div>
+
 				</section>
 
 				<!-- Slide number 10g -->
@@ -4147,7 +4187,7 @@
 									monomer for acrylics or using adhesive primers with strong solvents, open them only
 									as long as needed and recap promptly. If something has a strong odor, that’s a cue
 									that ventilation should be improved or respiratory protection considered. Some
-									clinics have small bench-top fume extractors or at least do tasks near the general
+									workplaces have small bench-top fume extractors or at least do tasks near the general
 									suction inlet.
 								</div>
 							</div>
@@ -4172,7 +4212,7 @@
 									monomer for acrylics or using adhesive primers with strong solvents, open them only
 									as long as needed and recap promptly. If something has a strong odor, that’s a cue
 									that ventilation should be improved or respiratory protection considered. Some
-									clinics have small bench-top fume extractors or at least do tasks near the general
+									workplaces have small bench-top fume extractors or at least do tasks near the general
 									suction inlet.
 								</div>
 							</div>
@@ -4208,7 +4248,7 @@
 									monomer for acrylics or using adhesive primers with strong solvents, open them only
 									as long as needed and recap promptly. If something has a strong odor, that’s a cue
 									that ventilation should be improved or respiratory protection considered. Some
-									clinics have small bench-top fume extractors or at least do tasks near the general
+									workplaces have small bench-top fume extractors or at least do tasks near the general
 									suction inlet.
 								</div>
 							</div>
@@ -4305,7 +4345,7 @@
 									If you have significant quantities of flammable liquids (e.g., a liter of alcohol or
 									acetone, or lots of methyl methacrylate), they should be stored in a designated
 									flammable storage cabinet – a ventilated, fire-resistant cabinet (often yellow in
-									color) designed to contain fires. In a small clinic with only small bottles, you may
+									color) designed to contain fires. In some workplaces with only small bottles, you may
 									not need a formal flammable cabinet, but at least store flammables away from
 									ignition sources.
 								</div>
@@ -4344,7 +4384,7 @@
 									If you have significant quantities of flammable liquids (e.g., a liter of alcohol or
 									acetone, or lots of methyl methacrylate), they should be stored in a designated
 									flammable storage cabinet – a ventilated, fire-resistant cabinet (often yellow in
-									color) designed to contain fires. In a small clinic with only small bottles, you may
+									color) designed to contain fires. In some workplaces with only small bottles, you may
 									not need a formal flammable cabinet, but at least store flammables away from
 									ignition sources.
 								</div>
@@ -4501,7 +4541,7 @@
 
 					<div class="quiz-container">
 						<p class="info-box3" style="font-size: 30px; color: black;" id="question12">Which type of gloves
-							generally provide the best protection against a wide range of pharmaceutical chemicals like
+							generally provide the best protection against a wide range of chemicals like
 							disinfectants and solvents? </p>
 
 						<div class="option">
@@ -4710,6 +4750,8 @@
 
 			const slideMap = {};   // store references for completion marks
 			const childMap = {};   // track children per parent
+			window.slideMap = slideMap;
+			window.childMap = childMap;
 
 			const hSlides = document.querySelectorAll(".reveal .slides > section");
 
