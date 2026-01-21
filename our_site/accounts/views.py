@@ -9,6 +9,8 @@ from constance import config
 from polls.models import Certificate
 from django.db import transaction
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
 
 class AccountDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/dashboard.html'
@@ -114,6 +116,19 @@ def register_view(request):
                     group=selected_group,
                     years=[current_year]
                 )
+
+                # Send notification email to admin
+                try:
+                    send_mail(
+                        subject='New User Registration',
+                        message=f'A new user has registered.\n\nName: {user.first_name} {user.last_name}\nEmail: {user.email}',
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=['info@whmiswise.com'],
+                        fail_silently=True,
+                    )
+                except Exception as e:
+                    # Log error but don't fail registration
+                    print(f"Failed to send admin notification email: {e}")
 
             if config.SIGNUP_NEW_ACCOUNTS_PENDING:
                 messages.info(request, "Your account has been created and is pending approval. You will be notified when an administrator approves your account.")
