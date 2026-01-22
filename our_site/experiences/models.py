@@ -37,6 +37,7 @@ class Person(BaseVisibilityModel):
                                      related_name='students')
     show_activities_publicly = models.BooleanField(default=False, help_text="Whether to show activities on public profile")
     show_guardians_publicly = models.BooleanField(default=False, help_text="Whether to show guardians on public profile")
+    email_verified = models.BooleanField(default=False, help_text="Whether the user has confirmed their email address")
     cached_str = models.CharField(max_length=255, blank=True, editable=False, 
                                 help_text="Cached string representation of this person")
 

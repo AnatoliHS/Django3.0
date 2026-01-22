@@ -90,6 +90,12 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
             
         return context
 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 def register_view(request):
     """View for registering a new user"""
     if request.user.is_authenticated:
@@ -117,24 +123,27 @@ def register_view(request):
                     years=[current_year]
                 )
 
-                # Send notification email to admin
+                # Generate token and send confirmation email to the user
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                # Build the absolute URL for the confirmation link
+                confirmation_link = request.build_absolute_uri(
+                    reverse('accounts:confirm_email', kwargs={'uidb64': uid, 'token': token})
+                )
+                
                 try:
                     send_mail(
-                        subject='New User Registration',
-                        message=f'A new user has registered.\n\nName: {user.first_name} {user.last_name}\nEmail: {user.email}',
+                        subject='Confirm your email address - WHMIS Wise',
+                        message=f'Please confirm your email address by clicking the following link:\n\n{confirmation_link}',
                         from_email=settings.DEFAULT_FROM_EMAIL,
-                        recipient_list=['info@whmiswise.com'],
+                        recipient_list=[user.email],
                         fail_silently=True,
                     )
                 except Exception as e:
-                    # Log error but don't fail registration
-                    print(f"Failed to send admin notification email: {e}")
+                    print(f"Failed to send confirmation email: {e}")
 
-            if config.SIGNUP_NEW_ACCOUNTS_PENDING:
-                messages.info(request, "Your account has been created and is pending approval. You will be notified when an administrator approves your account.")
-            else:
-                messages.success(request, "Your account has been created successfully! You can now log in.")
-            # Always redirect to login after registration
+            # Notify user to check their email (the "popup" equivalent)
+            messages.info(request, "Registration successful! Please check your email to confirm your account.")
             return redirect('login')
     else:
         form = UserRegistrationForm()
@@ -143,6 +152,41 @@ def register_view(request):
         'form': form,
         'pending_approval': config.SIGNUP_NEW_ACCOUNTS_PENDING
     })
+
+def confirm_email_view(request, uidb64, token):
+    """View to handle email confirmation link"""
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user and default_token_generator.check_token(user, token):
+        try:
+            person = user.person
+            person.email_verified = True
+            person.save()
+
+            # Now send notification email to admin
+            try:
+                send_mail(
+                    subject='New User Registration (Email Confirmed)',
+                    message=f'A new user has registered and confirmed their email.\n\nName: {user.first_name} {user.last_name}\nEmail: {user.email}',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=['info@whmiswise.com'],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Failed to send admin notification email: {e}")
+
+            messages.success(request, "Email confirmed! Your account is pending admin approval.")
+            return redirect('login')
+        except Person.DoesNotExist:
+            messages.error(request, "User profile not found.")
+            return redirect('login')
+    else:
+        messages.error(request, "The confirmation link is invalid or has expired.")
+        return redirect('login')
 
 @login_required
 def profile_view(request):

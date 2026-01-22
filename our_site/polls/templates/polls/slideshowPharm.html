@@ -230,6 +230,7 @@
 			/* Light transparency */
 			color: #c51c1f;
 		}
+
 		.line {
 			flex-grow: 1;
 			height: 2px;
@@ -909,7 +910,7 @@
 			bottom: 16px;
 			right: 20px;
 			display: flex;
-			gap: 28px;
+			gap: 20px;
 			z-index: 999999;
 		}
 
@@ -924,14 +925,18 @@
 			color: white;
 			border-color: black;
 			border-width: 2px;
-			font-size: 20px;
-			padding: 10px 16px;
+			font-size: 18px;
+			padding: 10px 10px;
 			cursor: pointer;
 			border-radius: 10px;
+			display: inline-block;
+			/* Required for transform to work properly */
+			transition: transform 0.3s ease;
 		}
 
 		.nav-btn:hover {
 			background: rgba(0, 0, 0, 0.9);
+			transform: scale(1.05);
 		}
 
 		.nav-label {
@@ -1004,12 +1009,12 @@
 	<div class="nav-container">
 		<div class="nav-item">
 			<button id="navPrev" class="nav-btn" style="background: rgba(250, 154, 80);">❮ Prev</button>
-			
+
 		</div>
 
 		<div class="nav-item">
 			<button id="navNext" class="nav-btn" style="background: rgba(52, 172, 118);">Next ❯</button>
-			
+
 		</div>
 	</div>
 
@@ -1061,11 +1066,11 @@
 				</div>
 				<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
-
-						</div>
+					<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
 
 					</div>
+
+				</div>
 
 
 			</section>
@@ -1081,7 +1086,7 @@
 					<p class="main-title" style="color: #c51c1f;">What is WHMIS</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/topicOne1.png');">
+						<div class="title-box5" style="--banner-image: url('/static/images/WHMIS-TopicT.png');">
 
 						</div>
 
@@ -1109,7 +1114,7 @@
 							In a pharmacy, where various chemicals and materials are used daily, WHMIS is crucial to
 							keep staff informed about product dangers and precautions.
 						</p>
-						
+
 
 					</div>
 				</section>
@@ -1122,7 +1127,8 @@
 					</div>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/Pillars.png'); min-height: 470px;">
+						<div class="title-box5"
+							style="--banner-image: url('/static/images/topicOne1.png'); min-height: 470px;">
 
 						</div>
 				</section>
@@ -1275,7 +1281,8 @@
 						<ul class="info-box3" style=" font-size: 14px; font-style: italic;">
 							<li>
 								Identify and Inventory Hazardous Products: Keep an up-to-date inventory of all hazardous
-								chemicals and materials in the pharmacy (e.g., disinfectants, chemical cleaners, mercury,
+								chemicals and materials in the pharmacy (e.g., disinfectants, chemical cleaners,
+								mercury,
 								etc.)
 							</li>
 
@@ -1745,7 +1752,7 @@
 					<p class="main-title" style="color: #c51c1f;">Physical Hazards</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/topicThree3.png');">
+						<div class="title-box5" style="--banner-image: url('/static/images/topicThree33.png');">
 
 						</div>
 
@@ -2891,7 +2898,7 @@
 					<p class="main-title" style="color: #c51c1f;">Labels</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/topicSix.png');">
+						<div class="title-box5" style="--banner-image: url('/static/images/topicSix6.png');">
 
 						</div>
 
@@ -4006,7 +4013,8 @@
 						your torso from any leak.</p>
 					<p class="title-box3" style="background-color: #e64d00; color: black">Closed-toe shoes</p>
 					<p style="text-align: left; font-size: 17px; color: black;"> These are a must (which should already
-						be a pharmacy policy). If you drop a sharp or a bit of acid, you don’t want it on your feet. Avoid
+						be a pharmacy policy). If you drop a sharp or a bit of acid, you don’t want it on your feet.
+						Avoid
 						mesh athletic shoes on days you work with chemicals – a solid material shoe is better as a
 						barrier.</p>
 				</section>
@@ -4347,7 +4355,8 @@
 									If you have significant quantities of flammable liquids (e.g., a liter of alcohol or
 									acetone, or lots of methyl methacrylate), they should be stored in a designated
 									flammable storage cabinet – a ventilated, fire-resistant cabinet (often yellow in
-									color) designed to contain fires. In a small pharmacy with only small bottles, you may
+									color) designed to contain fires. In a small pharmacy with only small bottles, you
+									may
 									not need a formal flammable cabinet, but at least store flammables away from
 									ignition sources.
 								</div>
@@ -4386,7 +4395,8 @@
 									If you have significant quantities of flammable liquids (e.g., a liter of alcohol or
 									acetone, or lots of methyl methacrylate), they should be stored in a designated
 									flammable storage cabinet – a ventilated, fire-resistant cabinet (often yellow in
-									color) designed to contain fires. In a small pharmacy with only small bottles, you may
+									color) designed to contain fires. In a small pharmacy with only small bottles, you
+									may
 									not need a formal flammable cabinet, but at least store flammables away from
 									ignition sources.
 								</div>
