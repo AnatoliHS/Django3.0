@@ -910,8 +910,16 @@
 			bottom: 16px;
 			right: 20px;
 			display: flex;
-			gap: 28px;
+			gap: 1px;
 			z-index: 999999;
+		}
+
+		.button-row {
+			display: flex;
+			gap: 10px;
+			/* Default Origin for scaling */
+			transform-origin: bottom right;
+			transition: transform 0.3s ease;
 		}
 
 		.nav-item {
@@ -920,18 +928,41 @@
 			align-items: center;
 		}
 
-		.nav-btn {
-			background: rgba(0, 0, 0, 0.75);
+		.glass-button {
+			/* Base size */
+			font-size: 18px;
+			padding: 10px 20px;
+
+			/* Glass effect */
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 30px;
+
 			color: white;
-			border: none;
-			font-size: 26px;
-			padding: 10px 16px;
 			cursor: pointer;
-			border-radius: 10px;
+			text-transform: uppercase;
+			font-weight: bold;
+			letter-spacing: 1px;
+
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			white-space: nowrap;
 		}
 
-		.nav-btn:hover {
-			background: rgba(0, 0, 0, 0.9);
+		.glass-button:hover {
+			transform: translateY(-2px) scale(1.05);
+			box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+			filter: brightness(1.1);
+		}
+
+		.glass-button:active {
+			transform: translateY(1px) scale(0.98);
 		}
 
 		.nav-label {
@@ -941,10 +972,91 @@
 			letter-spacing: 0.4px;
 			user-select: none;
 		}
+
+		.exit-button-row {
+			transform-origin: bottom left !important;
+		}
+
+		/* Scaling Logic */
+		@media (max-width: 1200px) {
+
+			.nav-container .button-row,
+			.exit-button-row {
+				transform: scale(0.9);
+			}
+		}
+
+		/* Mobile Landscape & Portrait: Stack buttons */
+		@media (max-width: 950px) {
+
+			.nav-container .button-row,
+			.exit-button-row {
+				transform: scale(0.75);
+			}
+
+			.nav-container .button-row {
+				flex-direction: column !important;
+				/* Force stack on mobile landscape too */
+				gap: 15px !important;
+				/* Adjust position since they stack upwards */
+				bottom: 15px !important;
+				right: -20px !important;
+			}
+		}
+
+		@media (max-width: 400px) {
+
+			.nav-container .button-row,
+			.exit-button-row {
+				transform: scale(0.65);
+			}
+		}
+	</style>
+	<style>
+		/* Overlay for forcing landscape */
+		#mobile-portrait-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #222;
+			color: white;
+			z-index: 9999999;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			text-align: center;
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		#mobile-portrait-overlay::before {
+			content: "↻";
+			font-size: 60px;
+			margin-bottom: 20px;
+			display: block;
+		}
+
+		/* Show overlay only on mobile portrait */
+		@media only screen and (max-width: 900px) and (orientation: portrait) {
+			#mobile-portrait-overlay {
+				display: flex;
+			}
+
+			/* Hide the rest of the content to prevent scrolling/interaction behind */
+			.reveal,
+			.nav-container,
+			#menuButton {
+				display: none !important;
+			}
+		}
 	</style>
 </head>
 
 <body>
+	<div id="mobile-portrait-overlay">Please Rotate Your Device</div>
 	<div id="progressPercent"></div>
 	<script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
 	<script>
@@ -1003,24 +1115,24 @@
 
 	<div class="nav-container">
 		<div class="button-row" style="gap: 10px; position: fixed; bottom: 15px; right: -50px;">
-						<div class="button-wrap">
-							<button id="navPrev" class="glass-button" style="background: rgba(250, 154, 80);">
-								<span style="letter-spacing: 0.15em;">❮ Prev</span>
-							</button>
-							<div class="button-shadow"></div>
-						</div>
-					
+			<div class="button-wrap">
+				<button id="navPrev" class="glass-button" style="background: rgba(250, 154, 80);">
+					<span style="letter-spacing: 0.15em;">❮ Prev</span>
+				</button>
+				<div class="button-shadow"></div>
+			</div>
 
-		
-						<div class="button-wrap">
-							<button id="navNext" class="glass-button" style="background: rgba(52, 172, 118);">
-								<span style="letter-spacing: 0.15em;">Next ❯</span>
-							</button>
-							<div class="button-shadow"></div>
-						</div>
-					</div>
 
-		
+
+			<div class="button-wrap">
+				<button id="navNext" class="glass-button" style="background: rgba(52, 172, 118);">
+					<span style="letter-spacing: 0.15em;">Next ❯</span>
+				</button>
+				<div class="button-shadow"></div>
+			</div>
+		</div>
+
+
 	</div>
 
 
@@ -1072,11 +1184,11 @@
 				</div>
 				<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
-
-						</div>
+					<div class="title-box5" style="--banner-image: url('/static/images/NAV.png');">
 
 					</div>
+
+				</div>
 
 
 			</section>
@@ -1120,7 +1232,7 @@
 							In a dental clinic, where various chemicals and materials are used daily, WHMIS is crucial
 							to keep staff informed about product dangers and precautions.
 						</p>
-						
+
 
 					</div>
 				</section>
@@ -1133,7 +1245,8 @@
 					</div>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/topicOne1.png'); min-height: 470px;">
+						<div class="title-box5"
+							style="--banner-image: url('/static/images/topicOne1.png'); min-height: 470px;">
 
 						</div>
 				</section>
@@ -4666,7 +4779,7 @@
 		</div>
 	</div>
 
-	<div class="button-row" style="position: fixed; top: 15px; right: 80px; z-index: 1000;">
+	<div class="button-row exit-button-row" style="position: fixed; bottom: 15px; left: -20px; z-index: 1000;">
 		<div class="button-wrap">
 			<button class="glass-button" onclick="exitCourse()">
 				<span style="letter-spacing: 0.15em;">EXIT</span>
@@ -5057,25 +5170,6 @@
 			padding: 0 5vw;
 			gap: 80px;
 
-		}
-
-		@media (max-width: 768px) {
-
-			.button-row {
-				flex-direction: column;
-				align-items: center;
-				gap: 30px;
-				padding: 0 5vw;
-			}
-
-			.button-wrap {
-				width: 100%;
-			}
-
-			.glass-button {
-				width: 100%;
-
-			}
 		}
 	</style>
 
