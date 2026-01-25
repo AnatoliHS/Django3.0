@@ -19,6 +19,10 @@
 
 {% block content %}
 <card>
+  <div style="--ta:center; --mt:1em">
+        <p style="font-size: 18px;">Already have an account? <a href="{% url 'login' %}" style="--c:#7091e6; --weight:bold">Sign In</a></p>
+    </div>
+
     <h2>Sign Up</h2>
 
     {% if pending_approval %}
@@ -182,7 +186,7 @@
       z-index: 3;
       pointer-events: auto;
       border-radius: 999vw;
-      background: linear-gradient(-75deg, rgba(1, 255, 203,0.05), rgba(1, 255, 203,0.2), rgba(1, 255, 203,0.05));
+      background: linear-gradient(-75deg, rgba(1, 213, 255,0.05), rgba(1, 213, 255,0.2), rgba(1, 213, 255,0.05));
       box-shadow:
         inset 0 0.125em 0.125em rgba(0,0,0,0.05),
         inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
