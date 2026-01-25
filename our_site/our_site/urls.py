@@ -30,6 +30,7 @@ from .views import (
     backup_database_flat_csv, restore_database_from_flat_csv, # Add CSV views
     backup_management_view # Add the new management view
 )
+from django.http import JsonResponse
 
 # Custom view for the root URL
 from django.shortcuts import render
@@ -41,9 +42,11 @@ def home_view(request):
         # Use the login template with a welcome message
         return LoginView.as_view(template_name='registration/login.html', 
                                 extra_context={
-                                    'title': 'Particip8',
-                                    'welcome_message': 'Where participation becomes portfolio'
+                                    'title': 'Login',
+                                    'welcome_message': 'Empowering Safe Workplaces Through WHMIS Education'
                                     })(request)
+def silence_devtools(request):
+    return JsonResponse({})
 
 # Define backup/restore URL patterns
 backup_urlpatterns = [
@@ -59,6 +62,7 @@ backup_urlpatterns = [
 ]
 
 urlpatterns = [
+    path('.well-known/appspecific/com.chrome.devtools.json', silence_devtools),
     # Direct toggle route for participation visibility
     path('accounts/toggle-participation/<int:pk>/', toggle_participation_visibility, name='toggle_participation_visibility'),
     path('', home_view, name='home'),
@@ -66,9 +70,12 @@ urlpatterns = [
     path("experiences/", include("experiences.urls")),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('auth/', include('django.contrib.auth.urls')),
+    # WHMIS Cert lives in polls for now
+    path('polls/', include(("polls.urls", "polls"), namespace='polls')),
     # Include backup/restore URLs under the admin path
     path("admin/", include(backup_urlpatterns)),
     path("admin/", admin.site.urls), # Keep the standard admin URLs
+    path("slideshows/", include("slideshows.urls")), # Add slideshows API URLs
     path('register/', register_view, name='register'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

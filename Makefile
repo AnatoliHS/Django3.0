@@ -18,7 +18,7 @@ help:
 	@echo ""
 
 # Docker container name
-CONTAINER = web-django-develop
+CONTAINER = django3.0-develop
 
 # Load environment variables from .env file if it exists
 -include .env

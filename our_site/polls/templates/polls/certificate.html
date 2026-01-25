@@ -1,0 +1,511 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Completion</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+
+      const dashboardUrl = "{% url 'accounts:dashboard' %}";
+        function exitCourse() {
+          window.location.href = dashboardUrl; 
+        }
+
+   // AUTO-EMAIL ON PAGE LOAD
+   function sendCertificateWithImage() {
+  const cert = document.querySelector('.certificate');
+
+  html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+    const base64 = canvas.toDataURL('image/png').split(',')[1]; // Strip "data:image/png;base64,"
+
+    fetch("{% url 'polls:upload_certificate' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify({
+        image: base64
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('✅ Certificate uploaded and email sent with attachment.');
+      sessionStorage.removeItem('sendCertificate'); // Prevent repeat sending
+    })
+    .catch(err => console.error('❌ Error sending certificate:', err));
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('sendCertificate') === 'true') {
+    sendCertificateWithImage();
+  }
+});
+
+  // EXISTING DOWNLOAD BUTTON FUNCTIONALITY
+  function downloadCertificate() {
+    const cert = document.querySelector('.certificate');
+    html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+      const base64 = canvas.toDataURL('image/png').split(',')[1];
+
+      // Send image to Django via fetch
+      fetch("{% url 'polls:upload_certificate' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ image: base64 })
+      }).then(res => res.json()).then(data => {
+        console.log('Certificate uploaded for emailing.');
+      });
+
+      // Download image to user
+      const link = document.createElement('a');
+      link.download = 'WHMIS_Certificate.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eee;
+            font-family: 'Georgia', serif;
+            display: block;
+            padding: 200px 0 40px; /* push content down and give space below */
+            box-sizing: border-box;
+            min-height: 100vh;
+            padding-top: 180px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 200px;
+            }
+            }
+
+        .certificate {
+           margin: 0 auto; /* horizontally center */
+            margin-top: 0; /* no extra top margin */
+            width: 1000px;
+            height: 700px;
+            padding: 40px;
+            background: linear-gradient(to bottom, #fefefe, #f9f6f1);
+            border: 20px solid #244e68;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 6px double #cfae5e;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .certificate .corner {
+            width: 40px;
+            height: 40px;
+            border: 6px solid #cfae5e;
+            position: absolute;
+            z-index: 2;
+            background: #f9f6f1;
+        }
+
+        .corner.tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .corner.tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+        .corner.bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+        .corner.br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        .certificate-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .certificate h1 {
+            font-size: 60px;
+            margin-top: 40px;
+            margin-bottom: 0;
+            color: #2c485e;
+            letter-spacing: 2px;
+        }
+
+        .certificate h2 {
+            font-size: 30px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .certificate p {
+            font-size: 22px;
+            margin: 30px 0 10px;
+            color: #444;
+            font-style: italic;
+        }
+
+        .certificate .name {
+            font-size: 34px;
+            font-weight: bold;
+            color: #003366;
+            margin-top: 10px;
+        }
+
+        .certificate .course {
+            font-size: 26px;
+            color: #000;
+        }
+
+        .certificate .date {
+            font-size: 18px;
+            color: #666;
+            margin-top: 60px;
+        }
+
+        .signature-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding: 0 40px;
+        }
+
+        .signature {
+            text-align: left;
+            font-style: italic;
+            color: #555;
+            font-size: 18px;
+        }
+
+        .logo-container {
+            text-align: right;
+        }
+
+        .logo-container img {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Optional faded background watermark logo */
+        .certificate::after {
+            content: "";
+            background: url("{% static 'images/WW.png' %}") no-repeat center;
+            background-size: 900px;
+            opacity: 0.05;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+        .name-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .name-wrapper::before,
+        .name-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            height: 2px;
+            width: 45%;
+            background: linear-gradient(to right, transparent, #cfae5e);
+        }
+
+        .name-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, transparent, #cfae5e);
+        }
+
+        .name-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, transparent, #cfae5e);
+        }
+
+        .center-dot {
+            width: 5px;
+            height: 5px;
+            background-color: #cfae5e;
+            border-radius: 50%;
+            margin: 5px auto 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="button-row" style="position: fixed; top: 30px; z-index: 1000;">
+						<div class="button-wrap">
+							<button class="glass-button" onclick="exitCourse()">
+							<span style="letter-spacing: 0.15em;">EXIT</span>
+							</button>
+							<div class="button-shadow"></div>
+						</div>
+						</div>
+<div class="button-row" style="position: fixed; top: 80px; z-index: 1000;">  
+<div class="button-wrap">
+  <button class="glass-button" onclick="downloadCertificate()">
+    <span style="letter-spacing: 0.15em;">DOWNLOAD</span>
+  </button>
+  <div class="button-shadow"></div>
+</div>
+</div>
+
+    <div class="certificate">
+        <!-- Decorative Gold Corners -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <!-- Main Content -->
+        <div class="certificate-content">
+            <br>
+            <h1>CERTIFICATE</h1>
+            <h2>OF COMPLETION</h2>
+            
+            <p>This is to certify that</p>
+          <div class="name-wrapper">
+            <div class="name">
+                {% if user.first_name or user.last_name %}
+                    {{ user.first_name }} {{ user.last_name }}
+                {% else %}
+                    {{ user.username }}
+                {% endif %}
+            </div>
+    <div class="center-dot"></div>
+</div>
+
+
+            <p>has successfully completed the</p>
+            <div class="course">WHMIS Safety Training</div>
+            <div class="date">Date of Completion: {{ completion_date }}</div>
+
+            <div class="signature-block">
+                <div class="signature">
+                    <p>Authorized Instructor</p>
+                </div>
+                <div class="logo-container">
+                    <img src="{% static logo_image %}" alt="WHMIS Logo" class="certificate-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    @property --angle-1 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -75deg;
+    }
+
+    @property --angle-2 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -45deg;
+    }
+
+    :root {
+      --global--size: clamp(2rem, 4vw, 5rem);
+      --anim--hover-time: 400ms;
+      --anim--hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .button-wrap {
+      position: relative;
+      z-index: 2;
+      border-radius: 999vw;
+      background: transparent;
+      pointer-events: none;
+      transition: all var(--anim--hover-time) var(--anim--hover-ease);
+    }
+
+    .button-shadow {
+      --shadow-cuttoff-fix: 2em;
+      position: absolute;
+      width: calc(100% + var(--shadow-cuttoff-fix));
+      height: calc(100% + var(--shadow-cuttoff-fix));
+      top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      filter: blur(clamp(2px, 0.125em, 12px));
+      pointer-events: none;
+    }
+
+    .button-shadow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999vw;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+      width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+      left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+      padding: 0.125em;
+      box-sizing: border-box;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+    }
+
+    .glass-button {
+      --border-width: clamp(1px, 0.0625em, 4px);
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      z-index: 3;
+      pointer-events: auto;
+      border-radius: 999vw;
+      background: linear-gradient(-75deg, rgba(248, 250, 250, 0.05), rgba(248, 250, 250, 0.05), rgba(248, 250, 250, 0.05));
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0,0,0,0.05),
+        inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
+        0 0.25em 0.125em -0.125em rgba(0,0,0,0.2),
+        0 0 0.1em 0.25em inset rgba(255,255,255,0.2),
+        0 0 0 0 rgba(255,255,255,1);
+      backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      transition: all var(--anim--hover-time) var(--anim--hover-ease);
+      min-width: 220px;
+      text-align: center;
+      font-size: 15px;
+      -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          user-select: none;
+    }
+
+    .glass-button:hover {
+      transform: scale(0.975);
+      backdrop-filter: blur(0.01em);
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0,0,0,0.05),
+        inset 0 -0.125em 0.125em rgba(255,255,255,0.5),
+        0 0.15em 0.05em -0.1em rgba(0,0,0,0.25),
+        0 0 0.05em 0.1em inset rgba(255,255,255,0.5),
+        0 0 0 0 rgba(255,255,255,1);
+    }
+
+    .glass-button span {
+      display: block;
+      position: relative;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      color: #323232;
+      text-shadow: 0em 0.25em 0.05em rgba(0,0,0,0.1);
+      padding: 0.875em 1.5em;
+    }
+
+    .glass-button span::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: calc(100% - var(--border-width));
+      height: calc(100% - var(--border-width));
+      top: calc(var(--border-width) / 2);
+      left: calc(var(--border-width) / 2);
+      border-radius: 999vw;
+      background: linear-gradient(var(--angle-2), rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 40% 50%, rgba(255,255,255,0) 55%);
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      transition: background-position calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease), --angle-2 calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease);
+    }
+
+    .glass-button:hover span::after {
+      background-position: 25% 50%;
+    }
+
+    .glass-button:active span::after {
+      background-position: 50% 15%;
+      --angle-2: -15deg;
+    }
+
+    .glass-button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999vw;
+      width: calc(100% + var(--border-width));
+      height: calc(100% + var(--border-width));
+      top: calc(0% - var(--border-width) / 2);
+      left: calc(0% - var(--border-width) / 2);
+      padding: var(--border-width);
+      background: conic-gradient(
+        from var(--angle-1) at 50% 50%,
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0) 5% 40%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0) 60% 95%,
+        rgba(0,0,0,0.5)
+      ),
+      linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition: all var(--anim--hover-time) var(--anim--hover-ease), --angle-1 500ms ease;
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255,255,255,0.5);
+    }
+
+    .glass-button:hover::after {
+      --angle-1: -125deg;
+    }
+
+    .glass-button:active::after {
+      --angle-1: -75deg;
+    }
+
+    .button-container {
+      --w: 100%;
+      --ai: center;
+      --fd: column;
+      --d: flex;
+      --mt: 50px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 50px;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      padding: 0 5vw;
+      gap: 80px;
+      
+    }
+    @media (max-width: 768px) {
+       
+        .button-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 0 5vw;
+        }
+            
+        .button-wrap {
+            width: 100%;
+        }
+
+        .glass-button {
+            width: 100%;
+            
+        }
+    }
+  </style>
+</html>

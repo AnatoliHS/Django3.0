@@ -59,3 +59,9 @@ class OurSiteConfig(AppConfig):
                         print(f"[OurSiteConfig] Database found at {db_path}.")
             except Exception as e:
                 print(f"[OurSiteConfig] Error during database initialization: {str(e)}")
+
+
+from django.contrib.admin.apps import AdminConfig
+
+class CustomAdminConfig(AdminConfig):
+    default_site = 'our_site.admin_site.CustomAdminSite'

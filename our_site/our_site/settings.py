@@ -44,9 +44,10 @@ INSTALLED_APPS = [
     'django_startr',
     'experiences',
     'accounts',
+    'polls',
     'translate',  # Add the new translate app
     'our_site.apps.OurSiteConfig',  # Add the main app with its management commands
-    'django.contrib.admin',
+    'our_site.apps.CustomAdminConfig', # Custom admin config to reorder apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'our_site.apps.ConstanceConfig',  # Use our custom app config instead of 'constance'
     'constance.backends.database',
     'debug_toolbar',  # Add Django Debug Toolbar
+    'slideshows', # Add the new slideshows app
 ]
 
 MIDDLEWARE = [
@@ -231,6 +233,17 @@ hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += ['.'.join(ip.split('.')[:3] + ['1']) for ip in ips]
 
 # Debug Toolbar configuration
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
-}
+#DEBUG_TOOLBAR_CONFIG = {
+    #'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+#}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'info@whmiswise.com'  # Replace with your actual email
+EMAIL_HOST_PASSWORD = 'afnlunnyyvfrkmea'  # Use a secure method!
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+VERSION = '0.0.1'
+
