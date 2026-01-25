@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<!-- Visibility Controls -->
+<!-- Visibility Controls 
 <div class="card" style="--mt:20px">
     <h3>Profile Visibility Settings</h3>
     <form method="post" action="{% url 'accounts:update_visibility' %}">
@@ -91,9 +91,9 @@
             <button type="submit" style="--p:8px 15px;">Save Visibility Settings</button>
         </div>
        
-    </form>
+    </form> -->
 
-    <!-- Sharing Options -->
+    <!-- Sharing Options 
     {% if person.is_public %}
     <div class="sharing-options" style="--mt:20px; --pt:20px; --bt:1px solid #eee">
         <h3>Share Your Profile</h3>
@@ -103,13 +103,13 @@
             Share it with your friends, family, or colleagues to let them know about your experiences and achievements!</p>
         <section>
 
-            <!-- Instagram -->
+            
             <a href="https://www.instagram.com/share?url={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/" 
                target="_blank" 
                style="--p:8px 15px; --bgc:#e1306c; --c:#fff; --b:none; --radius:4px; --cur:pointer; --td:none">
                 Share on Instagram
             </a>
-                        <!-- LinkedIn -->
+                        
             <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.scheme }}://{{ request.get_host }}/experiences/profile/{{ person.pk }}/&title=Check out my profile"
                target="_blank"> 
                 Share on LinkedIn
@@ -132,11 +132,11 @@
                     style="--p:8px 15px; --bgc:#28a745; --c:#fff; --b:none; --radius:4px; --cur:pointer">
                 Copy Profile Link
             </button>
-        </section>
+        </section> 
         </div>
-    </div>
-    {% endif %}
-</div>
+    </div> 
+    {% endif %} -->
+</div> 
 
 <script>
 function copyToClipboard(text) {
