@@ -929,42 +929,7 @@
 			align-items: center;
 		}
 
-		.glass-button {
-			/* Base size */
-			font-size: 18px;
-			padding: 10px 20px;
-
-			/* Glass effect */
-			background: rgba(255, 255, 255, 0.1);
-			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 30px;
-
-			color: white;
-			cursor: pointer;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1px;
-
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			transition: all 0.3s ease;
-
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			white-space: nowrap;
-		}
-
-		.glass-button:hover {
-			transform: translateY(-2px) scale(1.05);
-			box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-			filter: brightness(1.1);
-		}
-
-		.glass-button:active {
-			transform: translateY(1px) scale(0.98);
-		}
+	
 
 		.nav-label {
 			margin-top: 6px;
@@ -1000,12 +965,12 @@
 				/* Force stack on mobile landscape too */
 				gap: 15px !important;
 				/* Adjust position since they stack upwards */
-				bottom: 15px !important;
+				bottom: 40px !important;
 				right: 10px !important;
 			}
 
 			.exit-button-row{
-				bottom: 15px !important;
+				bottom: 40px !important;
 				left: 10px !important;
 			}
 		}
@@ -1207,7 +1172,7 @@
 					<p class="main-title" style="color: #c51c1f;">What is WHMIS</p>
 					<div class="title-container">
 
-						<div class="title-box5" style="--banner-image: url('/static/images/WHMIS-TopicT.png');">
+						<div class="title-box5" style="--banner-image: url('/static/images/WHMIS-topicT.png');">
 
 						</div>
 
@@ -4699,7 +4664,7 @@
 							<button class="glass-button" onclick="test()">
 								<span style="letter-spacing: 0.15em;">START TEST</span>
 							</button>
-							<div class="button-shadow"></div>
+							
 						</div>
 					</div>
 				</section>
@@ -4716,7 +4681,7 @@
 			<button class="glass-button" onclick="exitCourse()">
 				<span style="letter-spacing: 0.15em;">EXIT</span>
 			</button>
-			<div class="button-shadow"></div>
+			
 		</div>
 	</div>
 
