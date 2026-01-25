@@ -233,9 +233,9 @@ hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += ['.'.join(ip.split('.')[:3] + ['1']) for ip in ips]
 
 # Debug Toolbar configuration
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
-}
+#DEBUG_TOOLBAR_CONFIG = {
+    #'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+#}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
