@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: update this when you have the production host
-CSRF_TRUSTED_ORIGINS = ["https://learn.whmiswise.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://learn.whmiswise.com"]
 
 
 # Application definition
@@ -245,5 +245,5 @@ EMAIL_HOST_USER = 'info@whmiswise.com'  # Replace with your actual email
 EMAIL_HOST_PASSWORD = 'afnlunnyyvfrkmea'  # Use a secure method!
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
