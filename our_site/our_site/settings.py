@@ -245,3 +245,5 @@ EMAIL_HOST_USER = 'info@whmiswise.com'  # Replace with your actual email
 EMAIL_HOST_PASSWORD = 'afnlunnyyvfrkmea'  # Use a secure method!
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+VERSION = '0.0.1'
+

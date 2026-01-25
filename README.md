@@ -35,7 +35,7 @@ We believe in speed without compromise. Our solution delivers:
 >  - Sage.is CTO
   
 
-## v0.9.7
+## v0.0.1
 
  - Backup and restore panel added to admin
  - Enhance person_detail.html layout and improve database initialization in apps.py 
